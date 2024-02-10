@@ -3,7 +3,6 @@ import "./Features.css";
 import { featuresData } from "./FeaturesEnum";
 
 const Features = () => {
-  console.log(featuresData);
   return (
     <>
       <div className="title_container">

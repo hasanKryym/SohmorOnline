@@ -15,6 +15,7 @@
 }
 
 .feature .feature_title {
+  font-size: 24px;
   border-radius: 8px 8px 0 0;
   text-align: center;
   color: #000;
@@ -23,5 +24,6 @@
 }
 
 .feature .feature_description {
-  padding: 1rem 2rem;
+  padding: 2rem;
+  color: var(--dark-charcoal);
 }

@@ -1,0 +1,9 @@
+.contact_us-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact_us-container textarea {
+  resize: vertical;
+}

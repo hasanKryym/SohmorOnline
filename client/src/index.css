@@ -29,6 +29,16 @@ code {
   --sky-blue: #c8d7d2;
 }
 
+.title_container {
+  display: flex;
+  font-size: 32px;
+  padding: 3rem 0 2rem 0;
+  color: #000;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
+
 /* Custom button */
 .custom-button {
   background-color: var(--terracotta-red);
@@ -46,12 +56,23 @@ code {
   filter: brightness(90%);
 }
 
-.title_container {
-  display: flex;
-  font-size: 32px;
-  padding: 3rem 0 2rem 0;
-  color: #000;
-  justify-content: center;
-  align-items: center;
-  text-transform: capitalize;
+/* Custom Input */
+
+.custom-input {
+  width: 100%;
+  color: var(--dark-charcoal);
+  font-size: 16px;
+  line-height: 20px;
+  min-height: 28px;
+  border-radius: 4px;
+  padding: 8px 16px;
+  border: 2px solid transparent;
+  box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+  background: rgb(251, 251, 251);
+  transition: all 0.1s ease 0s;
+}
+
+.custom-input:focus {
+  outline: none;
+  border: 2px solid var(--sky-blue);
 }
