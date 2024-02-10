@@ -1,0 +1,29 @@
+.swiper_container {
+  background: var(--terracotta-red);
+  width: 100vw;
+  max-width: 2000px;
+  overflow-x: hidden;
+}
+.swiper_container .swiper {
+  padding: 2rem;
+  max-height: inherit;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  padding: 0 2rem;
+  color: var(--dark-charcoal) !important;
+}
+
+.swiper img {
+  width: 100vw;
+  height: 600px;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 520px) {
+  .swiper_container .swiper {
+    padding: 0;
+    padding-bottom: 2rem;
+  }
+}
