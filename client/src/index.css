@@ -29,6 +29,8 @@ code {
   --sky-blue: #c8d7d2;
 }
 
+/* custom classes */
+
 .beige {
   color: var(--light-beige);
 }
@@ -40,6 +42,18 @@ code {
   text-align: center;
 }
 
+.middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.one-rem {
+  padding: 1rem;
+}
+.two-rem {
+  padding: 2rem;
+}
+
 .title_container {
   display: flex;
   font-size: 32px;
@@ -49,6 +63,18 @@ code {
   align-items: center;
   text-transform: capitalize;
 }
+
+.blur-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+/* custom classes */
 
 /* Custom button */
 .custom-button {
@@ -107,4 +133,16 @@ code {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
+}
+
+.underline-beige {
+  width: 100%;
+  height: 2px;
+  background: var(--light-beige);
+}
+
+.underline-sky-blue {
+  width: 100%;
+  height: 2px;
+  background: var(--sky-blue);
 }

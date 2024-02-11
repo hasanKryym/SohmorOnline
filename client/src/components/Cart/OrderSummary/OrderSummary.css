@@ -1,0 +1,49 @@
+.order_summary {
+  position: fixed;
+  top: 200px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 100vw;
+  max-width: 600px;
+  min-width: 300px;
+  background: var(--light-beige);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
+}
+
+.order_summary .info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0.5rem;
+}
+
+.order_summary .user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order_summary .summary-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0.5rem;
+}
+
+.order_summary .summary-total {
+  font-size: bolder;
+  font-size: 24px;
+}
+
+.order_summary button.black-bg {
+  background: var(--dark-charcoal);
+}
+
+.order_summary .summary-button {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+}
