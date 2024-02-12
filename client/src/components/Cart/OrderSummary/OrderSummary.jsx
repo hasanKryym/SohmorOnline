@@ -30,7 +30,7 @@ const OrderSummary = ({ onClose }) => {
 
           <div className="summary-total">
             <p>Total</p>
-            <span>$110</span>
+            <span>$16</span>
           </div>
 
           <div className="summary-button">
