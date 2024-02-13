@@ -1,0 +1,41 @@
+.shops_header .middle {
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.shops_header .middle input {
+  width: 50vw;
+  max-width: 400px;
+  min-width: 200px;
+}
+
+.shops_header .input_container {
+  position: relative;
+}
+
+.shops_header .search-btn {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 50px;
+  color: var(--light-beige);
+  background: var(--dark-charcoal);
+  border: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-size: 24px;
+}
+.shops_header .search-btn:hover {
+  cursor: pointer;
+  background: var(--dark-charcoal);
+}
+
+.shops_container {
+  padding: 0rem 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4rem;
+}

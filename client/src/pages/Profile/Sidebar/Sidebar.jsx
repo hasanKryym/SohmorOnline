@@ -4,14 +4,13 @@ import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <>
       <div className="profile-sidebar">
         <ul className="profile-sidebar-list">
-          {profileLinks.map(({ name, link, icon }) => {
+          {profileLinks.map(({ name, link, icon }, i) => {
             return (
-              <li className="profile-sidebar-list_element">
+              <li key={i} className="profile-sidebar-list_element">
                 <Link
                   className={`${location.pathname === link && "isActive"}`}
                   to={link}
