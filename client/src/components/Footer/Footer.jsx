@@ -14,9 +14,9 @@ const Footer = () => {
 
         {/* Links Map */}
         <div className="linksMap_container">
-          {favLinksMap.map(({ name, link }) => {
+          {favLinksMap.map(({ name, link }, i) => {
             return (
-              <Link style={{ color: "#373234" }} to={link}>
+              <Link key={i} style={{ color: "#373234" }} to={link}>
                 {name}
               </Link>
             );

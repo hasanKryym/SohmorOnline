@@ -1,0 +1,26 @@
+.shop_container {
+}
+
+.shop_container .title_container {
+  font-size: 48px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.shop_container .title_container .star {
+  color: var(--vibrant-yellow);
+}
+
+.shop_container .title_container .flame {
+  /* color: linear-gradient(135deg, #ff4500, #ffa500); */
+  color: #ffa500;
+}
+
+.shop_container .items_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4rem;
+  padding: 0rem 2rem;
+}

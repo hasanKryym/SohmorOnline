@@ -1,6 +1,7 @@
 import "./Shop.css";
 import { FaStar } from "react-icons/fa";
 import Image from "../../assets/images/shops page/Designing a Modern Fast Food Restaurant.jpg";
+import { Link } from "react-router-dom";
 
 const Shop = ({ shop }) => {
   const { name, description, rating, image } = shop;
@@ -21,7 +22,9 @@ const Shop = ({ shop }) => {
             </span>
             {rating}
           </span>
-          <button className="custom-button">View</button>
+          <Link to={"/shops/123"}>
+            <button className="custom-button">View</button>
+          </Link>
         </div>
       </div>
     </>

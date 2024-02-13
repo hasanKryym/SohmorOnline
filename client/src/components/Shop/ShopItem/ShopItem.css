@@ -1,0 +1,95 @@
+.shop_item {
+  width: 300px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); */
+}
+
+.shop_item .image_container {
+  position: relative;
+  width: 320px;
+  padding-top: 0.5rem;
+  height: 300px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+
+.shop_item .image_container .offer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--vibrant-yellow);
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.shop_item img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.shop_item .item_details {
+  padding-top: 0.5rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shop_item .title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.shop_item .title .price {
+  position: absolute;
+  right: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  color: var(--terracotta-red);
+}
+
+.shop_item .title .price .dashed {
+  text-decoration: line-through;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.shop_item .title .new-price {
+  text-decoration: none;
+  padding: 5px;
+}
+
+.shop_item .description {
+  padding: 1rem;
+  max-height: 4rem; /* Adjust this value to accommodate three lines of text */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit the description to three lines */
+  -webkit-box-orient: vertical;
+}
+
+.shop_item .footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.shop_item .rating {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--dark-charcoal);
+}
+
+.shop_item .rating .star {
+  color: var(--vibrant-yellow);
+}
