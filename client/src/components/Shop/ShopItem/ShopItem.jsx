@@ -34,7 +34,7 @@ const ShopItem = ({ item }) => {
               </span>
               {rating}
             </span>
-            <Link to={"/shops/123"}>
+            <Link to={"/shops/products/123"}>
               <button className="custom-button">View</button>
             </Link>
           </div>

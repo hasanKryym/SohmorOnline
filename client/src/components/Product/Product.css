@@ -1,0 +1,112 @@
+.product_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0rem;
+}
+
+.product {
+  display: flex;
+  gap: 2rem;
+}
+
+.product img {
+  width: 50vw;
+  max-width: 500px;
+  min-width: 300px;
+  object-fit: cover;
+  max-height: 600px;
+}
+
+.product .title {
+  width: 100%;
+  max-width: 800px;
+  min-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 48px;
+  color: #000;
+}
+
+.product .title .price {
+  color: var(--terracotta-red);
+}
+
+.product .navigation .list {
+  display: flex;
+  list-style: none;
+  padding: 1rem 0;
+}
+
+/* .product .navigation .underline {
+  background: var(--sky-blue);
+  width: fit-content;
+  height: 2px;
+} */
+
+.product .navigation .list .list-item {
+  position: relative;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  color: var(--dark-charcoal);
+  transition: all 0.3s ease;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.product .navigation .list .list-item:hover {
+  background: var(--dark-charcoal);
+  color: var(--light-beige);
+}
+
+.product .navigation .list .list-item .underline {
+  position: absolute;
+  background: var(--sky-blue);
+  width: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  height: 2px;
+  bottom: 0;
+}
+
+.product .navigation .list .list-item .rating {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.product .navigation .list .list-item .rating .star {
+  font-size: initial;
+}
+
+.product .navigation .list .list-item .underline.isSelected {
+  background: var(--dark-charcoal);
+}
+
+.product .action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.product .action-buttons .heart {
+  font-size: 24px;
+  color: var(--light-beige);
+}
+
+.product .action-buttons .heart.isFavorate {
+  color: var(--terracotta-red);
+  background: #fff;
+}
+
+.product .rate-button {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.product .star {
+  color: var(--vibrant-yellow);
+  font-size: 24px;
+}

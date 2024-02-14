@@ -11,6 +11,7 @@ import { FaFireFlameCurved } from "react-icons/fa6";
 import { shopItems } from "../../components/Shop/ShopItem/shopItems";
 import { useEffect, useState } from "react";
 import ShopItem from "../../components/Shop/ShopItem/ShopItem";
+import { CiSearch } from "react-icons/ci";
 
 const Shop = () => {
   const { id } = useParams();
@@ -56,6 +57,21 @@ const Shop = () => {
         <ItemsSlider items={offerItems} />
 
         <div className="title_container">Products</div>
+        <div className="middle">
+          <div className="search-input_container">
+            <input
+              className="custom-input"
+              type="text"
+              name=""
+              id=""
+              placeholder="Search products..."
+            />
+            <button className="search-btn">
+              <CiSearch />
+            </button>
+          </div>
+          <button className="custom-button">filter</button>
+        </div>
 
         <div className="items_container">
           {items.map((item) => {

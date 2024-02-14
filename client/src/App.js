@@ -7,6 +7,7 @@ import { Login, Register } from "./pages/LoginRegister/LoginRegister";
 import Shops from "./pages/Shops/Shops";
 import Shop from "./pages/Shop/Shop";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Product from "./pages/Product/Product";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/shops" element={<Shops />} />
           <Route path="/shops/:id" element={<Shop />} />
+          <Route path="/shops/products/:id" element={<Product />} />
         </Routes>
       </Router>
     </>

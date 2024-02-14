@@ -12,7 +12,7 @@ const Shops = () => {
       <div className="shops_header">
         <div className="title_container">shops</div>
         <div className="middle">
-          <div className="input_container">
+          <div className="search-input_container">
             <input
               className="custom-input"
               type="text"
