@@ -1,0 +1,13 @@
+.products_container .items_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4rem;
+  padding: 0rem 2rem;
+}
+
+.products_container .middle {
+  gap: 1rem;
+  margin-bottom: 4rem;
+}

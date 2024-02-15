@@ -39,12 +39,6 @@
   padding: 1rem 0;
 }
 
-/* .product .navigation .underline {
-  background: var(--sky-blue);
-  width: fit-content;
-  height: 2px;
-} */
-
 .product .navigation .list .list-item {
   position: relative;
   padding: 1rem 2rem;
@@ -55,9 +49,8 @@
   border-top-right-radius: 8px;
 }
 
-.product .navigation .list .list-item:hover {
+.product .navigation .list .list-item:hover .underline {
   background: var(--dark-charcoal);
-  color: var(--light-beige);
 }
 
 .product .navigation .list .list-item .underline {

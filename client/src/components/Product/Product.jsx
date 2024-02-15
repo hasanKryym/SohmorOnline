@@ -25,6 +25,7 @@ const Product = ({ product }) => {
                 {pagesNavArr.map(({ id, value }) => {
                   return (
                     <li
+                      key={id}
                       onClick={(e) => {
                         setSelectedPage(e.currentTarget.id);
                       }}
