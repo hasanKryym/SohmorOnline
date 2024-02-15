@@ -13,7 +13,7 @@ const register = asyncWrapper(async (req, res) => {
 
   return res.status(StatusCodes.CREATED).json({
     token,
-    user: { id: user._id, name: user.name },
+    user,
     success: true,
   });
 });

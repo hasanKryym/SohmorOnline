@@ -86,7 +86,11 @@ UserSchema.statics.login = async function (email, password) {
 
   const token = user.createJWT();
 
-  return { user, token };
+  // Exclude password from user object
+  const userWithoutPassword = user.toObject();
+  delete userWithoutPassword.password;
+
+  return { user: userWithoutPassword, token };
 };
 
 UserSchema.statics.register = async function (userData) {
@@ -101,7 +105,12 @@ UserSchema.statics.register = async function (userData) {
   await newUser.save();
 
   const token = newUser.createJWT();
-  return { user: newUser, token };
+
+  // Exclude password from user object
+  const userWithoutPassword = newUser.toObject();
+  delete userWithoutPassword.password;
+
+  return { user: userWithoutPassword, token };
 };
 
 const User = mongoose.model("User", UserSchema);
