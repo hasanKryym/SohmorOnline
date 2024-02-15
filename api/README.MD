@@ -21,33 +21,27 @@
     ```
   - Response:
 
-  ````json
-     {
+  ```json
+  {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWNkZjM1YTBhNmQ5MmI2NmRkZjk3YWYiLCJuYW1lIjoiTWF5YSIsImlhdCI6MTcwNzk5NTk5NCwiZXhwIjoxNzM5NTMxOTk0fQ.DUwElnNTU6WWef2jG86tfROFcvV6YhbRy9fXgp5w9bw",
     "user": {
-        "name": "Maya",
-        "email": "maya@gmail.com",
-        "address": "Beirut",
-        "number": "+961 70243456",
-        "role": {
-            "position": "user",
-            "shop": null
-        },
-        "_id": "65cdf35a0a6d92b66ddf97af",
-        "__v": 0
+      "name": "Maya",
+      "email": "maya@gmail.com",
+      "address": "Beirut",
+      "number": "+961 70243456",
+      "role": {
+        "position": "user",
+        "shop": null
+      },
+      "_id": "65cdf35a0a6d92b66ddf97af",
+      "__v": 0
     },
     "success": true
   }
-    ```
+  ```
 
-    - Success: Status 201 CREATED
-    - Error: Status 400 Bad Request
-
-      ```
-
-      ```
-
-  ````
+  - Success: Status 201 CREATED
+  - Error: Status 400 Bad Request
 
 - **Login User**
 
