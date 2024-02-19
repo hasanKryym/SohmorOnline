@@ -101,3 +101,43 @@
 - Validation Errors
 - Duplicate (Email)
 - Cast Error
+
+## Add Shop
+
+Adds a new shop to the database. This endpoint is accessible only to site admins.
+
+- **URL:** `/api/shops/manage/add`
+- **Method:** `POST`
+- **Authentication required:** Yes (Site admin)
+- **Request Body:**
+  - `name`: String (required) - Name of the shop.
+  - `description`: String (required) - Description of the shop.
+  - `address`: String (required) - Address of the shop.
+  - `phoneNumber`: String - Phone number of the shop.
+  - `categories`: Array - Categories of the shop.
+  - `image`: String - URL of the shop's image.
+- **Response:**
+  - **Success:** `201 Created`
+    ```json
+    {
+      "success": true,
+      "shop": {
+        "_id": "611f5c57a31dc74cfa1e8e38",
+        "name": "Example Shop",
+        "description": "This is an example shop.",
+        "address": "123 Main Street",
+        "phoneNumber": "123-456-7890",
+        "categories": ["Food", "Clothing"],
+        "image": "https://example.com/shop.jpg",
+        "createdAt": "2022-01-01T12:00:00.000Z",
+        "updatedAt": "2022-01-01T12:00:00.000Z"
+      }
+    }
+    ```
+  - **Error:** `401 Unauthorized`
+    ```json
+    {
+      "success": false,
+      "error": "Only site admins are authorized to perform this action."
+    }
+    ```
