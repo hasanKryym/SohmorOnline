@@ -3,7 +3,6 @@ const router = express.Router();
 
 const { login, register } = require("../controllers/auth");
 const authenticate = require("../middleware/authentication");
-const response = require("../response");
 const { StatusCodes } = require("http-status-codes");
 
 router.post("/register", register);

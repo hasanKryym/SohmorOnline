@@ -4,17 +4,18 @@ const { BadRequestError, UnauthenticatedError } = require("../errors/index");
 const asyncWrapper = require("../middleware/async");
 
 const register = asyncWrapper(async (req, res) => {
-  const { name, email, password, address, number } = req.body;
+  const { name, email, password, address, number, role } = req.body;
   if (!name || !email || !password || !address || !number)
     throw new BadRequestError("Please provide name, email, and password");
 
-  const userData = { name, email, password, address, number };
+  const userData = { name, email, password, address, number, role };
   const { user, token } = await User.register(userData);
 
   return res.status(StatusCodes.CREATED).json({
     token,
     user,
     success: true,
+    message: "Registered successfully",
   });
 });
 

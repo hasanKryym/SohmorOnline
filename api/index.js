@@ -11,6 +11,7 @@ const authenticate = require("./middleware/authentication");
 
 // routers
 const authRouter = require("./routes/auth");
+const shopsRouter = require("./routes/shop");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -30,6 +31,7 @@ app.use(express.json());
 
 // routes
 app.use("/auth", authRouter);
+app.use("/shops", shopsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
