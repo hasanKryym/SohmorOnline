@@ -141,3 +141,78 @@ Adds a new shop to the database. This endpoint is accessible only to site admins
       "error": "Only site admins are authorized to perform this action."
     }
     ```
+
+## Delete Shop
+
+Deletes a shop from the database.
+
+- **URL:** `/api/shops/manage/delete/:id`
+- **Method:** `DELETE`
+- **Auth Required:** Yes
+- **Permissions Required:** Site Admin
+
+### Request Parameters
+
+- `id`: The ID of the shop to be deleted.
+
+### Response
+
+- **Success Response:**
+
+  - **Status Code:** `200 OK`
+  - **Content:**
+    ```json
+    {
+      "success": true,
+      "message": "Shop deleted successfully",
+      "deletedShop": {
+        "_id": "610ae319b3a7eb76b0d97837",
+        "name": "Example Shop",
+        "description": "This is an example shop.",
+        "image": "example.jpg",
+        "address": "123 Example St",
+        "phoneNumber": "123-456-7890",
+        "categories": ["Category 1", "Category 2"],
+        "createdAt": "2022-08-05T12:00:00.000Z",
+        "updatedAt": "2022-08-05T12:30:00.000Z"
+      }
+    }
+    ```
+
+- **Error Response:**
+
+  - **Status Code:** `400 Bad Request`
+  - **Content:**
+
+    ```json
+    {
+      "success": false,
+      "message": "Please provide the shop id"
+    }
+    ```
+
+  - **Status Code:** `404 Not Found`
+  - **Content:**
+
+    ```json
+    {
+      "success": false,
+      "message": "Shop not found"
+    }
+    ```
+
+  - **Status Code:** `500 Internal Server Error`
+  - **Content:**
+    ```json
+    {
+      "success": false,
+      "message": "Unable to delete shop"
+    }
+    ```
+
+### Example Usage
+
+```shell
+curl -X DELETE http://localhost:5000/api/shops/610ae319b3a7eb76b0d97837 \
+-H "Authorization: Bearer <token>"
+```
