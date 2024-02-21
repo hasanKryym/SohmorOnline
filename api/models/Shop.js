@@ -59,6 +59,11 @@ ShopSchema.statics.createShop = async function (shopData) {
   return newShop;
 };
 
+ShopSchema.statics.deleteShop = async function (shopId) {
+  const deletedShop = await this.findByIdAndDelete(shopId);
+  return deletedShop;
+};
+
 // static method to update shop rating
 ShopSchema.statics.updateRating = async function (shopId) {
   const Review = mongoose.model("Review");

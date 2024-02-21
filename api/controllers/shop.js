@@ -2,20 +2,9 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors/index");
 const asyncWrapper = require("../middleware/async");
 const Shop = require("../models/Shop");
-const { checkSiteAdmin } = require("../middleware/admins/authSiteAdmin");
 const userPositions = require("../Enums/userEnums/positionsEnums");
 
 const addShop = asyncWrapper(async (req, res) => {
-  //   if (!isSiteAdmin(req.user))
-  //     throw new UnauthenticatedError(
-  //       "Only site admins have access to this route"
-  //     );
-
-  if (req.user.role.position !== userPositions.SITE_ADMIN)
-    throw new UnauthenticatedError(
-      "Only site admins have access to this route"
-    );
-
   const {
     name,
     description,
@@ -47,6 +36,36 @@ const addShop = asyncWrapper(async (req, res) => {
   res.status(StatusCodes.CREATED).json({ shop: newShop, success: true });
 });
 
+const deleteShop = asyncWrapper(async (req, res) => {
+  const { id: shopId } = req.params;
+
+  if (!shopId) {
+    throw new BadRequestError("Please provide the shop id");
+  }
+
+  const deletedShop = await Shop.deleteShop(shopId);
+
+  if (deletedShop) {
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Shop deleted successfully",
+      deletedShop,
+    });
+  } else {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: "Unable to delete shop" });
+  }
+
+  // Handle any errors here
+  // console.error(error);
+  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+  //   success: false,
+  //   message: "An error occurred while deleting the shop",
+  // });
+});
+
 module.exports = {
   addShop,
+  deleteShop,
 };
