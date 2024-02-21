@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const { BadRequestError, UnauthenticatedError } = require("../errors");
+const {
+  BadRequestError,
+  UnauthenticatedError,
+  NotFoundError,
+} = require("../errors");
 
 const ShopSchema = new mongoose.Schema({
   name: {
@@ -60,6 +64,8 @@ ShopSchema.statics.createShop = async function (shopData) {
 };
 
 ShopSchema.statics.deleteShop = async function (shopId) {
+  const shop = await this.findOne({ shopId });
+  if (!shop) throw new NotFoundError("Shop not found");
   const deletedShop = await this.findByIdAndDelete(shopId);
   return deletedShop;
 };
