@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const { NotFoundError } = require("../errors");
+const { NotFoundError, InternalServerError } = require("../errors");
+const Shop = require("./Shop");
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -30,8 +31,21 @@ const ProductSchema = new mongoose.Schema({
   },
 });
 
+ProductSchema.statics.addProduct = async function (productData, shopId) {
+  const newProduct = await this.create(productData);
+
+  // Find the shop by its ID and update its products array
+  await Shop.findByIdAndUpdate(
+    shopId,
+    { $push: { products: newProduct._id } },
+    { new: true }
+  );
+
+  return newProduct;
+};
+
 // static method to calculate average rating
-productSchema.statics.calculateAverageRating = async function (productId) {
+ProductSchema.statics.calculateAverageRating = async function (productId) {
   const Product = this;
   const product = await Product.findById(productId);
   if (!product) {

@@ -56,13 +56,6 @@ const deleteShop = asyncWrapper(async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: "Unable to delete shop" });
   }
-
-  // Handle any errors here
-  // console.error(error);
-  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-  //   success: false,
-  //   message: "An error occurred while deleting the shop",
-  // });
 });
 
 module.exports = {

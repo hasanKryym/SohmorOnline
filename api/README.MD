@@ -216,3 +216,61 @@ Deletes a shop from the database.
 curl -X DELETE http://localhost:5000/api/shops/610ae319b3a7eb76b0d97837 \
 -H "Authorization: Bearer <token>"
 ```
+
+## Add a New Product
+
+Adds a new product to a shop.
+
+**Endpoint:** `POST /products/manage/add`
+
+- **Authentication required:** Yes (Shop admin)
+
+### Request Body
+
+| Field         | Type   | Required | Description                 |
+| ------------- | ------ | -------- | --------------------------- |
+| `name`        | String | Yes      | The name of the product.    |
+| `description` | String | Yes      | Description of the product. |
+| `price`       | Number | Yes      | Price of the product.       |
+| `image`       | String | Yes      | URL of the product image.   |
+
+POST /products/add
+Content-Type: application/json
+
+````json
+{
+"name": "Classic Hamburger",
+"description": "Juicy beef patty topped with lettuce, tomato, onion, and pickles, served on a toasted bun.",
+"price": 8.99,
+"image": "https://example.com/classic-hamburger.jpg"
+}
+
+### Response
+
+```json
+{
+    "product": {
+        "name": "Classic Hamburger",
+        "description": "Juicy beef patty topped with lettuce, tomato, onion, and pickles, served on a toasted bun.",
+        "price": 8.99,
+        "rating": 0,
+        "offer": 0,
+        "image": "https://ucarecdn.com/b5232c56-306c-450f-94bf-8aab7c38d869/-/preview/667x1000/",
+        "_id": "65d70699e6b65f90cf9a7970",
+        "__v": 0
+    },
+    "success": true
+}
+
+
+POST /products/add
+Content-Type: application/json
+
+{
+  "name": "Classic Hamburger",
+  "description": "Juicy beef patty topped with lettuce, tomato, onion, and pickles, served on a toasted bun.",
+  "price": 8.99,
+  "image": "https://example.com/classic-hamburger.jpg"
+}
+
+````
