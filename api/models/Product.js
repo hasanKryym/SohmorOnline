@@ -29,6 +29,12 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  categories: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
+  ],
 });
 
 ProductSchema.statics.addProduct = async function (productData, shopId) {

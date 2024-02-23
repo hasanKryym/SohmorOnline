@@ -3,6 +3,7 @@ const { BadRequestError, UnauthenticatedError } = require("../errors/index");
 const asyncWrapper = require("../middleware/async");
 const Shop = require("../models/Shop");
 const userPositions = require("../Enums/userEnums/positionsEnums");
+const Domain = require("../models/Domain");
 
 const addShop = asyncWrapper(async (req, res) => {
   const {
@@ -58,7 +59,17 @@ const deleteShop = asyncWrapper(async (req, res) => {
   }
 });
 
+const addDomain = asyncWrapper(async (req, res) => {
+  const { name } = req.query;
+  if (!name) throw new BadRequestError("please provide the name of the domain");
+
+  const newDomain = await Domain.addDomain({ name });
+
+  return res.status(StatusCodes.OK).json({ success: true, newDomain });
+});
+
 module.exports = {
   addShop,
   deleteShop,
+  addDomain,
 };

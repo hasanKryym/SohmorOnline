@@ -237,13 +237,14 @@ Adds a new product to a shop.
 POST /products/add
 Content-Type: application/json
 
-````json
+```json
 {
-"name": "Classic Hamburger",
-"description": "Juicy beef patty topped with lettuce, tomato, onion, and pickles, served on a toasted bun.",
-"price": 8.99,
-"image": "https://example.com/classic-hamburger.jpg"
+  "name": "Classic Hamburger",
+  "description": "Juicy beef patty topped with lettuce, tomato, onion, and pickles, served on a toasted bun.",
+  "price": 8.99,
+  "image": "https://example.com/classic-hamburger.jpg"
 }
+```
 
 ### Response
 
@@ -273,4 +274,30 @@ Content-Type: application/json
   "image": "https://example.com/classic-hamburger.jpg"
 }
 
-````
+```
+
+## Add a New Domain
+
+**Endpoint:** `POST /shops/manage/addDomain?name=newDomain`
+
+- **Authentication required:** Yes (Site admin)
+
+### Response
+
+```json
+{
+  "success": true,
+  "newDomain": {
+    "name": "Clothing",
+    "_id": "65d8d1338e17d0d9ea9ef956",
+    "__v": 0
+  }
+}
+```
+
+```json
+{
+  "message": "domain name already exists",
+  "success": false
+}
+```

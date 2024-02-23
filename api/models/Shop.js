@@ -39,7 +39,20 @@ const ShopSchema = new mongoose.Schema({
   },
   categories: [
     {
-      type: String,
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        auto: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  domain: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Domain",
     },
   ],
   rating: {
