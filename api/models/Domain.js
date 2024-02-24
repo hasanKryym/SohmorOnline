@@ -21,6 +21,11 @@ DomainSchema.statics.addDomain = async function (domainData) {
   return newDomain;
 };
 
+DomainSchema.statics.getDomains = async function () {
+  const domains = await this.find();
+  return domains;
+};
+
 const Domain = mongoose.model("Domain", DomainSchema);
 
 module.exports = Domain;

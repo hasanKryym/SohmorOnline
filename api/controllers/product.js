@@ -1,15 +1,23 @@
 const { StatusCodes } = require("http-status-codes");
-const { BadRequestError, InternalServerError } = require("../errors");
+const {
+  BadRequestError,
+  InternalServerError,
+  UnauthenticatedError,
+} = require("../errors");
 const asyncWrapper = require("../middleware/async");
 const Product = require("../models/Product");
 const Shop = require("../models/Shop");
 
 const addProduct = asyncWrapper(async (req, res) => {
-  const { name, description, price, rating, offer, image, category } = req.body;
+  const { name, description, price, rating, offer, image, categories } =
+    req.body;
 
   const shopId = req.user.role.shop;
 
-  if (!name || !description || !price || !image || !category)
+  if (!shopId)
+    throw new UnauthenticatedError("only admins have access to this route");
+
+  if (!name || !description || !price || !image || !categories)
     throw new BadRequestError("Required fields are missing.");
 
   const productData = {
@@ -19,7 +27,7 @@ const addProduct = asyncWrapper(async (req, res) => {
     rating,
     offer: offer || 0,
     image,
-    category,
+    categories,
   };
 
   const newProduct = await Product.addProduct(productData, shopId);

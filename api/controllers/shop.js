@@ -77,8 +77,14 @@ const addDomain = asyncWrapper(async (req, res) => {
   return res.status(StatusCodes.OK).json({ success: true, newDomain });
 });
 
+const getDomains = asyncWrapper(async (req, res) => {
+  const domains = await Domain.getDomains();
+  return res.status(StatusCodes.OK).json({ success: true, domains });
+});
+
 module.exports = {
   addShop,
   deleteShop,
   addDomain,
+  getDomains,
 };

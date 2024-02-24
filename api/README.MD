@@ -116,24 +116,36 @@ Adds a new shop to the database. This endpoint is accessible only to site admins
   - `phoneNumber`: String - Phone number of the shop.
   - `categories`: Array - Categories of the shop.
   - `image`: String - URL of the shop's image.
+  - `domain`: mongoose ID - The id for the shop domain (array)
 - **Response:**
   - **Success:** `201 Created`
-    ```json
+    ````json
     {
-      "success": true,
-      "shop": {
-        "_id": "611f5c57a31dc74cfa1e8e38",
-        "name": "Example Shop",
-        "description": "This is an example shop.",
-        "address": "123 Main Street",
-        "phoneNumber": "123-456-7890",
-        "categories": ["Food", "Clothing"],
-        "image": "https://example.com/shop.jpg",
-        "createdAt": "2022-01-01T12:00:00.000Z",
-        "updatedAt": "2022-01-01T12:00:00.000Z"
-      }
+    "shop": {
+    "name": "Simple",
+    "description": "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+    "products": [],
+    "image": "https://ucarecdn.com/95a48ce0-61b2-483f-a729-c9fa11f1aa11/-/preview/500x500/-/quality/smart_retina/-/format/auto/",
+    "sliderImages": [],
+    "address": "Beirut",
+    "phoneNumber": "+961 81982664",
+    "categories": [
+    "Food",
+    "hot_drinks",
+    "cold_drinks",
+    "sweets"
+    ],
+    "domain": [
+    "65d8d11b8e17d0d9ea9ef950"
+    ],
+    "rating": 0,
+    "\_id": "65da20265bf31ecadbe38775",
+    "\_\_v": 0
+    },
+    "success": true
     }
-    ```
+        ```
+    ````
   - **Error:** `401 Unauthorized`
     ```json
     {
@@ -242,7 +254,8 @@ Content-Type: application/json
   "name": "Classic Hamburger",
   "description": "Juicy beef patty topped with lettuce, tomato, onion, and pickles, served on a toasted bun.",
   "price": 8.99,
-  "image": "https://example.com/classic-hamburger.jpg"
+  "image": "https://ucarecdn.com/b5232c56-306c-450f-94bf-8aab7c38d869/-/preview/667x1000/",
+  "categories": ["Food"]
 }
 ```
 
@@ -257,7 +270,10 @@ Content-Type: application/json
         "rating": 0,
         "offer": 0,
         "image": "https://ucarecdn.com/b5232c56-306c-450f-94bf-8aab7c38d869/-/preview/667x1000/",
-        "_id": "65d70699e6b65f90cf9a7970",
+        "categories": [
+            "Food"
+        ],
+        "_id": "65da2216c27039dc5bdc2ec4",
         "__v": 0
     },
     "success": true

@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const { addShop, deleteShop, addDomain } = require("../controllers/shop");
+const {
+  addShop,
+  deleteShop,
+  addDomain,
+  getDomains,
+} = require("../controllers/shop");
 const authenticate = require("../middleware/authentication");
 const checkSiteAdmin = require("../middleware/admins/authSiteAdmin");
 
@@ -11,5 +16,6 @@ router
   .delete(authenticate, checkSiteAdmin, deleteShop);
 
 router.route("/manage/addDomain").post(authenticate, checkSiteAdmin, addDomain);
+router.route("/domains").get(authenticate, checkSiteAdmin, getDomains);
 
 module.exports = router;
