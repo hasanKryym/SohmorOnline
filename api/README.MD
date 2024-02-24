@@ -229,6 +229,50 @@ curl -X DELETE http://localhost:5000/api/shops/610ae319b3a7eb76b0d97837 \
 -H "Authorization: Bearer <token>"
 ```
 
+## get Shops
+
+Search for shops by name, description, domain, or category.
+
+- **URL**: `/shops`
+- **Method**: `GET`
+- **Parameters**:
+  - `search` (optional): Search query to find matching shops by name, description, or category.
+  - `domain` (optional): Filter shops by domain.
+- **Response**:
+  - **200 OK**: Successful response containing matching shops.
+    ```json
+    {
+      "success": true,
+      "shops": [
+        {
+          "_id": "shop_id",
+          "name": "Shop Name",
+          "description": "Shop Description",
+          "image": "Shop Image URL",
+          "address": "Shop Address",
+          "phoneNumber": "Shop Phone Number",
+          "categories": ["Category1", "Category2"],
+          "domain": ["Domain1", "Domain2"],
+          "rating": 4.5
+        },
+        {
+          "_id": "shop_id",
+          "name": "Shop Name",
+          "description": "Shop Description",
+          "image": "Shop Image URL",
+          "address": "Shop Address",
+          "phoneNumber": "Shop Phone Number",
+          "categories": ["Category1", "Category2"],
+          "domain": ["Domain1", "Domain2"],
+          "rating": 4.2
+        }
+      ],
+      "message": "shops retrieved successfully"
+    }
+    ```
+  - **400 Bad Request**: Invalid request parameters.
+  - **500 Internal Server Error**: Server error.
+
 ## Add a New Product
 
 Adds a new product to a shop.
