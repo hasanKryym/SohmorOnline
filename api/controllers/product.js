@@ -34,7 +34,11 @@ const addProduct = asyncWrapper(async (req, res) => {
 
   return res
     .status(StatusCodes.CREATED)
-    .json({ product: newProduct, success: true });
+    .json({
+      product: newProduct,
+      success: true,
+      message: "product added successfully",
+    });
 });
 
 module.exports = {

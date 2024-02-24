@@ -78,6 +78,12 @@ ShopSchema.statics.deleteShop = async function (shopId) {
   return deletedShop;
 };
 
+ShopSchema.statics.getShops = async function (queryParameters) {
+  console.log(queryParameters);
+  const shops = await this.find(queryParameters);
+  return shops;
+};
+
 // static method to update shop rating
 ShopSchema.statics.updateRating = async function (shopId) {
   const Review = mongoose.model("Review");
