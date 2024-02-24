@@ -5,11 +5,11 @@ const Product = require("../models/Product");
 const Shop = require("../models/Shop");
 
 const addProduct = asyncWrapper(async (req, res) => {
-  const { name, description, price, rating, offer, image } = req.body;
+  const { name, description, price, rating, offer, image, category } = req.body;
 
   const shopId = req.user.role.shop;
 
-  if (!name || !description || !price || !image)
+  if (!name || !description || !price || !image || !category)
     throw new BadRequestError("Required fields are missing.");
 
   const productData = {
@@ -19,6 +19,7 @@ const addProduct = asyncWrapper(async (req, res) => {
     rating,
     offer: offer || 0,
     image,
+    category,
   };
 
   const newProduct = await Product.addProduct(productData, shopId);

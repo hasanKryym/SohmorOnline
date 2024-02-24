@@ -39,16 +39,11 @@ const ShopSchema = new mongoose.Schema({
   },
   categories: [
     {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        auto: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     },
   ],
+
   domain: [
     {
       type: mongoose.Schema.Types.ObjectId,

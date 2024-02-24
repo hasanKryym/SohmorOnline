@@ -15,9 +15,17 @@ const addShop = asyncWrapper(async (req, res) => {
     address,
     phoneNumber,
     categories,
+    domain,
   } = req.body;
 
-  if (!name || !description || !address || !phoneNumber || !categories) {
+  if (
+    !name ||
+    !description ||
+    !address ||
+    !phoneNumber ||
+    !categories ||
+    !domain
+  ) {
     throw new BadRequestError("Required fields are missing.");
   }
 
@@ -30,6 +38,7 @@ const addShop = asyncWrapper(async (req, res) => {
     address,
     phoneNumber,
     categories,
+    domain,
   };
 
   const newShop = await Shop.createShop(shopData);

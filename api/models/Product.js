@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
-const { NotFoundError, InternalServerError } = require("../errors");
+const {
+  NotFoundError,
+  InternalServerError,
+  BadRequestError,
+} = require("../errors");
 const Shop = require("./Shop");
 
 const ProductSchema = new mongoose.Schema({
