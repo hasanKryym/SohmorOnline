@@ -393,8 +393,7 @@ POST /shops/manage/addCategory
 
 ```json
 {
-  "name": "Electronics",
-  "shopId": "shop_id_here"
+  "category": "Electronics"
 }
 ```
 
@@ -402,7 +401,18 @@ POST /shops/manage/addCategory
 
 - Throws a 400 Bad Request error if a category with the same name already exists for the shop.
 
-Replace `'shop_id_here'` with the actual ID of the shop for which you want to create the category.
+## get categories for a Shop
+
+#### Endpoint
+
+```
+GET /shops/categories
+```
+
+#### Response
+
+- **200 OK**: categories retrieved successfully.
+- **404 Not Found**: If no categories were found for the shop.
 
 ## Get Products
 

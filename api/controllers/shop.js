@@ -143,6 +143,19 @@ const addCategory = asyncWrapper(async (req, res) => {
   });
 });
 
+const getCategories = asyncWrapper(async (req, res) => {
+  const shopId = req.user.role.shop;
+  const categories = await Shop.getShopCategories(shopId);
+
+  if (!categories) throw new NotFoundError("no categories found for this shop");
+
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    message: "categories retrieved successfully",
+    categories,
+  });
+});
+
 module.exports = {
   addShop,
   deleteShop,
@@ -150,4 +163,5 @@ module.exports = {
   addDomain,
   getDomains,
   addCategory,
+  getCategories,
 };

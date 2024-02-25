@@ -98,6 +98,22 @@ ShopSchema.statics.getShops = async function (queryParameters) {
   return shops;
 };
 
+// Define the static method to retrieve shop categories
+ShopSchema.statics.getShopCategories = async function (shopId) {
+  // Find the shop by its ID and extract the category IDs
+  const shop = await this.findById(shopId);
+  if (!shop) {
+    throw new NotFoundError("Shop not found");
+  }
+  const categoryIds = shop.categories;
+
+  // Find categories with the extracted IDs
+  const categories = await Category.find({ _id: { $in: categoryIds } });
+  // Extract and return the category names
+  // const categoryNames = categories.map((category) => category.name);
+  return categories;
+};
+
 // static method to update shop rating
 ShopSchema.statics.updateRating = async function (shopId) {
   const Review = mongoose.model("Review");

@@ -8,6 +8,7 @@ const {
   getDomains,
   getShops,
   addCategory,
+  getCategories,
 } = require("../controllers/shop");
 const authenticate = require("../middleware/authentication");
 const checkSiteAdmin = require("../middleware/admins/authSiteAdmin");
@@ -26,5 +27,6 @@ router.route("/domains").get(authenticate, checkSiteAdmin, getDomains);
 router
   .route("/manage/addCategory")
   .post(authenticate, checkShopAdmin, addCategory);
+router.route("/categories").get(authenticate, checkShopAdmin, getCategories);
 
 module.exports = router;
