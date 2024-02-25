@@ -74,10 +74,14 @@ const deleteShop = asyncWrapper(async (req, res) => {
 });
 
 const getShops = asyncWrapper(async (req, res) => {
-  const { search, domain } = req.query;
+  const { search, domain, minRating, maxRating } = req.query;
   const queryObject = {};
 
-  if (domain) queryObject.domain = domain;
+  if (domain && typeof domain === "string" && domain.trim() !== "") {
+    const domainProperty = { $in: [domain] }; // Use exact match for domain
+    queryObject.domain = domainProperty;
+  }
+
   if (search) {
     // Perform case-insensitive search across multiple fields
     queryObject.$or = [
@@ -87,9 +91,17 @@ const getShops = asyncWrapper(async (req, res) => {
     ];
   }
 
+  // Filter by minimum and/or maximum rating if provided
+  if (minRating || maxRating) {
+    queryObject.rating = {};
+    if (minRating) queryObject.rating.$gte = parseInt(minRating); // Filter for minimum rating
+    if (maxRating) queryObject.rating.$lte = parseInt(maxRating); // Filter for maximum rating
+  }
+
   const shops = await Shop.getShops(queryObject);
 
-  if (!shops) throw new NotFoundError("no shops available");
+  if (!shops || shops.length === 0)
+    throw new NotFoundError("No shops available");
 
   return res
     .status(StatusCodes.OK)

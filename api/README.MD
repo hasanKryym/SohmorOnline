@@ -238,6 +238,8 @@ Search for shops by name, description, domain, or category.
 - **Parameters**:
   - `search` (optional): Search query to find matching shops by name, description, or category.
   - `domain` (optional): Filter shops by domain.
+  - `minRating` (optional): Filter shops by rating get shops that have rating > minRating
+  - `maxRating` (optional): Filter shops by rating get shops that have rating < maxRating
 - **Response**:
   - **200 OK**: Successful response containing matching shops.
     ```json
