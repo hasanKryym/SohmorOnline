@@ -4,6 +4,8 @@ const {
   UnauthenticatedError,
   NotFoundError,
 } = require("../errors");
+const User = require("./User");
+const Product = require("./Product");
 
 const ShopSchema = new mongoose.Schema({
   name: {
@@ -71,9 +73,23 @@ ShopSchema.statics.createShop = async function (shopData) {
 };
 
 ShopSchema.statics.deleteShop = async function (shopId) {
-  const shop = await this.findOne({ shopId });
-  if (!shop) throw new NotFoundError("Shop not found");
+  const shop = await this.findById(shopId);
+  if (!shop) {
+    throw new NotFoundError("Shop not found");
+  }
+
+  // Delete all products associated with the shop
+  await Product.deleteMany({ _id: { $in: shop.products } });
+
+  // Delete all categories associated with the shop
+  await Category.deleteMany({ _id: { $in: shop.categories } });
+
+  // Delete all users with role.shop equal to the shop being deleted
+  await User.deleteMany({ "role.shop": shopId });
+
+  // Delete the shop itself
   const deletedShop = await this.findByIdAndDelete(shopId);
+
   return deletedShop;
 };
 

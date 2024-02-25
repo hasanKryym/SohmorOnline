@@ -4,7 +4,6 @@ const {
   InternalServerError,
   BadRequestError,
 } = require("../errors");
-const Shop = require("./Shop");
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -35,14 +34,15 @@ const ProductSchema = new mongoose.Schema({
   },
   categories: [
     {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
     },
   ],
 });
 
 ProductSchema.statics.addProduct = async function (productData, shopId) {
+  const Shop = mongoose.model("Shop");
   const newProduct = await this.create(productData);
-
   // Find the shop by its ID and update its products array
   await Shop.findByIdAndUpdate(
     shopId,
