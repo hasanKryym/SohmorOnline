@@ -6,7 +6,7 @@ const {
   InternalServerError,
 } = require("../errors/index");
 const asyncWrapper = require("../middleware/async");
-const Shop = require("../models/Shop");
+const { Shop, Category } = require("../models/Shop");
 const userPositions = require("../Enums/userEnums/positionsEnums");
 const Domain = require("../models/Domain");
 
@@ -19,18 +19,10 @@ const addShop = asyncWrapper(async (req, res) => {
     sliderImages,
     address,
     phoneNumber,
-    categories,
     domain,
   } = req.body;
 
-  if (
-    !name ||
-    !description ||
-    !address ||
-    !phoneNumber ||
-    !categories ||
-    !domain
-  ) {
+  if (!name || !description || !address || !phoneNumber || !domain) {
     throw new BadRequestError("Required fields are missing.");
   }
 
@@ -42,7 +34,6 @@ const addShop = asyncWrapper(async (req, res) => {
     sliderImages,
     address,
     phoneNumber,
-    categories,
     domain,
   };
 
@@ -74,7 +65,7 @@ const deleteShop = asyncWrapper(async (req, res) => {
 });
 
 const getShops = asyncWrapper(async (req, res) => {
-  const { search, domain, minRating, maxRating } = req.query;
+  const { search, domain, categories, minRating, maxRating } = req.query;
   const queryObject = {};
 
   if (domain && typeof domain === "string" && domain.trim() !== "") {
@@ -82,12 +73,17 @@ const getShops = asyncWrapper(async (req, res) => {
     queryObject.domain = domainProperty;
   }
 
+  if (categories && typeof domain === "string" && categories.trim() !== "") {
+    const categoriesProperty = { $in: [categories] };
+    queryObject.categories = categoriesProperty;
+  }
+
   if (search) {
     // Perform case-insensitive search across multiple fields
     queryObject.$or = [
       { name: { $regex: new RegExp(search, "i") } }, // The "i" flag makes the search case-insensitive, so it will match both upper and lower case letters
       { description: { $regex: new RegExp(search, "i") } },
-      { categories: { $in: [new RegExp(search, "i")] } }, // Use $in operator for array field
+      // { categories: { $in: [new RegExp(search, "i")] } }, // Use $in operator for array field
     ];
   }
 
@@ -126,10 +122,32 @@ const getDomains = asyncWrapper(async (req, res) => {
   });
 });
 
+const addCategory = asyncWrapper(async (req, res) => {
+  const shop = req.user.role.shop;
+  const { category: name } = req.body;
+
+  if (!shop || !name)
+    throw new BadRequestError("please provide shopId and category name");
+
+  const categoryData = {
+    name,
+    shop,
+  };
+
+  const category = await Category.createCategory(categoryData);
+
+  return res.status(StatusCodes.CREATED).json({
+    success: true,
+    category,
+    message: "category created successfully",
+  });
+});
+
 module.exports = {
   addShop,
   deleteShop,
   getShops,
   addDomain,
   getDomains,
+  addCategory,
 };

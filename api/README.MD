@@ -363,3 +363,84 @@ Content-Type: application/json
   "success": false
 }
 ```
+
+## Creating a New Category for a Shop
+
+To add a new category for a shop, use the `createCategory` endpoint.
+
+#### Endpoint
+
+```
+POST /shops/manage/addCategory
+```
+
+#### Request Body
+
+```json
+{
+  "name": "Electronics"
+}
+```
+
+- `name` (string, required): The name of the category to be created.
+
+#### Response
+
+- **200 OK**: Category successfully created.
+- **400 Bad Request**: If a category with the same name already exists for the shop.
+
+#### Example
+
+```json
+{
+  "name": "Electronics",
+  "shopId": "shop_id_here"
+}
+```
+
+#### Error Handling
+
+- Throws a 400 Bad Request error if a category with the same name already exists for the shop.
+
+Replace `'shop_id_here'` with the actual ID of the shop for which you want to create the category.
+
+## Get Products
+
+Retrieve products based on various filters.
+
+- **URL:** `/products`
+- **Method:** `GET`
+- **Query Parameters:**
+  - `search`: Search term to filter products by name, description, or category.
+  - `minPrice`: Minimum price of products.
+  - `maxPrice`: Maximum price of products.
+  - `minRating`: Minimum rating of products.
+  - `maxRating`: Maximum rating of products.
+  - `categories`: Array of category names to filter products.
+  - `shopId`: retrieves products for the specified shop.
+- **Success Response:**
+  - **Code:** `200 OK`
+  - **Content:**
+    ```json
+    {
+      "success": true,
+      "products": [Array of product objects]
+    }
+    ```
+- **Error Response:**
+  - **Code:** `404 Not Found`
+  - **Content:**
+    ```json
+    {
+      "err": "No products found",
+      "success": false
+    }
+    ```
+- **Sample Request:**
+  ```http
+  GET /products?search=hamburger&minPrice=5&maxRating=4&categories=Food&shopId=609de71c70f49c3e487d1329
+  ```
+
+```
+
+```

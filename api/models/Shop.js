@@ -39,11 +39,10 @@ const ShopSchema = new mongoose.Schema({
   },
   categories: [
     {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
     },
   ],
-
   domain: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -79,7 +78,6 @@ ShopSchema.statics.deleteShop = async function (shopId) {
 };
 
 ShopSchema.statics.getShops = async function (queryParameters) {
-  console.log(queryParameters);
   const shops = await this.find(queryParameters);
   return shops;
 };
@@ -109,4 +107,46 @@ ShopSchema.statics.updateRating = async function (shopId) {
 
 const Shop = mongoose.model("Shop", ShopSchema);
 
-module.exports = Shop;
+const CategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
+CategorySchema.statics.createCategory = async function (categoryData) {
+  const { name, shop } = categoryData;
+
+  // Fetch the category IDs from the shop document
+  const shopCategories = await Shop.findById(shop).select("categories");
+  if (shopCategories) {
+    const categoryIds = shopCategories.categories;
+
+    // Fetch the categories with the IDs
+    const categories = await this.find({ _id: { $in: categoryIds } });
+
+    // Check if the category name already exists for the shop
+    const existingCategory = categories.find(
+      (category) => category.name === name
+    );
+    if (existingCategory) {
+      throw new BadRequestError("Category already exists for this shop.");
+    }
+  }
+
+  // Create the new category
+  const newCategory = new this({ name });
+  await newCategory.save();
+  // Update the shop document with the new category ID
+  await Shop.findByIdAndUpdate(
+    shop,
+    { $push: { categories: newCategory._id } },
+    { new: true }
+  );
+
+  return newCategory;
+};
+
+const Category = mongoose.model("Category", CategorySchema);
+
+module.exports = { Shop, Category };

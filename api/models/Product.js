@@ -53,6 +53,11 @@ ProductSchema.statics.addProduct = async function (productData, shopId) {
   return newProduct;
 };
 
+ProductSchema.statics.getProducts = async function (queryParameters) {
+  const products = await this.find(queryParameters);
+  return products;
+};
+
 // static method to calculate average rating
 ProductSchema.statics.calculateAverageRating = async function (productId) {
   const Product = this;
