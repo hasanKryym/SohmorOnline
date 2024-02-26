@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { UnauthenticatedError, BadRequestError } = require("../errors");
+const {
+  UnauthenticatedError,
+  BadRequestError,
+  NotFoundError,
+} = require("../errors");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -49,6 +53,21 @@ const UserSchema = new mongoose.Schema({
       default: null,
     },
   },
+
+  cart: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        default: 1,
+      },
+    },
+  ],
 });
 
 UserSchema.pre("save", async function () {
@@ -111,6 +130,63 @@ UserSchema.statics.register = async function (userData) {
   delete userWithoutPassword.password;
 
   return { user: userWithoutPassword, token };
+};
+
+//CART
+
+// Static method to update the user's cart
+UserSchema.statics.updateCart = async function (userId, cartItems) {
+  try {
+    const User = this;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Update the user's cart based on the provided cart items
+    cartItems.forEach((item) => {
+      const index = user.cart.findIndex((cartItem) =>
+        cartItem.product.equals(item.product)
+      );
+      if (index !== -1) {
+        // If the product already exists in the cart, update its quantity
+        user.cart[index].quantity = item.quantity;
+      } else {
+        // If the product is not in the cart, add it
+        user.cart.push(item);
+      }
+    });
+
+    // Save the updated user document
+    await user.save();
+
+    return user.cart; // Return the updated cart
+  } catch (error) {
+    throw new Error(`Failed to update cart: ${error.message}`);
+  }
+};
+
+// Static method to replace the user's cart
+UserSchema.statics.replaceCart = async function (userId, newCartItems) {
+  try {
+    const User = this;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new NotFoundError("User not found");
+    }
+
+    // Replace the user's cart with the new cart items
+    user.cart = newCartItems;
+
+    // Save the updated user document
+    await user.save();
+
+    return user.cart; // Return the updated cart
+  } catch (error) {
+    throw new Error(`Failed to replace cart: ${error.message}`);
+  }
 };
 
 const User = mongoose.model("User", UserSchema);

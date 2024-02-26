@@ -13,6 +13,7 @@ const authenticate = require("./middleware/authentication");
 const authRouter = require("./routes/auth");
 const shopsRouter = require("./routes/shop");
 const productsRouter = require("./routes/product");
+const usersRouter = require("./routes/user");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/shops", shopsRouter);
 app.use("/products", productsRouter);
+app.use("/users", authenticate, usersRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
