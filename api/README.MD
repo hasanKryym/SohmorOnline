@@ -454,3 +454,99 @@ Retrieve products based on various filters.
 ```
 
 ```
+
+## Update User's Cart
+
+Update the user's cart with new items.
+
+- **URL**
+
+  `/users/cart`
+
+- **Method**
+
+  `PATCH`
+
+- **Data Params**
+
+  ```json
+  {
+    "cart": [
+      {
+        "product": "product_id_1",
+        "quantity": 3
+      },
+      {
+        "product": "product_id_2",
+        "quantity": 1
+      }
+    ]
+  }
+  ```
+
+  - `cart`: An array of objects representing the new cart items.
+  - `product`: The ID of the product to add to the cart.
+  - `quantity`: The quantity of the product.
+
+- **Success Response**
+
+  - **Code:** 200
+  - **Content:**
+    ```json
+    {
+      "success": true,
+      "updatedCart": {
+        "cart": [
+          {
+            "product": "product_id_1",
+            "quantity": 3
+          },
+          {
+            "product": "product_id_2",
+            "quantity": 1
+          }
+        ]
+      }
+    }
+    ```
+
+- **Error Response**
+
+  - **Code:** 500 Internal Server Error
+  - **Content:**
+    ```json
+    {
+      "success": false,
+      "error": "Internal Server Error"
+    }
+    ```
+
+- **Sample Call**
+
+  ```javascript
+  fetch("users/cart", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cart: [
+        {
+          product: "product_id_1",
+          quantity: 3,
+        },
+        {
+          product: "product_id_2",
+          quantity: 1,
+        },
+      ],
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
+  ```
+
+- **Notes**
+
+  - This endpoint updates the user's cart with the provided cart items.

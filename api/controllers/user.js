@@ -9,11 +9,11 @@ const updateCart = asyncWrapper(async (req, res) => {
 
   if (!userId || !cart) throw new BadRequestError("Please provide Cart data");
 
-  const newCart = await User.replaceCart(userId, cart);
+  const updatedCart = await User.updateCart(userId, cart);
 
   return res
     .status(StatusCodes.OK)
-    .json({ success: true, message: "cart updated successfully", newCart });
+    .json({ success: true, message: "cart updated successfully", updatedCart });
 });
 
 module.exports = {
