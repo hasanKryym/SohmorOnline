@@ -40,6 +40,21 @@ const addProduct = asyncWrapper(async (req, res) => {
   });
 });
 
+const deleteProducts = asyncWrapper(async (req, res) => {
+  const shopId = req.user.role.shop;
+  if (!shopId)
+    throw new UnauthenticatedError("only admins have access to this route");
+
+  const { productsToDelete } = req.body;
+
+  if (!productsToDelete)
+    throw new BadRequestError("please provide the products to be deleted");
+
+  const response = await Product.deleteProducts(productsToDelete, shopId);
+
+  if (response) return res.status(StatusCodes.OK).json(response);
+});
+
 const getProducts = asyncWrapper(async (req, res) => {
   const {
     search,
@@ -115,4 +130,5 @@ const getProducts = asyncWrapper(async (req, res) => {
 module.exports = {
   addProduct,
   getProducts,
+  deleteProducts,
 };

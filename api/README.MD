@@ -338,6 +338,41 @@ Content-Type: application/json
 
 ```
 
+To add the route to the README, you can include a section for routes/endpoints and describe how to use the `deleteProduct` functionality. Here's an example:
+
+---
+
+## Delete Products
+
+### DELETE /products/manage/delete
+
+Deletes one or more products from the database.
+
+- **Request Type:** DELETE
+- **Route:** /products/manage/delete
+- **Request Body:**
+  - `productsToDelete`: Array of product IDs to be deleted
+- **Response:**
+  - `success`: Boolean indicating the success of the operation
+  - `message`: Description of the operation result
+
+**Example:**
+
+```json
+DELETE /api/products/delete
+
+Request Body:
+{
+  "productsToDelete": ["product_id1", "product_id2"],
+}
+
+Response:
+{
+  "success": true,
+  "message": "Products deleted successfully"
+}
+```
+
 ## Add a New Domain
 
 **Endpoint:** `POST /shops/manage/addDomain?name=newDomain`

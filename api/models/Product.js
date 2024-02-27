@@ -53,6 +53,31 @@ ProductSchema.statics.addProduct = async function (productData, shopId) {
   return newProduct;
 };
 
+ProductSchema.statics.deleteProducts = async function (
+  productsToDelete,
+  shopId
+) {
+  const Shop = mongoose.model("Shop");
+  const Product = this;
+
+  const result = await Product.deleteMany({
+    _id: { $in: productsToDelete }, // Delete products with IDs in the productsToDelete array
+  });
+
+  // Check if any products were deleted
+  if (result.deletedCount > 0) {
+    // If products were deleted, remove them from the shop's product list
+    await Shop.findByIdAndUpdate(
+      shopId,
+      { $pull: { products: { $in: productsToDelete } } }, // Remove deleted products from the shop's products array
+      { new: true }
+    );
+    return { success: true, message: "Products deleted successfully", result };
+  } else {
+    throw new NotFoundError("No products found with the provided IDs");
+  }
+};
+
 ProductSchema.statics.getProducts = async function (queryParameters) {
   const products = await this.find(queryParameters);
   return products;
