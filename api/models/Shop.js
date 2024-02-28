@@ -72,6 +72,30 @@ ShopSchema.statics.createShop = async function (shopData) {
   return newShop;
 };
 
+ShopSchema.statics.editShop = async function (shopId, shopData) {
+  // Check if the provided shop name already exists
+  const existingShop = await this.findOne({
+    name: shopData.name,
+    _id: { $ne: shopId }, // Exclude the current shop being edited
+  });
+
+  if (existingShop) {
+    throw new BadRequestError("Shop name already exists");
+  }
+
+  // Find the shop by its ID and update its data
+  const updatedShop = await this.findByIdAndUpdate(shopId, shopData, {
+    new: true, // Return the modified document rather than the original
+    runValidators: true, // Run validators to ensure the updated data is valid
+  });
+
+  if (!updatedShop) {
+    throw new NotFoundError("Shop not found");
+  }
+
+  return updatedShop;
+};
+
 ShopSchema.statics.deleteShop = async function (shopId) {
   const shop = await this.findById(shopId);
   if (!shop) {

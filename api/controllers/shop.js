@@ -44,8 +44,46 @@ const addShop = asyncWrapper(async (req, res) => {
     .json({ shop: newShop, success: true, message: "shop added successfully" });
 });
 
+const editShop = asyncWrapper(async (req, res) => {
+  const shopId = req.user.role.shop;
+
+  const {
+    name,
+    description,
+    image,
+    products,
+    sliderImages,
+    address,
+    phoneNumber,
+    domain,
+  } = req.body;
+
+  if (!name || !description || !address || !phoneNumber || !domain) {
+    throw new BadRequestError("Required fields are missing.");
+  }
+
+  const shopData = {
+    name,
+    description,
+    image,
+    products,
+    sliderImages,
+    address,
+    phoneNumber,
+    domain,
+  };
+
+  const updatedShop = await Shop.editShop(shopId, shopData);
+
+  res.status(StatusCodes.OK).json({
+    shop: updatedShop,
+    success: true,
+    message: "shop added successfully",
+  });
+});
+
 const deleteShop = asyncWrapper(async (req, res) => {
-  const { id: shopId } = req.params;
+  const shopId = req.user.role.shop;
 
   if (!shopId) {
     throw new BadRequestError("Please provide the shop id");
@@ -65,8 +103,11 @@ const deleteShop = asyncWrapper(async (req, res) => {
 });
 
 const getShops = asyncWrapper(async (req, res) => {
-  const { search, domain, categories, minRating, maxRating } = req.query;
+  const { search, domain, categories, minRating, maxRating, shopId } =
+    req.query;
   const queryObject = {};
+
+  if (shopId) queryObject._id = shopId;
 
   if (domain && typeof domain === "string" && domain.trim() !== "") {
     const domainProperty = { $in: [domain] }; // Use exact match for domain
@@ -158,6 +199,7 @@ const getCategories = asyncWrapper(async (req, res) => {
 
 module.exports = {
   addShop,
+  editShop,
   deleteShop,
   getShops,
   addDomain,
