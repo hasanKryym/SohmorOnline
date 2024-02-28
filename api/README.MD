@@ -494,7 +494,7 @@ POST /shops/manage/addCategory
 #### Endpoint
 
 ```
-GET /shops/categories
+GET /shops/categories?shopId=id
 ```
 
 #### Response

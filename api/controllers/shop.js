@@ -185,7 +185,9 @@ const addCategory = asyncWrapper(async (req, res) => {
 });
 
 const getCategories = asyncWrapper(async (req, res) => {
-  const shopId = req.user.role.shop;
+  const { shopId } = req.query;
+  if (!shopId) throw new BadRequestError("Please provide shopId");
+
   const categories = await Shop.getShopCategories(shopId);
 
   if (!categories) throw new NotFoundError("no categories found for this shop");
