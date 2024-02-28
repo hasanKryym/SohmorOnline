@@ -67,7 +67,7 @@ const getProducts = asyncWrapper(async (req, res) => {
   } = req.query;
 
   const queryParameters = {};
-
+  let products = [];
   if (shopId) {
     // Fetch products based on shopId
     const shop = await Shop.findById(shopId);
@@ -109,8 +109,6 @@ const getProducts = asyncWrapper(async (req, res) => {
   if (categories) {
     queryParameters.categories = { $in: categories };
   }
-
-  let products = [];
 
   // Handle case where no products are found
   if (!products || products.length === 0) {
