@@ -68,7 +68,24 @@ const getProducts = asyncWrapper(async (req, res) => {
 
   const queryParameters = {};
 
-  // Construct the query object based on the provided parameters
+  if (shopId) {
+    // Fetch products based on shopId
+    const shop = await Shop.findById(shopId);
+    if (!shop) {
+      throw new NotFoundError("Shop not found");
+    }
+
+    queryParameters._id = { $in: shop.products };
+
+    products = await Product.getProducts(queryParameters);
+    // products = await Product.find({
+    //   _id: { $in: shop.products },
+    //   ...queryParameters,
+    // });
+  } else {
+    throw new BadRequestError("please provide the shopId");
+  }
+
   if (search) {
     queryParameters.$or = [
       { name: { $regex: new RegExp(search, "i") } },
@@ -94,26 +111,6 @@ const getProducts = asyncWrapper(async (req, res) => {
   }
 
   let products = [];
-
-  if (shopId) {
-    // Fetch products based on shopId
-    const shop = await Shop.findById(shopId);
-    if (!shop) {
-      throw new NotFoundError("Shop not found");
-    }
-
-    queryParameters._id = { $in: shop.products };
-
-    products = await Product.getProducts(queryParameters);
-    // products = await Product.find({
-    //   _id: { $in: shop.products },
-    //   ...queryParameters,
-    // });
-  } else {
-    // Fetch all products if no shopId is provided
-    // products = await Product.getProducts(queryParameters);
-    throw new BadRequestError("please provide the shopId");
-  }
 
   // Handle case where no products are found
   if (!products || products.length === 0) {
