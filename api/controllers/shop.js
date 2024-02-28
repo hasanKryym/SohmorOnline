@@ -83,7 +83,7 @@ const editShop = asyncWrapper(async (req, res) => {
 });
 
 const deleteShop = asyncWrapper(async (req, res) => {
-  const shopId = req.user.role.shop;
+  const { id: shopId } = req.params;
 
   if (!shopId) {
     throw new BadRequestError("Please provide the shop id");
