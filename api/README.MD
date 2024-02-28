@@ -154,6 +154,59 @@ Adds a new shop to the database. This endpoint is accessible only to site admins
     }
     ```
 
+## edit Shop
+
+Adds a new shop to the database. This endpoint is accessible only to site admins.
+
+- **URL:** `/api/shops/manage/edit`
+- **Method:** `PATCH`
+- **Authentication required:** Yes (Shop admin)
+- **Request Body:**
+  - `name`: String (required) - Name of the shop.
+  - `description`: String (required) - Description of the shop.
+  - `address`: String (required) - Address of the shop.
+  - `phoneNumber`: String - Phone number of the shop.
+  - `categories`: Array - Categories of the shop.
+  - `image`: String - URL of the shop's image.
+  - `domain`: mongoose ID - The id for the shop domain (array)
+- **Response:**
+  - **Success:** `201 Created`
+    ````json
+    {
+    "shop": {
+    "name": "Simple",
+    "description": "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+    "products": [],
+    "image": "https://ucarecdn.com/95a48ce0-61b2-483f-a729-c9fa11f1aa11/-/preview/500x500/-/quality/smart_retina/-/format/auto/",
+    "sliderImages": [],
+    "address": "Beirut",
+    "phoneNumber": "+961 81982664",
+    "categories": [
+    "Food",
+    "hot_drinks",
+    "cold_drinks",
+    "sweets"
+    ],
+    "domain": [
+    "65d8d11b8e17d0d9ea9ef950"
+    ],
+    "rating": 0,
+    "\_id": "65da20265bf31ecadbe38775",
+    "\_\_v": 0
+    },
+    "success": true,
+    "message": "shop updated successfully",
+    }
+        ```
+    ````
+  - **Error:** `401 Unauthorized`
+    ```json
+    {
+      "success": false,
+      "error": "Only site admins are authorized to perform this action."
+    }
+    ```
+
 ## Delete Shop
 
 Deletes a shop from the database.

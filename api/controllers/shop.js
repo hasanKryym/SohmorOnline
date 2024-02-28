@@ -78,7 +78,7 @@ const editShop = asyncWrapper(async (req, res) => {
   res.status(StatusCodes.OK).json({
     shop: updatedShop,
     success: true,
-    message: "shop added successfully",
+    message: "shop updated successfully",
   });
 });
 
