@@ -1,16 +1,16 @@
 import ShopProduct from "./ShopProduct/ShopProduct";
 import "./Dashboard.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Dashboard = ({ headers, data }) => {
+  const location = useLocation();
+
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Dashboard</h1>
       <nav className="dashboard-nav">
         <ul className="dashboard-nav-list">
-          <li>
-            <Link to="/dashboard">Home</Link>
-          </li>
+          <li>{/* <Link to="/dashboard">Home</Link> */}</li>
           {/* Add more navigation links as needed */}
         </ul>
       </nav>
@@ -25,7 +25,9 @@ const Dashboard = ({ headers, data }) => {
             </tr>
           </thead>
           <tbody>
-            <ShopProduct data={data} />
+            {location.pathname === "/shops/adminPanel" && (
+              <ShopProduct data={data} />
+            )}
           </tbody>
         </table>
       </div>

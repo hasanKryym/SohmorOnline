@@ -6,11 +6,21 @@ import { getProducts } from "../../../../services/productService";
 const ShopAdminPanel = () => {
   const [products, setProducts] = useState([]);
   // const headers = ["Product ID", "Name", "Price"];
-  const headers = ["Product ID", "Name", "Price"];
+  const headers = [
+    "Image",
+    "Name",
+    "Description",
+    "Price",
+    "Offer",
+    "Rating",
+    "Categories",
+  ];
 
   const fetchProducts = async () => {
-    const productsArr = await getProducts();
-    console.log(productsArr);
+    const response = await getProducts();
+    if (response.success) {
+      setProducts(response.products);
+    } else console.error(response.message);
   };
 
   // Sample data for the table
@@ -27,7 +37,9 @@ const ShopAdminPanel = () => {
 
   return (
     <>
-      <div>{/* <Dashboard headers={headers} data={data} /> */}</div>
+      <div>
+        <Dashboard headers={headers} data={products} />
+      </div>
     </>
   );
 };
