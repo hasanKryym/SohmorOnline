@@ -9,24 +9,29 @@ import Shop from "./pages/Shop/Shop";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Product from "./pages/Product/Product";
 import ShopAdminPanel from "./pages/Admins/ShopAdmin/ShopAdminPanel/ShopAdminPanel";
+import { NotificationProvider } from "./context/Notification/NotificationContext";
+import Notification from "./components/Notification/Notification";
 
 function App() {
   return (
     <>
-      <Router>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/shops" element={<Shops />} />
-          <Route path="/shops/:id" element={<Shop />} />
-          <Route path="/shops/products/:id" element={<Product />} />
-          <Route path="/shops/adminPanel" element={<ShopAdminPanel />} />
-        </Routes>
-      </Router>
+      <NotificationProvider>
+        <Notification />
+        <Router>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/shops" element={<Shops />} />
+            <Route path="/shops/:id" element={<Shop />} />
+            <Route path="/shops/products/:id" element={<Product />} />
+            <Route path="/shops/adminPanel" element={<ShopAdminPanel />} />
+          </Routes>
+        </Router>
+      </NotificationProvider>
     </>
   );
 }

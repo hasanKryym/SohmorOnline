@@ -1,5 +1,27 @@
 .shop_product .product_image {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
+  border-radius: 1000px;
   object-fit: cover;
+}
+
+.shop_product .delete-btn,
+.edit-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.shop_product .delete-btn {
+  color: var(--terracotta-red);
+}
+.shop_product .edit-btn {
+  color: var(--dark-charcoal);
+}
+.shop_product .buttons_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }

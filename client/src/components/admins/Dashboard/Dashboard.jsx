@@ -1,6 +1,7 @@
 import ShopProduct from "./ShopProduct/ShopProduct";
 import "./Dashboard.css";
 import { Link, useLocation } from "react-router-dom";
+import { useNotification } from "../../../context/Notification/NotificationContext";
 
 const Dashboard = ({ headers, data }) => {
   const location = useLocation();

@@ -1,4 +1,5 @@
 import "./ShopProduct.css";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const ShopProduct = ({ data }) => {
   return (
@@ -14,15 +15,19 @@ const ShopProduct = ({ data }) => {
           <td>{product.price}</td>
           <td>{product.offer}</td>
           <td>{product.rating}</td>
-          <td>
+          {/* <td>
             <input type="text" name="" id="" />
-          </td>
+          </td> */}
 
           <td>
-            {/* Add edit, delete, or add buttons */}
-            <button className="edit-btn">Edit</button>
-            <button className="delete-btn">Delete</button>
-            <button className="add-btn">Add</button>
+            <div className="buttons_container">
+              <button className="edit-btn">
+                <FaEdit />
+              </button>
+              <button className="delete-btn">
+                <FaTrashAlt />
+              </button>
+            </div>
           </td>
         </tr>
       ))}
