@@ -4,6 +4,8 @@ import "./ShopAdminPanel.css";
 import { getProducts } from "../../../../services/productService";
 import { useNotification } from "../../../../context/Notification/NotificationContext";
 import { notificationTypes } from "../../../../context/Notification/notificationEnum";
+import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "../../Navbar/Navbar";
 
 const ShopAdminPanel = () => {
   const [products, setProducts] = useState([]);
@@ -37,6 +39,7 @@ const ShopAdminPanel = () => {
 
   return (
     <>
+      <Navbar />
       <div>
         <Dashboard headers={headers} data={products} />
       </div>

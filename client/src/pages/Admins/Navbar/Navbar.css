@@ -1,0 +1,57 @@
+.admin_navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--light-beige);
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.admin_navbar .list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 10rem;
+}
+
+.admin_navbar .list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  cursor: pointer;
+}
+
+.admin_navbar .list_container {
+  position: relative;
+  color: var(--dark-charcoal);
+}
+
+.admin_navbar .links {
+  position: absolute;
+  background: var(--dark-charcoal);
+  width: 100px;
+  top: 25px;
+  /* width: 0; */
+  text-transform: capitalize;
+  /* background: red; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.admin_navbar .links .list {
+  display: initial;
+}
+.admin_navbar .links .list .list-item {
+  padding: 10px;
+}
+
+.admin_navbar .links a {
+  font-size: 14px;
+  color: var(--light-beige);
+  text-decoration: none;
+}
+.admin_navbar .list-item:hover {
+}
+
+.admin_navbar .list_container {
+}
