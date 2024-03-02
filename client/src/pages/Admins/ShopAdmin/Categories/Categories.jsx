@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNotification } from "../../../../context/Notification/NotificationContext";
 import "./Categories.css";
 import Navbar from "../../Navbar/Navbar";
 import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
@@ -18,6 +17,7 @@ const Categories = () => {
   }, []);
 
   const addShopCategory = async () => {
+    if (!newCategory) return;
     const response = await addNewCategory(newCategory);
     if (response.success) setNewCategory("");
   };
