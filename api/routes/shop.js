@@ -29,6 +29,6 @@ router.route("/domains").get(authenticate, checkSiteAdmin, getDomains);
 router
   .route("/manage/addCategory")
   .post(authenticate, checkShopAdmin, addCategory);
-router.route("/categories").get(authenticate, getCategories);
+router.route("/categories").get(getCategories);
 
 module.exports = router;

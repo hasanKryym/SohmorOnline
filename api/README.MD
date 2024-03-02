@@ -466,7 +466,7 @@ POST /shops/manage/addCategory
 
 ```json
 {
-  "name": "Electronics"
+  "category": "Electronics"
 }
 ```
 

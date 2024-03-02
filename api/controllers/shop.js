@@ -167,8 +167,7 @@ const addCategory = asyncWrapper(async (req, res) => {
   const shop = req.user.role.shop;
   const { category: name } = req.body;
 
-  if (!shop || !name)
-    throw new BadRequestError("please provide shopId and category name");
+  if (!shop || !name) throw new BadRequestError("please provide category name");
 
   const categoryData = {
     name,
