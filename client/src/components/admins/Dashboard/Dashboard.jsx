@@ -26,7 +26,7 @@ const Dashboard = ({ headers, data }) => {
             </tr>
           </thead>
           <tbody>
-            {location.pathname === "/shops/adminPanel" && (
+            {location.pathname === "/shops/adminPanel/dashboard" && (
               <ShopProduct data={data} />
             )}
           </tbody>

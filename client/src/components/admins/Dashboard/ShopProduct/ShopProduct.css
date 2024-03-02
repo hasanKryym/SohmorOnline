@@ -19,6 +19,17 @@
 .shop_product .edit-btn {
   color: var(--dark-charcoal);
 }
+
+.shop_product .edit-btn,
+.delete-btn {
+  transition: all ease-in 0.1s;
+}
+
+.shop_product .edit-btn:hover,
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
 .shop_product .buttons_container {
   display: flex;
   align-items: center;

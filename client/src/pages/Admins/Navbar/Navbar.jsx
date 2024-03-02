@@ -9,16 +9,29 @@ const Navbar = ({ navbarLinks }) => {
       {
         title: "Shop",
         lists: [
-          { name: "add Product", link: "/shop/manage/products/add" },
-          { name: "categories", link: "/shop/manage/categories" },
+          {
+            name: "dashboard",
+            link: "/shops/adminPanel/dashboard",
+          },
+          {
+            name: "add Product",
+            link: "/shops/adminPanel/manage/products/add",
+          },
+          { name: "categories", link: "/shops/adminPanel/manage/categories" },
         ],
       },
 
       {
         title: "Delivery",
         lists: [
-          { name: "add Delivery", link: "/shop/manage/delivery/add" },
-          { name: "Orders history", link: "/shop/manage/ordersHistory" },
+          {
+            name: "add Delivery",
+            link: "/shops/adminPanel/manage/delivery/add",
+          },
+          {
+            name: "Orders history",
+            link: "/shops/adminPanel/manage/ordersHistory",
+          },
         ],
       },
     ];
