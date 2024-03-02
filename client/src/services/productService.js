@@ -4,10 +4,10 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 const shopAdminToken =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRiNTc4ZjliMzIyYWFkZWMyNTgzMTAiLCJuYW1lIjoiQWxpIiwicm9sZSI6eyJwb3NpdGlvbiI6InNob3BBZG1pbiIsInNob3AiOiI2NWRiNTc2ZTliMzIyYWFkZWMyNTgzMGMifSwiaWF0IjoxNzA4ODczNjE1LCJleHAiOjE3NDA0MDk2MTV9.tcUY7rcH2CE4lAIKlBVm_WITlnAafpaxh3zjFQDacZQ";
 
-export const getProducts = async () => {
+export const getProducts = async (queryParameter) => {
   try {
     const response = await axios.get(
-      `${baseUrl}/products?shopId=65db576e9b322aadec25830c`,
+      `${baseUrl}/products?shopId=${queryParameter.shopId}`,
       {
         headers: {
           Authorization: shopAdminToken,

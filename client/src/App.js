@@ -14,39 +14,42 @@ import Notification from "./components/Notification/Notification";
 import AddProduct from "./pages/Admins/ShopAdmin/AddProduct/AddProduct";
 import Categories from "./pages/Admins/ShopAdmin/Categories/Categories";
 import { CategoriesProvider } from "./context/Shop/Categories/CategoriesContext";
+import { ProductProvider } from "./context/Shop/Products/ProductsContext";
 
 function App() {
   return (
     <>
       <NotificationProvider>
-        <CategoriesProvider>
-          <Notification />
-          <Router>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/shops" element={<Shops />} />
-              <Route path="/shops/:id" element={<Shop />} />
-              <Route path="/shops/products/:id" element={<Product />} />
-              <Route
-                path="/shops/adminPanel/dashboard"
-                element={<ShopAdminPanel />}
-              />
-              <Route
-                path="/shops/adminPanel/addProduct"
-                element={<AddProduct />}
-              />
-              <Route
-                path="/shops/adminPanel/manage/categories"
-                element={<Categories />}
-              />
-            </Routes>
-          </Router>
-        </CategoriesProvider>
+        <ProductProvider>
+          <CategoriesProvider>
+            <Notification />
+            <Router>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/shops" element={<Shops />} />
+                <Route path="/shops/:id" element={<Shop />} />
+                <Route path="/shops/products/:id" element={<Product />} />
+                <Route
+                  path="/shops/adminPanel/dashboard"
+                  element={<ShopAdminPanel />}
+                />
+                <Route
+                  path="/shops/adminPanel/addProduct"
+                  element={<AddProduct />}
+                />
+                <Route
+                  path="/shops/adminPanel/manage/categories"
+                  element={<Categories />}
+                />
+              </Routes>
+            </Router>
+          </CategoriesProvider>
+        </ProductProvider>
       </NotificationProvider>
     </>
   );

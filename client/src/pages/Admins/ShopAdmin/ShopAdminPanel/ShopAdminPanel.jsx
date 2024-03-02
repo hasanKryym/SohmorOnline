@@ -6,11 +6,13 @@ import { useNotification } from "../../../../context/Notification/NotificationCo
 import { notificationTypes } from "../../../../context/Notification/notificationEnum";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../../Navbar/Navbar";
+import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
 
 const ShopAdminPanel = () => {
-  const [products, setProducts] = useState([]);
-  const { showNotification, hideNotification } = useNotification();
-  // const headers = ["Product ID", "Name", "Price"];
+  const { products, getShopProducts } = useProduct();
+  const [queryParameter, setQueryParameters] = useState({
+    shopId: "65db576e9b322aadec25830c",
+  });
   const headers = [
     "Image",
     "Name",
@@ -20,21 +22,8 @@ const ShopAdminPanel = () => {
     "Rating(5)",
   ];
 
-  const fetchProducts = async () => {
-    showNotification(notificationTypes.LOAD, "");
-    const response = await getProducts();
-    if (response.success) {
-      setProducts(response.products);
-      hideNotification();
-    } else
-      showNotification(
-        notificationTypes.ERROR,
-        response.message ? response.message : "error while retrieving products"
-      );
-  };
-
   useEffect(() => {
-    fetchProducts();
+    getShopProducts(queryParameter);
   }, []);
 
   return (
