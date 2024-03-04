@@ -183,7 +183,7 @@ CategorySchema.statics.createCategory = async function (categoryData) {
 
     // Check if the category name already exists for the shop
     const existingCategory = categories.find(
-      (category) => category.name === name
+      (category) => category.name.toLowerCase() === name.toLowerCase()
     );
     if (existingCategory) {
       throw new BadRequestError("Category already exists for this shop.");
