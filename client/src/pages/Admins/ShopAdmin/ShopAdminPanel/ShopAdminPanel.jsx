@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import Dashboard from "../../../../components/admins/Dashboard/Dashboard";
 import "./ShopAdminPanel.css";
-import { getProducts } from "../../../../services/productService";
-import { useNotification } from "../../../../context/Notification/NotificationContext";
-import { notificationTypes } from "../../../../context/Notification/notificationEnum";
-import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../../Navbar/Navbar";
 import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
+import ProductForm from "../../../../components/admins/ProductForm/ProductForm";
+import { MdAddToPhotos } from "react-icons/md";
 
 const ShopAdminPanel = () => {
   const { products, getShopProducts } = useProduct();
@@ -26,10 +24,31 @@ const ShopAdminPanel = () => {
     getShopProducts(queryParameter);
   }, []);
 
+  const [showProductForm, setShowProductForm] = useState(false);
+
+  const clostProductForm = () => {
+    setShowProductForm(false);
+  };
+
   return (
     <>
       <Navbar />
       <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "1rem 2rem",
+          }}
+        >
+          <button
+            onClick={() => setShowProductForm(true)}
+            className="secondary-button"
+          >
+            Add new Product <MdAddToPhotos />
+          </button>
+        </div>
+        {showProductForm && <ProductForm clostProductForm={clostProductForm} />}
         <Dashboard headers={headers} data={products} />
       </div>
     </>

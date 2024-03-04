@@ -39,3 +39,44 @@ export const getProducts = async (queryParameter) => {
     }
   }
 };
+
+export const addProduct = async (product) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/products/manage/add`,
+      product,
+      {
+        headers: {
+          Authorization: shopAdminToken,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while adding the new product: ${error.message}`);
+      throw error;
+    }
+  }
+};
+
+export const deleteProduct = async (productsToDelete) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/products/manage/delete`, {
+      data: { productsToDelete },
+      headers: {
+        Authorization: shopAdminToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while deleting the products: ${error.message}`);
+      throw error;
+    }
+  }
+};

@@ -16,7 +16,8 @@ const Categories = () => {
     getCategories("65db576e9b322aadec25830c");
   }, []);
 
-  const addShopCategory = async () => {
+  const addShopCategory = async (e) => {
+    e.preventDefault();
     if (!newCategory) return;
     const response = await addNewCategory(newCategory);
     if (response.success) setNewCategory("");
@@ -25,17 +26,19 @@ const Categories = () => {
     <>
       <Navbar />
       <div>
-        <input
-          type="text"
-          className="custom-input"
-          style={{ width: "350px", marginRight: "1rem" }}
-          value={newCategory}
-          onChange={handleChange}
-          placeholder="Enter new category..."
-        />
-        <button onClick={() => addShopCategory()} className="custom-button">
-          add
-        </button>
+        <form onSubmit={addShopCategory}>
+          <input
+            type="text"
+            className="custom-input"
+            style={{ width: "350px", marginRight: "1rem" }}
+            value={newCategory}
+            onChange={handleChange}
+            placeholder="Enter new category..."
+          />
+          <button type="submit" className="custom-button">
+            Add
+          </button>
+        </form>
       </div>
       <div className="">
         {categories.map((category, i) => {

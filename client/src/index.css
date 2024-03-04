@@ -47,6 +47,19 @@ code {
   align-items: center;
   justify-content: center;
 }
+.center-card {
+  position: fixed;
+  top: 20px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 100vw;
+  max-width: 600px;
+  min-width: 300px;
+  background: var(--light-beige);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
+}
 .one-rem {
   padding: 1rem;
 }
@@ -86,6 +99,22 @@ code {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.secondary-button {
+  background-color: var(--dark-charcoal);
+  color: var(--vibrant-yellow);
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.secondary-button:hover {
+  background-color: var(--dark-charcoal);
+  filter: brightness(90%);
 }
 
 .custom-button:hover {

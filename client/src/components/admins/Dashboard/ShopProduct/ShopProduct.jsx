@@ -1,7 +1,10 @@
+import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
 import "./ShopProduct.css";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const ShopProduct = ({ data }) => {
+  const { deleteProductsById } = useProduct();
+
   return (
     <>
       {/* edit the table to be able to display the products data of the shop */}
@@ -25,7 +28,7 @@ const ShopProduct = ({ data }) => {
                 <FaEdit />
               </button>
               <button className="delete-btn">
-                <FaTrashAlt />
+                <FaTrashAlt onClick={() => deleteProductsById([product._id])} />
               </button>
             </div>
           </td>
