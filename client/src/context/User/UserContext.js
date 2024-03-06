@@ -1,62 +1,52 @@
-import { useState, createContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
-export const UserStatus = (props) => {
-  const { checkAuth } = require("../../utils/checkAuth");
-  const userData = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : {
-        id: "",
-        username: "",
-        email: "",
-        address: "",
-        phoneNumber: "",
-      };
+export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
     status: {
       isLoggedIn: localStorage.getItem("token") ? true : false,
+      token: localStorage.getItem("token"),
     },
-    userData,
+    data: JSON.parse(localStorage.getItem("user"))
+      ? JSON.parse(localStorage.getItem("user"))
+      : {
+          _id: "",
+          name: "",
+          email: "",
+          address: "",
+          number: "",
+          role: {
+            position: "user",
+            shop: null,
+          },
+          cart: [],
+        },
   });
 
-  useEffect(() => {
-    const isAuth = checkAuth();
-    isAuth.then((res) => {
-      if (res.success) {
-        if (!user.status.isLoggedIn) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            status: { isLoggedIn: true },
-          }));
-          const newUser = JSON.parse(localStorage.getItem("user"));
-          setUser((prevUser) => ({ ...prevUser, data: newUser }));
-        }
-      } else {
-        localStorage.clear();
-        setUser({
-          status: {
-            isLoggedIn: false,
-          },
-          data: {
-            id: "",
-            username: "",
-            email: "",
-            address: "",
-            phoneNumber: "",
-          },
-        });
-      }
-    });
-  }, []);
+  // Function to update user data
+  // const updateUserData = (newUserData) => {
+  //   setUser((prevUser) => ({
+  //     ...prevUser,
+  //     data: {
+  //       ...prevUser.data,
+  //       ...newUserData,
+  //     },
+  //   }));
+  // };
+
+  // useEffect(() => {
+  //   updateUserData(JSON.parse(localStorage.getItem("user")));
+  // }, [user.status.isLoggedIn]);
 
   return (
-    <UserContext.Provider
-      value={{
-        userData: [user, setUser],
-      }}
-    >
-      {props.children}
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
     </UserContext.Provider>
   );
+};
+
+// Create a hook to use the context
+export const useUser = () => {
+  return useContext(UserContext);
 };

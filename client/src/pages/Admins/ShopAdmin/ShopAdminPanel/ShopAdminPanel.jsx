@@ -5,11 +5,16 @@ import Navbar from "../../Navbar/Navbar";
 import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
 import ProductForm from "../../../../components/admins/ProductForm/ProductForm";
 import { MdAddToPhotos } from "react-icons/md";
+import { useUser } from "../../../../context/User/UserContext";
+import UserPositions from "../../../../enum/userEnum/userPositionsEnum";
+import { useNavigate } from "react-router-dom";
 
 const ShopAdminPanel = () => {
+  const navigate = useNavigate();
   const { products, getShopProducts } = useProduct();
+  const { user } = useUser();
   const [queryParameter, setQueryParameters] = useState({
-    shopId: "65db576e9b322aadec25830c",
+    shopId: user.data.role.shop,
   });
   const headers = [
     "Image",
@@ -21,6 +26,12 @@ const ShopAdminPanel = () => {
   ];
 
   useEffect(() => {
+    if (
+      !user.status.isLoggedIn ||
+      !user.data.role.position === UserPositions.SHOP_ADMIN
+    ) {
+      navigate("/");
+    }
     getShopProducts(queryParameter);
   }, []);
 

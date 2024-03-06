@@ -1,8 +1,7 @@
 import axios from "axios";
-
 const baseUrl = process.env.REACT_APP_BASE_URL;
-const shopAdminToken =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRiNTc4ZjliMzIyYWFkZWMyNTgzMTAiLCJuYW1lIjoiQWxpIiwicm9sZSI6eyJwb3NpdGlvbiI6InNob3BBZG1pbiIsInNob3AiOiI2NWRiNTc2ZTliMzIyYWFkZWMyNTgzMGMifSwiaWF0IjoxNzA4ODczNjE1LCJleHAiOjE3NDA0MDk2MTV9.tcUY7rcH2CE4lAIKlBVm_WITlnAafpaxh3zjFQDacZQ";
+
+const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
 export const getProducts = async (queryParameter) => {
   try {
@@ -10,7 +9,7 @@ export const getProducts = async (queryParameter) => {
       `${baseUrl}/products?shopId=${queryParameter.shopId}`,
       {
         headers: {
-          Authorization: shopAdminToken,
+          Authorization: getToken(),
         },
       }
     );
@@ -47,7 +46,7 @@ export const addProduct = async (product) => {
       product,
       {
         headers: {
-          Authorization: shopAdminToken,
+          Authorization: getToken(),
         },
       }
     );
@@ -67,7 +66,7 @@ export const deleteProduct = async (productsToDelete) => {
     const response = await axios.delete(`${baseUrl}/products/manage/delete`, {
       data: { productsToDelete },
       headers: {
-        Authorization: shopAdminToken,
+        Authorization: getToken(),
       },
     });
     return response.data;

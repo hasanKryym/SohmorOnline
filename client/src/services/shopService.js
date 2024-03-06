@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
-const shopAdminToken =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRiNTc4ZjliMzIyYWFkZWMyNTgzMTAiLCJuYW1lIjoiQWxpIiwicm9sZSI6eyJwb3NpdGlvbiI6InNob3BBZG1pbiIsInNob3AiOiI2NWRiNTc2ZTliMzIyYWFkZWMyNTgzMGMifSwiaWF0IjoxNzA4ODczNjE1LCJleHAiOjE3NDA0MDk2MTV9.tcUY7rcH2CE4lAIKlBVm_WITlnAafpaxh3zjFQDacZQ";
+const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
 export const getShopCategories = async (shopId) => {
   try {
@@ -22,7 +21,7 @@ export const createShopCategory = async (category) => {
       { category },
       {
         headers: {
-          Authorization: shopAdminToken,
+          Authorization: getToken(),
         },
       }
     );

@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import "./Categories.css";
 import Navbar from "../../Navbar/Navbar";
 import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
+import { useUser } from "../../../../context/User/UserContext";
 
 const Categories = () => {
   const { categories, getCategories, addNewCategory } = useCategories();
+  const { user } = useUser();
 
   const [newCategory, setNewCategory] = useState("");
 
@@ -13,7 +15,7 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    getCategories("65db576e9b322aadec25830c");
+    getCategories(user.data.role.shop);
   }, []);
 
   const addShopCategory = async (e) => {

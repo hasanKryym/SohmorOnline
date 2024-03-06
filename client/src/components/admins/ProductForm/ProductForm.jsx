@@ -5,14 +5,17 @@ import AddImage from "../../UploadCare/UploadCare";
 import { useNotification } from "../../../context/Notification/NotificationContext";
 import { notificationTypes } from "../../../context/Notification/notificationEnum";
 import { useProduct } from "../../../context/Shop/Products/ProductsContext";
+import { useUser } from "../../../context/User/UserContext";
 
 const ProductForm = ({ clostProductForm }) => {
   const { categories, getCategories } = useCategories();
   const { showNotification } = useNotification();
   const { addNewProduct } = useProduct();
 
+  const { user } = useUser();
+
   useEffect(() => {
-    getCategories("65db576e9b322aadec25830c");
+    getCategories(user.data.role.shop);
   }, []);
   const [formData, setFormData] = useState({
     name: "",

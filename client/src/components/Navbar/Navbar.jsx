@@ -4,9 +4,12 @@ import { FaCartShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { pagesLinks } from "./pagesLinksEnum";
+import { useUser } from "../../context/User/UserContext";
 
 const Navbar = () => {
+  const { user } = useUser();
   const location = useLocation();
+
   const navbarLinks = [
     {
       name: "home",
@@ -16,15 +19,19 @@ const Navbar = () => {
       name: "shops",
       link: pagesLinks.SHOPS,
     },
-    {
-      name: "login",
-      link: pagesLinks.LOGIN,
-    },
+    // Conditionally include the "login" link based on user status
+    ...(user.status.isLoggedIn
+      ? []
+      : [
+          {
+            name: "login",
+            link: pagesLinks.LOGIN,
+          },
+        ]),
     {
       name: <FaCartShopping style={{ fontSize: "24px" }} />,
       link: pagesLinks.CART,
     },
-
     {
       name: <FaUser style={{ fontSize: "24px" }} />,
       link: pagesLinks.PROFILE,
