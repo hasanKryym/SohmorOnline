@@ -2,6 +2,7 @@ import ShopProduct from "./ShopProduct/ShopProduct";
 import "./Dashboard.css";
 import { Link, useLocation } from "react-router-dom";
 import { useNotification } from "../../../context/Notification/NotificationContext";
+import ShopRow from "./ShopRow/ShopRow";
 
 const Dashboard = ({ headers, data }) => {
   const location = useLocation();
@@ -28,6 +29,10 @@ const Dashboard = ({ headers, data }) => {
           <tbody>
             {location.pathname === "/shops/adminPanel/dashboard" && (
               <ShopProduct data={data} />
+            )}
+
+            {location.pathname === "/siteAdmin/adminPanel/dashboard" && (
+              <ShopRow data={data} />
             )}
           </tbody>
         </table>

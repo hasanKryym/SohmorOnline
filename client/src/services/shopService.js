@@ -3,6 +3,15 @@ import axios from "axios";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
+export const getShops = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/shops`);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const getShopCategories = async (shopId) => {
   try {
     const response = await axios.get(

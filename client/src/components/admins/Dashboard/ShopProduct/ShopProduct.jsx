@@ -9,7 +9,7 @@ const ShopProduct = ({ data }) => {
     <>
       {/* edit the table to be able to display the products data of the shop */}
       {data.map((product, index) => (
-        <tr className="shop_product" key={index}>
+        <tr className="shop_product" key={product._id}>
           <td>
             <img className="product_image" src={product.image} alt="" />
           </td>

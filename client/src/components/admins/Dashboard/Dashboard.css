@@ -41,3 +41,35 @@
 .dashboard-table tr:hover {
   background-color: #ddd;
 }
+
+.dashboard-container .delete-btn,
+.edit-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.dashboard-container .delete-btn {
+  color: var(--terracotta-red);
+}
+.dashboard-container .edit-btn {
+  color: var(--dark-charcoal);
+}
+
+.dashboard-container .edit-btn,
+.delete-btn {
+  transition: all ease-in 0.1s;
+}
+
+.dashboard-container .edit-btn:hover,
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.dashboard-container .buttons_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
