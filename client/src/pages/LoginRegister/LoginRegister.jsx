@@ -52,7 +52,9 @@ const Login = () => {
       showNotification(notificationTypes.SUCCESS, response.message);
       if (response.user.role.position === UserPositions.SHOP_ADMIN) {
         navigate("/shops/adminPanel/dashboard");
-      } else navigate("/");
+      } else if (response.user.role.position === UserPositions.SITE_ADMIN)
+        navigate("/siteAdmin/adminPanel/dashboard");
+      else navigate("/");
     } else {
       showNotification(notificationTypes.ERROR, response.message);
     }

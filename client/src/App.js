@@ -15,6 +15,7 @@ import Categories from "./pages/Admins/ShopAdmin/Categories/Categories";
 import { CategoriesProvider } from "./context/Shop/Categories/CategoriesContext";
 import { ProductProvider } from "./context/Shop/Products/ProductsContext";
 import { UserProvider } from "./context/User/UserContext";
+import SiteAdminPanel from "./pages/Admins/SiteAdmin/SiteAdminPanel/SiteAdminPanel";
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
                   <Route
                     path="/shops/adminPanel/manage/categories"
                     element={<Categories />}
+                  />
+                  <Route
+                    path="/siteAdmin/adminPanel/dashboard"
+                    element={<SiteAdminPanel />}
                   />
                 </Routes>
               </Router>

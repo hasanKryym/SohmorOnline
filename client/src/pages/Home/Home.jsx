@@ -17,6 +17,8 @@ const Home = () => {
   useEffect(() => {
     if (user.data.role.position === UserPositions.SHOP_ADMIN)
       navigate("/shops/adminPanel/dashboard");
+    else if (user.data.role.position === UserPositions.SITE_ADMIN)
+      navigate("/siteAdmin/adminPanel/dashboard");
   }, []);
   return (
     <>
