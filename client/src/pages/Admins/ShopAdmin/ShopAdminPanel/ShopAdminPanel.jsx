@@ -16,6 +16,36 @@ const ShopAdminPanel = () => {
   const [queryParameter, setQueryParameters] = useState({
     shopId: user.data.role.shop,
   });
+  const navbarLinks = [
+    {
+      title: "Shop",
+      lists: [
+        {
+          name: "dashboard",
+          link: "/shops/adminPanel/dashboard",
+        },
+        // {
+        //   name: "add Product",
+        //   link: "/shops/adminPanel/manage/products/add",
+        // },
+        { name: "categories", link: "/shops/adminPanel/manage/categories" },
+      ],
+    },
+
+    {
+      title: "Delivery",
+      lists: [
+        {
+          name: "add Delivery",
+          link: "/shops/adminPanel/manage/delivery/add",
+        },
+        {
+          name: "Orders history",
+          link: "/shops/adminPanel/manage/ordersHistory",
+        },
+      ],
+    },
+  ];
   const headers = [
     "Image",
     "Name",
@@ -43,7 +73,7 @@ const ShopAdminPanel = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar navbarLinks={navbarLinks} />
       <div>
         <div
           style={{

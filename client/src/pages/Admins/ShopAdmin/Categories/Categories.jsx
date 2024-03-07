@@ -27,25 +27,33 @@ const Categories = () => {
   return (
     <>
       <Navbar />
-      <div>
-        <form onSubmit={addShopCategory}>
-          <input
-            type="text"
-            className="custom-input"
-            style={{ width: "350px", marginRight: "1rem" }}
-            value={newCategory}
-            onChange={handleChange}
-            placeholder="Enter new category..."
-          />
-          <button type="submit" className="custom-button">
-            Add
-          </button>
-        </form>
-      </div>
-      <div className="">
-        {categories.map((category, i) => {
-          return <h3 key={i}>{category.name} </h3>;
-        })}
+      <div className="title_container">categories</div>
+      <div className="shop_categories-container">
+        <div>
+          <form onSubmit={addShopCategory}>
+            <input
+              type="text"
+              className="custom-input"
+              style={{ width: "350px", marginRight: "1rem" }}
+              value={newCategory}
+              onChange={handleChange}
+              placeholder="Enter new category..."
+            />
+            <button type="submit" className="custom-button">
+              Add
+            </button>
+          </form>
+        </div>
+        <div className="">
+          {categories.map((category, i) => {
+            return (
+              <h3 key={i}>
+                <span>{i + 1}_</span>
+                {category.name}{" "}
+              </h3>
+            );
+          })}
+        </div>
       </div>
     </>
   );

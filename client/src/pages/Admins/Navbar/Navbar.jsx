@@ -4,38 +4,6 @@ import Logo from "../../../assets/images/sohmor-online-high-resolution-logo-tran
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 const Navbar = ({ navbarLinks }) => {
-  if (!navbarLinks) {
-    navbarLinks = [
-      {
-        title: "Shop",
-        lists: [
-          {
-            name: "dashboard",
-            link: "/shops/adminPanel/dashboard",
-          },
-          // {
-          //   name: "add Product",
-          //   link: "/shops/adminPanel/manage/products/add",
-          // },
-          { name: "categories", link: "/shops/adminPanel/manage/categories" },
-        ],
-      },
-
-      {
-        title: "Delivery",
-        lists: [
-          {
-            name: "add Delivery",
-            link: "/shops/adminPanel/manage/delivery/add",
-          },
-          {
-            name: "Orders history",
-            link: "/shops/adminPanel/manage/ordersHistory",
-          },
-        ],
-      },
-    ];
-  }
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleDropdown = (index) => {
