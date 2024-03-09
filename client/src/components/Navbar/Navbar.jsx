@@ -28,14 +28,22 @@ const Navbar = () => {
             link: pagesLinks.LOGIN,
           },
         ]),
-    {
-      name: <FaCartShopping style={{ fontSize: "24px" }} />,
-      link: pagesLinks.CART,
-    },
-    {
-      name: <FaUser style={{ fontSize: "24px" }} />,
-      link: pagesLinks.PROFILE,
-    },
+    ...(!user.status.isLoggedIn
+      ? []
+      : [
+          {
+            name: <FaCartShopping style={{ fontSize: "24px" }} />,
+            link: pagesLinks.CART,
+          },
+        ]),
+    ...(!user.status.isLoggedIn
+      ? []
+      : [
+          {
+            name: <FaUser style={{ fontSize: "24px" }} />,
+            link: pagesLinks.PROFILE,
+          },
+        ]),
   ];
   return (
     <>
