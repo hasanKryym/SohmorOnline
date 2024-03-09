@@ -7,10 +7,10 @@ import { notificationTypes } from "../../../context/Notification/notificationEnu
 import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 import { useUser } from "../../../context/User/UserContext";
 
-const ProductForm = ({ clostProductForm }) => {
+const ProductForm = ({ clostProductForm, product }) => {
   const { categories, getCategories } = useCategories();
   const { showNotification } = useNotification();
-  const { addNewProduct } = useProduct();
+  const { addNewProduct, editProduct } = useProduct();
 
   const { user } = useUser();
 
@@ -18,16 +18,21 @@ const ProductForm = ({ clostProductForm }) => {
     getCategories(user.data.role.shop);
   }, []);
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    image: "",
-    categories: [],
+    name: product?.name ?? "",
+    description: product?.description ?? "",
+    price: product?.price ?? "",
+    offer: +product?.offer ?? 0,
+    rating: product?.rating ?? 0,
+    image: product?.image ?? "",
+    categories: product?.categories ?? [],
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: name === "offer" ? parseInt(value) : value,
+    });
   };
 
   const handleCategoryChange = (e) => {
@@ -51,6 +56,7 @@ const ProductForm = ({ clostProductForm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (
       !formData.name ||
       !formData.description ||
@@ -77,10 +83,37 @@ const ProductForm = ({ clostProductForm }) => {
     clostProductForm();
   };
 
+  const editShopProduct = async (e) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.description || !formData.price) {
+      showNotification(
+        notificationTypes.INFO,
+        "please fill the required fields"
+      );
+      return;
+    }
+
+    if (
+      formData.name === product.name &&
+      formData.description === product.description &&
+      formData.image === product.image &&
+      formData.price === product.price &&
+      formData.categories === product.productCategories
+    )
+      return;
+    const response = await editProduct(product._id, formData);
+
+    if (response.success) clostProductForm();
+  };
+
   return (
     <div className="blur-bg">
       <div className="center-card">
-        <form onSubmit={handleSubmit} className="product_form">
+        <form
+          onSubmit={!product ? handleSubmit : editShopProduct}
+          className="product_form"
+        >
           <label className="form-label">Name:</label>
           <input
             type="text"
@@ -91,6 +124,7 @@ const ProductForm = ({ clostProductForm }) => {
           />
           <label className="form-label">Description:</label>
           <textarea
+            style={{ resize: "vertical" }}
             name="description"
             value={formData.description}
             onChange={handleChange}
@@ -104,6 +138,18 @@ const ProductForm = ({ clostProductForm }) => {
             onChange={handleChange}
             className="custom-input"
           />
+          {product && (
+            <>
+              <label className="form-label">offer%:</label>
+              <input
+                type="number"
+                name="offer"
+                value={formData.offer}
+                onChange={handleChange}
+                className="custom-input"
+              />
+            </>
+          )}
           <label className="form-label">Image:</label>
           <AddImage setFormData={setFormData} />
           <br />
@@ -125,9 +171,16 @@ const ProductForm = ({ clostProductForm }) => {
             ))}
           </ul>
           <div className="productForm_buttons-container">
-            <button type="submit" className="custom-button">
-              Add Product
-            </button>
+            {product ? (
+              <button type="submit" className="custom-button">
+                Save
+              </button>
+            ) : (
+              <button type="submit" className="custom-button">
+                Add Product
+              </button>
+            )}
+
             <button
               onClick={() => clostProductForm()}
               className="secondary-button"

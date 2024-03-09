@@ -7,9 +7,11 @@ const {
   addProduct,
   getProducts,
   deleteProducts,
+  editProduct,
 } = require("../controllers/product");
 
 router.route("/manage/add").post(authenticate, checkShopAdmin, addProduct);
+router.route("/manage/edit").patch(authenticate, checkShopAdmin, editProduct);
 router
   .route("/manage/delete")
   .delete(authenticate, checkShopAdmin, deleteProducts);

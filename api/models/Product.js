@@ -53,6 +53,22 @@ ProductSchema.statics.addProduct = async function (productData, shopId) {
   return newProduct;
 };
 
+ProductSchema.statics.editProduct = async function (productId, updatedData) {
+  try {
+    // Find the product by ID and update it
+    const updatedProduct = await this.findByIdAndUpdate(
+      productId,
+      updatedData,
+      { new: true }
+    );
+    return updatedProduct;
+  } catch (error) {
+    // Handle errors appropriately
+    console.error("Error editing product:", error);
+    throw error;
+  }
+};
+
 ProductSchema.statics.deleteProducts = async function (
   productsToDelete,
   shopId

@@ -3,6 +3,7 @@ import { useNotification } from "../../Notification/NotificationContext";
 import {
   addProduct,
   deleteProduct,
+  edit_product,
   getProducts,
 } from "../../../services/productService";
 import { notificationTypes } from "../../Notification/notificationEnum";
@@ -40,7 +41,7 @@ export const ProductProvider = ({ children }) => {
     if (!newProduct) {
       showNotification(
         notificationTypes.ERROR,
-        "now new product obj, Please pass the new product"
+        "no new product obj, Please pass the new product"
       );
       return;
     }
@@ -55,6 +56,68 @@ export const ProductProvider = ({ children }) => {
         notificationTypes.ERROR,
         response.message ? response.message : "error while adding new product"
       );
+  };
+
+  // const editProduct = async (productId, updatedProduct) => {
+  //   if (!productId || !updatedProduct) {
+  //     showNotification(
+  //       notificationTypes.INFO,
+  //       "Please provide the productId and the updated product"
+  //     );
+  //     return;
+  //   }
+
+  //   showNotification(notificationTypes.LOAD, "");
+  //   const response = await edit_product(productId, updatedProduct);
+  //   if (response.success) {
+  //     showNotification(notificationTypes.SUCCESS, response.message);
+  //     updatedProduct._id = productId;
+  //     setProducts(
+  //       products.map((product) => {
+  //         if (product._id === productId) {
+  //           return updatedProduct;
+  //         }
+  //         return product;
+  //       })
+  //     );
+  //     return response;
+  //   } else {
+  //     showNotification(
+  //       notificationTypes.ERROR,
+  //       response.message ? response.message : "Error while editing the product"
+  //     );
+  //   }
+  // };
+
+  const editProduct = async (productId, updatedFields) => {
+    if (!productId || !updatedFields) {
+      showNotification(
+        notificationTypes.INFO,
+        "Please provide the productId and the updated fields"
+      );
+      return;
+    }
+
+    showNotification(notificationTypes.LOAD, "");
+    const response = await edit_product(productId, updatedFields);
+    if (response.success) {
+      showNotification(notificationTypes.SUCCESS, response.message);
+      // Update the products state only if the response is successful
+      setProducts((prevProducts) =>
+        prevProducts.map((product) => {
+          if (product._id === productId) {
+            return { ...product, ...updatedFields };
+          }
+          return product;
+        })
+      );
+      return response;
+    } else {
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ? response.message : "Error while editing the product"
+      );
+    }
   };
 
   const deleteProductsById = async (productsToDelete) => {
@@ -100,6 +163,7 @@ export const ProductProvider = ({ children }) => {
         addNewProduct,
         updateProducts,
         deleteProductsById,
+        editProduct,
       }}
     >
       {children}

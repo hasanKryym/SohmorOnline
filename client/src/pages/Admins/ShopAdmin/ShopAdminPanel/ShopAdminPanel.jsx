@@ -33,7 +33,7 @@ const ShopAdminPanel = () => {
 
   const [showProductForm, setShowProductForm] = useState(false);
 
-  const clostProductForm = () => {
+  const closeProductForm = () => {
     setShowProductForm(false);
   };
 
@@ -55,7 +55,7 @@ const ShopAdminPanel = () => {
             Add new Product <MdAddToPhotos />
           </button>
         </div>
-        {showProductForm && <ProductForm clostProductForm={clostProductForm} />}
+        {showProductForm && <ProductForm clostProductForm={closeProductForm} />}
         <Dashboard headers={headers} data={products} />
       </div>
     </>

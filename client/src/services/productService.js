@@ -61,6 +61,21 @@ export const addProduct = async (product) => {
   }
 };
 
+export const edit_product = async (productId, product) => {
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/products/manage/edit?productId=${productId}`,
+      { product },
+      {
+        headers: { Authorization: getToken() },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const deleteProduct = async (productsToDelete) => {
   try {
     const response = await axios.delete(`${baseUrl}/products/manage/delete`, {

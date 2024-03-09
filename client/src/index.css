@@ -49,14 +49,14 @@ code {
 }
 .center-card {
   position: fixed;
-  top: 20px;
+  top: 10px;
   right: 50%;
   transform: translateX(50%);
   width: 100vw;
   max-width: 600px;
   min-width: 300px;
   background: var(--light-beige);
-  padding: 2rem;
+  padding: 1rem 2rem;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
 }
@@ -84,7 +84,7 @@ code {
   width: 100%;
   height: 100%;
   z-index: 1000;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(1px);
 }
 
 /* custom classes */

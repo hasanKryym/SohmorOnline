@@ -40,6 +40,23 @@ const addProduct = asyncWrapper(async (req, res) => {
   });
 });
 
+const editProduct = asyncWrapper(async (req, res) => {
+  const { productId } = req.query;
+  const { product } = req.body;
+  if (!productId || !product)
+    throw new BadRequestError(
+      "Please provide the productId and the updated product"
+    );
+
+  const updatedProduct = await Product.editProduct(productId, product);
+
+  return res.status(StatusCodes.OK).json({
+    updatedProduct,
+    message: "Product Updated successfully",
+    success: true,
+  });
+});
+
 const deleteProducts = asyncWrapper(async (req, res) => {
   const shopId = req.user.role.shop;
   if (!shopId)
@@ -125,5 +142,6 @@ const getProducts = asyncWrapper(async (req, res) => {
 module.exports = {
   addProduct,
   getProducts,
+  editProduct,
   deleteProducts,
 };

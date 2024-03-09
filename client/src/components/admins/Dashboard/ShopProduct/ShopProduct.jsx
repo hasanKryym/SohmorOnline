@@ -1,9 +1,17 @@
+import { useState } from "react";
 import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
+import ProductForm from "../../ProductForm/ProductForm";
 import "./ShopProduct.css";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const ShopProduct = ({ data }) => {
+  const [showProductForm, setShowProductForm] = useState(false);
+  const [clickedProduct, setClickedProduct] = useState({});
   const { deleteProductsById } = useProduct();
+
+  const closeProductForm = () => {
+    setShowProductForm(false);
+  };
 
   return (
     <>
@@ -24,7 +32,13 @@ const ShopProduct = ({ data }) => {
 
           <td>
             <div className="buttons_container">
-              <button className="edit-btn">
+              <button
+                className="edit-btn"
+                onClick={() => {
+                  setShowProductForm(true);
+                  setClickedProduct(product);
+                }}
+              >
                 <FaEdit />
               </button>
               <button className="delete-btn">
@@ -34,6 +48,12 @@ const ShopProduct = ({ data }) => {
           </td>
         </tr>
       ))}
+      {showProductForm && (
+        <ProductForm
+          clostProductForm={closeProductForm}
+          product={clickedProduct}
+        />
+      )}
     </>
   );
 };
