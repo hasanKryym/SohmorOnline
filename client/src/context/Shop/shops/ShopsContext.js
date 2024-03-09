@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useNotification } from "../../Notification/NotificationContext";
 import { notificationTypes } from "../../Notification/notificationEnum";
-import { edit_shop, getShops } from "../../../services/shopService";
+import { add_shop, edit_shop, getShops } from "../../../services/shopService";
 
 const ShopContext = createContext();
 
@@ -27,11 +27,25 @@ export const ShopProvider = ({ children }) => {
     }
   };
 
+  const addShop = async (shopData) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await add_shop(shopData);
+    if (response.success) {
+      showNotification(notificationTypes.SUCCESS, response.message);
+      return response;
+    } else {
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ? response.message : "error while editing shop"
+      );
+      return response;
+    }
+  };
+
   const editShop = async (shopData) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await edit_shop(shopData);
     if (response.success) {
-      console.log(response);
       setShops([response.shop]);
       showNotification(notificationTypes.SUCCESS, response.message);
     } else
@@ -42,7 +56,9 @@ export const ShopProvider = ({ children }) => {
   };
 
   return (
-    <ShopContext.Provider value={{ shops, updateShops, get_shops, editShop }}>
+    <ShopContext.Provider
+      value={{ shops, updateShops, get_shops, editShop, addShop }}
+    >
       {children}
     </ShopContext.Provider>
   );

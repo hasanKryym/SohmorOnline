@@ -14,6 +14,19 @@ export const getShops = async (shopId) => {
   }
 };
 
+export const add_shop = async (shopData) => {
+  try {
+    const response = await axios.post(`${baseUrl}/shops/manage/add`, shopData, {
+      headers: {
+        Authorization: getToken(),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const edit_shop = async (shopData) => {
   try {
     const response = await axios.patch(

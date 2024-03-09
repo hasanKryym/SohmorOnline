@@ -1,5 +1,6 @@
 import "./ShopRow.css";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+import { GrUserAdmin } from "react-icons/gr";
 const ShopRow = ({ data }) => {
   return (
     <>
@@ -14,12 +15,12 @@ const ShopRow = ({ data }) => {
           <td>{shop.address}</td>
           <td>{shop.phoneNumber}</td>
           <td>{shop.rating}</td>
-          {/* <td>
-            <input type="text" name="" id="" />
-          </td> */}
 
           <td>
             <div className="buttons_container">
+              <button className="edit-btn">
+                <GrUserAdmin />
+              </button>
               <button className="delete-btn">
                 <FaTrashAlt />
               </button>

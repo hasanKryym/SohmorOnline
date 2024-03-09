@@ -7,6 +7,10 @@ export const navbarLinks = [
         link: "/siteAdmin/adminPanel/dashboard",
       },
       {
+        name: "Add Shop",
+        link: "/siteAdmin/adminPanel/manage/addShop",
+      },
+      {
         name: "domains",
         link: "/siteAdmin/adminPanel/domains",
       },

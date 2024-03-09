@@ -29,17 +29,6 @@ const SiteAdminPanel = () => {
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: "1rem 2rem",
-        }}
-      >
-        <button className="secondary-button">
-          Add new Shop <MdAddToPhotos />
-        </button>
-      </div>
       <Dashboard headers={headers} data={shops} />
     </>
   );

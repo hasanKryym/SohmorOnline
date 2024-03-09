@@ -3,13 +3,13 @@ import { useNotification } from "../../../../context/Notification/NotificationCo
 import { useUser } from "../../../../context/User/UserContext";
 import { navbarLinks } from "../../../../enum/linksEnum/shopAdminLinks";
 import Navbar from "../../Navbar/Navbar";
-import "./ShopMainMenu.css";
+import "./EditShop.css";
 import { notificationTypes } from "../../../../context/Notification/notificationEnum";
 import { useDomain } from "../../../../context/Shop/Domains/DomainsContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import AddImage from "../../../../components/UploadCare/UploadCare";
 
-const ShopMainMenu = () => {
+const EditShop = () => {
   const { showNotification } = useNotification();
   const { domains, getDomains } = useDomain();
   const { shops, get_shops, editShop } = useShop();
@@ -175,4 +175,4 @@ const ShopMainMenu = () => {
   );
 };
 
-export default ShopMainMenu;
+export default EditShop;
