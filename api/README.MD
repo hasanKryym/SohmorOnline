@@ -106,7 +106,7 @@
 
 Adds a new shop to the database. This endpoint is accessible only to site admins.
 
-- **URL:** `/api/shops/manage/add`
+- **URL:** `/shops/manage/add`
 - **Method:** `POST`
 - **Authentication required:** Yes (Site admin)
 - **Request Body:**

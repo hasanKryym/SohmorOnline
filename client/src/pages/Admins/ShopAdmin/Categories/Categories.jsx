@@ -3,6 +3,7 @@ import "./Categories.css";
 import Navbar from "../../Navbar/Navbar";
 import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
 import { useUser } from "../../../../context/User/UserContext";
+import { navbarLinks } from "../../../../enum/linksEnum/shopAdminLinks";
 
 const Categories = () => {
   const { categories, getCategories, addNewCategory } = useCategories();
@@ -26,7 +27,7 @@ const Categories = () => {
   };
   return (
     <>
-      <Navbar />
+      <Navbar navbarLinks={navbarLinks} />
       <div className="title_container">categories</div>
       <div className="shop_categories-container">
         <div>

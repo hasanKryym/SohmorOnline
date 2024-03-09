@@ -6,30 +6,16 @@ import "./SiteAdminPanel.css";
 import { useUser } from "../../../../context/User/UserContext";
 import UserPositions from "../../../../enum/userEnum/userPositionsEnum";
 import { useNavigate } from "react-router-dom";
+import { MdAddToPhotos } from "react-icons/md";
+import {
+  navbarLinks,
+  headers,
+} from "../../../../enum/linksEnum/siteAdminLinks";
 
 const SiteAdminPanel = () => {
   const { shops, get_shops } = useShop();
   const { user } = useUser();
   const navigate = useNavigate();
-  const navbarLinks = [
-    {
-      title: "Shops",
-      lists: [
-        {
-          name: "dashboard",
-          link: "/siteAdmin/adminPanel/dashboard",
-        },
-      ],
-    },
-  ];
-  const headers = [
-    "Image",
-    "Name",
-    "Description",
-    "Address",
-    "Phone Nb",
-    "Rating(5)",
-  ];
 
   useEffect(() => {
     if (
@@ -43,6 +29,17 @@ const SiteAdminPanel = () => {
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "1rem 2rem",
+        }}
+      >
+        <button className="secondary-button">
+          Add new Shop <MdAddToPhotos />
+        </button>
+      </div>
       <Dashboard headers={headers} data={shops} />
     </>
   );

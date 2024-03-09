@@ -146,7 +146,7 @@ const getShops = asyncWrapper(async (req, res) => {
 });
 
 const addDomain = asyncWrapper(async (req, res) => {
-  const { name } = req.query;
+  const { name } = req.body;
   if (!name) throw new BadRequestError("please provide the name of the domain");
 
   const newDomain = await Domain.addDomain({ name });

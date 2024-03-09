@@ -8,6 +8,10 @@ import { MdAddToPhotos } from "react-icons/md";
 import { useUser } from "../../../../context/User/UserContext";
 import UserPositions from "../../../../enum/userEnum/userPositionsEnum";
 import { useNavigate } from "react-router-dom";
+import {
+  navbarLinks,
+  headers,
+} from "../../../../enum/linksEnum/shopAdminLinks";
 
 const ShopAdminPanel = () => {
   const navigate = useNavigate();
@@ -16,44 +20,6 @@ const ShopAdminPanel = () => {
   const [queryParameter, setQueryParameters] = useState({
     shopId: user.data.role.shop,
   });
-  const navbarLinks = [
-    {
-      title: "Shop",
-      lists: [
-        {
-          name: "dashboard",
-          link: "/shops/adminPanel/dashboard",
-        },
-        // {
-        //   name: "add Product",
-        //   link: "/shops/adminPanel/manage/products/add",
-        // },
-        { name: "categories", link: "/shops/adminPanel/manage/categories" },
-      ],
-    },
-
-    {
-      title: "Delivery",
-      lists: [
-        {
-          name: "add Delivery",
-          link: "/shops/adminPanel/manage/delivery/add",
-        },
-        {
-          name: "Orders history",
-          link: "/shops/adminPanel/manage/ordersHistory",
-        },
-      ],
-    },
-  ];
-  const headers = [
-    "Image",
-    "Name",
-    "Description",
-    "Price($)",
-    "Offer(%)",
-    "Rating(5)",
-  ];
 
   useEffect(() => {
     if (

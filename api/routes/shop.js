@@ -24,7 +24,7 @@ router
 router.route("/").get(getShops);
 
 router.route("/manage/addDomain").post(authenticate, checkSiteAdmin, addDomain);
-router.route("/domains").get(authenticate, checkSiteAdmin, getDomains);
+router.route("/domains").get(getDomains);
 
 router
   .route("/manage/addCategory")
