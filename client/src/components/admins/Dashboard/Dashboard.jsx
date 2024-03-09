@@ -9,7 +9,7 @@ const Dashboard = ({ headers, data }) => {
 
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">Dashboard</h1>
+      <h1 className="dashboard-title title_container">Dashboard</h1>
       <nav className="dashboard-nav">
         <ul className="dashboard-nav-list">
           <li>{/* <Link to="/dashboard">Home</Link> */}</li>

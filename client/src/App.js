@@ -19,6 +19,7 @@ import SiteAdminPanel from "./pages/Admins/SiteAdmin/SiteAdminPanel/SiteAdminPan
 import { ShopProvider } from "./context/Shop/shops/ShopsContext";
 import Domains from "./pages/Admins/SiteAdmin/Domains/Domains";
 import { DomainProvider } from "./context/Shop/Domains/DomainsContext";
+import ShopMainMenu from "./pages/Admins/ShopAdmin/ShopMainMenu/ShopMainMenu";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
                       <Route
                         path="/siteAdmin/adminPanel/domains"
                         element={<Domains />}
+                      />
+                      <Route
+                        path="/shops/adminPanel/manage/mainmenu"
+                        element={<ShopMainMenu />}
                       />
                     </Routes>
                   </Router>

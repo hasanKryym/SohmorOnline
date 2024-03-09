@@ -6,11 +6,9 @@ export const navbarLinks = [
         name: "dashboard",
         link: "/shops/adminPanel/dashboard",
       },
-      // {
-      //   name: "add Product",
-      //   link: "/shops/adminPanel/manage/products/add",
-      // },
+
       { name: "categories", link: "/shops/adminPanel/manage/categories" },
+      { name: "edit Shop", link: "/shops/adminPanel/manage/mainmenu" },
     ],
   },
 

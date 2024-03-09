@@ -1,0 +1,19 @@
+.shop_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.shop_form .form-domains {
+  list-style: none;
+  max-height: 110px;
+  overflow-y: scroll;
+}
+
+.shop_form .shopForm_buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}

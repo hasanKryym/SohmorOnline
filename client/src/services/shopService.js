@@ -3,9 +3,28 @@ import axios from "axios";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
-export const getShops = async () => {
+export const getShops = async (shopId) => {
+  let url = `${baseUrl}/shops`;
+  if (shopId) url += `?shopId=${shopId}`;
   try {
-    const response = await axios.get(`${baseUrl}/shops`);
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const edit_shop = async (shopData) => {
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/shops/manage/edit`,
+      shopData,
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error.response.data;

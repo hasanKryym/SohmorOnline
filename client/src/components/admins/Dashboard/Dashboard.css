@@ -15,8 +15,10 @@
   padding: 0;
 }
 
-.table-container {
+.dashboard-container .table-container {
   overflow-x: auto;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .dashboard-table {
