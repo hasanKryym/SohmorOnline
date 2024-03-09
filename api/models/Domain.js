@@ -12,8 +12,8 @@ const DomainSchema = new mongoose.Schema({
 
 // Static method to add a new domain
 DomainSchema.statics.addDomain = async function (domainData) {
-  const domain = this.findOne(domainData);
-  // if (domain) throw new BadRequestError("domain name already exists");
+  const domain = await this.findOne(domainData);
+  if (domain) throw new BadRequestError("domain name already exists");
 
   const newDomain = new this(domainData);
   await newDomain.save();

@@ -151,7 +151,9 @@ const addDomain = asyncWrapper(async (req, res) => {
 
   const newDomain = await Domain.addDomain({ name });
 
-  return res.status(StatusCodes.OK).json({ success: true, newDomain });
+  return res
+    .status(StatusCodes.OK)
+    .json({ success: true, newDomain, message: "Domain added successfully" });
 });
 
 const getDomains = asyncWrapper(async (req, res) => {
