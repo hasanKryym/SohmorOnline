@@ -15,11 +15,20 @@ import {
 
 const ShopAdminPanel = () => {
   const navigate = useNavigate();
-  const { products, getShopProducts } = useProduct();
+  const { products, getShopProducts, queryParameters, setQueryParameters } =
+    useProduct();
   const { user } = useUser();
-  const [queryParameter, setQueryParameters] = useState({
-    shopId: user.data.role.shop,
-  });
+  // const [queryParameter, setQueryParameters] = useState({
+  //   shopId: user.data.role.shop,
+  // });
+
+  useEffect(() => {
+    setQueryParameters({ shopId: user.data.role.shop });
+  }, []);
+
+  // useEffect(() => {
+  //   getShopProducts();
+  // }, [queryParameters]);
 
   useEffect(() => {
     if (
@@ -28,7 +37,7 @@ const ShopAdminPanel = () => {
     ) {
       navigate("/");
     }
-    getShopProducts(queryParameter);
+    // getShopProducts(queryParameters);
   }, []);
 
   const [showProductForm, setShowProductForm] = useState(false);

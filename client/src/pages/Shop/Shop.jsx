@@ -33,9 +33,9 @@ const Shop = () => {
     setQueryParameters({ shopId: id });
   }, []);
 
-  useEffect(() => {
-    getShopProducts();
-  }, [queryParameters]);
+  // useEffect(() => {
+  //   getShopProducts();
+  // }, [queryParameters]);
 
   return (
     <>

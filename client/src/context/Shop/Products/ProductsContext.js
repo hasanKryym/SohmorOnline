@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../../Notification/NotificationContext";
 import {
   addProduct,
@@ -29,6 +29,10 @@ export const ProductProvider = ({ children }) => {
 
     setOffers(offers);
   };
+
+  useEffect(() => {
+    getShopProducts();
+  }, [queryParameters]);
 
   const getShopProducts = async () => {
     if (!queryParameters.shopId) {

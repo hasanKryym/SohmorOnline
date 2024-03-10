@@ -24,11 +24,8 @@ const Product = () => {
     setQueryParameters((prevState) => {
       return { ...prevState, _id: id };
     });
-  }, [id]);
+  }, []);
 
-  useEffect(() => {
-    getShopProducts();
-  }, [queryParameters]);
   return (
     <>
       <Navbar />
