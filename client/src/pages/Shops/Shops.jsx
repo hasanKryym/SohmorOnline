@@ -1,11 +1,17 @@
 import "./Shops.css";
-import { shopsData } from "./shopsData";
 import Shop from "../../components/Shop/Shop";
 import Navbar from "../../components/Navbar/Navbar";
 import { CiSearch } from "react-icons/ci";
 import Footer from "../../components/Footer/Footer";
+import { useShop } from "../../context/Shop/shops/ShopsContext";
+import { useEffect } from "react";
 
 const Shops = () => {
+  const { shops, get_shops } = useShop();
+
+  useEffect(() => {
+    get_shops();
+  }, []);
   return (
     <>
       <Navbar />
@@ -29,8 +35,8 @@ const Shops = () => {
       </div>
 
       <div className="shops_container">
-        {shopsData.map((shop, i) => {
-          return <Shop key={i} shop={shop} />;
+        {shops.map((shop) => {
+          return <Shop key={shop._id} shop={shop} />;
         })}
       </div>
 

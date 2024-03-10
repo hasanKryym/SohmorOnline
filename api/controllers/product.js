@@ -74,6 +74,7 @@ const deleteProducts = asyncWrapper(async (req, res) => {
 
 const getProducts = asyncWrapper(async (req, res) => {
   const {
+    _id,
     search,
     minPrice,
     maxPrice,
@@ -93,12 +94,14 @@ const getProducts = asyncWrapper(async (req, res) => {
     }
 
     queryParameters._id = { $in: shop.products };
-
-    products = await Product.getProducts(queryParameters);
-    // products = await Product.find({
-    //   _id: { $in: shop.products },
-    //   ...queryParameters,
-    // });
+    // If _id is provided, add it to the query parameters
+    if (_id) {
+      // Check if the specified _id exists in the shop's products array
+      if (!shop.products.includes(_id)) {
+        throw new NotFoundError("Product not found in this shop");
+      }
+      queryParameters._id = _id;
+    }
   } else {
     throw new BadRequestError("please provide the shopId");
   }
@@ -107,7 +110,6 @@ const getProducts = asyncWrapper(async (req, res) => {
     queryParameters.$or = [
       { name: { $regex: new RegExp(search, "i") } },
       { description: { $regex: new RegExp(search, "i") } },
-      { categories: { $in: [search] } },
     ];
   }
 
@@ -126,6 +128,7 @@ const getProducts = asyncWrapper(async (req, res) => {
   if (categories) {
     queryParameters.categories = { $in: categories };
   }
+  products = await Product.getProducts(queryParameters);
 
   // Handle case where no products are found
   if (!products || products.length === 0) {

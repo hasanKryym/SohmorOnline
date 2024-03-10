@@ -2,9 +2,17 @@ import "./Products.css";
 import { CiSearch } from "react-icons/ci";
 import ShopItem from "../../components/Shop/ShopItem/ShopItem";
 import { useState } from "react";
+import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Products = ({ items }) => {
-  const [quereyParameters, setQueryParameters] = useState({});
+  const {
+    products,
+    offers,
+    queryParameters,
+    setQueryParameters,
+    getOffers,
+    getShopProducts,
+  } = useProduct();
   return (
     <>
       <div className="products_container">

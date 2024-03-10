@@ -22,7 +22,7 @@ const Shop = ({ shop }) => {
             </span>
             {rating}
           </span>
-          <Link to={"/shops/123"}>
+          <Link to={`/shops/${shop._id}`}>
             <button className="custom-button">View</button>
           </Link>
         </div>

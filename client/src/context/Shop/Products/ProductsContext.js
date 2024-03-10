@@ -15,18 +15,28 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const { showNotification, hideNotification } = useNotification();
   const [products, setProducts] = useState([]);
+  const [offers, setOffers] = useState([]);
+  const [queryParameters, setQueryParameters] = useState({});
 
   const updateProducts = (newProduct) => {
     setProducts((prevState) => [...prevState, newProduct]);
   };
 
-  const getShopProducts = async (queryParameter) => {
-    if (!queryParameter.shopId) {
+  const getOffers = (products) => {
+    const offers = products.filter((product) => {
+      return product.offer > 0;
+    });
+
+    setOffers(offers);
+  };
+
+  const getShopProducts = async () => {
+    if (!queryParameters.shopId) {
       showNotification(notificationTypes.INFO);
       return;
     }
     showNotification(notificationTypes.LOAD, "");
-    const response = await getProducts(queryParameter);
+    const response = await getProducts(queryParameters);
     if (response.success) {
       setProducts(response.products);
       hideNotification();
@@ -159,7 +169,11 @@ export const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
+        offers,
+        queryParameters,
+        setQueryParameters,
         getShopProducts,
+        getOffers,
         addNewProduct,
         updateProducts,
         deleteProductsById,

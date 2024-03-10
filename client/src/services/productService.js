@@ -4,15 +4,14 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
 export const getProducts = async (queryParameter) => {
+  let url = `${baseUrl}/products?shopId=${queryParameter.shopId}`;
+  if (queryParameter._id) url += `&_id=${queryParameter._id}`;
   try {
-    const response = await axios.get(
-      `${baseUrl}/products?shopId=${queryParameter.shopId}`,
-      {
-        headers: {
-          Authorization: getToken(),
-        },
-      }
-    );
+    const response = await axios.get(url, queryParameter, {
+      headers: {
+        Authorization: getToken(),
+      },
+    });
     return response.data;
   } catch (error) {
     if (error.response) {

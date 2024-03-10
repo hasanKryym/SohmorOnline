@@ -1,10 +1,9 @@
 import "./ShopItem.css";
 import { FaStar } from "react-icons/fa";
-import image from "../../../assets/images/shop page/Jack Daniels Burgers - Host The Toast.jpg";
 import { Link } from "react-router-dom";
 
 const ShopItem = ({ item }) => {
-  const { id, name, description, price, rating, offer } = item;
+  const { _id, name, description, image, price, rating, offer } = item;
   return (
     <>
       <div className="shop_item">
@@ -34,7 +33,7 @@ const ShopItem = ({ item }) => {
               </span>
               {rating}
             </span>
-            <Link to={"/shops/products/123"}>
+            <Link to={`/shops/products/${_id}`}>
               <button className="custom-button">View</button>
             </Link>
           </div>

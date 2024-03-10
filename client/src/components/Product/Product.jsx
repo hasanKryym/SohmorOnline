@@ -1,12 +1,11 @@
 import { useState } from "react";
 import "./Product.css";
 import { pagesNavArr, productNav } from "./ProuctEnum";
-import image from "../../assets/images/shop page/Brownie Milkshake.jpg";
 import { FaStar } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 
 const Product = ({ product }) => {
-  const { id, name, description, price, rating } = product;
+  const { _id, name, description, image, price, rating } = product;
 
   const [selectedPage, setSelectedPage] = useState(productNav.OVERVIEW);
 

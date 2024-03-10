@@ -21,6 +21,7 @@ import Domains from "./pages/Admins/SiteAdmin/Domains/Domains";
 import { DomainProvider } from "./context/Shop/Domains/DomainsContext";
 import EditShop from "./pages/Admins/ShopAdmin/EditShop/EditShop";
 import AddShop from "./pages/Admins/SiteAdmin/AddShop/AddShop";
+import BackNavigationHandler from "./components/BackNavigationHandler/BackNavigationHandler";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
                   <Notification />
                   <Router>
                     <ScrollToTop />
+                    <BackNavigationHandler />
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/cart" element={<Cart />} />

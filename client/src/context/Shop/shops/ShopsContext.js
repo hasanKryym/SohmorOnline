@@ -17,8 +17,10 @@ export const ShopProvider = ({ children }) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await getShops(shopId);
     if (response.success) {
+      // if (shopId) return response.shops[0];
       updateShops(response.shops);
       hideNotification();
+      return response;
     } else {
       showNotification(
         notificationTypes.ERROR,

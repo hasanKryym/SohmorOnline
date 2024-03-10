@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import "./Shop.css";
-import { shopsData } from "../Shops/shopsData";
 import Navbar from "../../components/Navbar/Navbar";
 import Slider from "../Home/HomeSlider/Slider";
 import ItemsSlider from "../../components/Shop/ItemsSlider/Slider";
@@ -8,24 +7,35 @@ import Footer from "../../components/Footer/Footer";
 import { FaStar } from "react-icons/fa";
 import { IoMdFlame } from "react-icons/io";
 import { FaFireFlameCurved } from "react-icons/fa6";
-import { shopItems } from "../../components/Shop/ShopItem/shopItems";
 import { useEffect, useState } from "react";
 import Products from "../../components/Products/Products";
+import { useShop } from "../../context/Shop/shops/ShopsContext";
+import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Shop = () => {
   const { id } = useParams();
-  const { name, description, rating, image } = shopsData[0];
-
-  const [items, setItems] = useState(shopItems);
-  const [offerItems, setOfferItems] = useState([]);
+  const { shops, get_shops } = useShop();
+  const {
+    products,
+    offers,
+    queryParameters,
+    setQueryParameters,
+    getOffers,
+    getShopProducts,
+  } = useProduct();
 
   useEffect(() => {
-    const offers = items.filter((item) => {
-      return item.offer > 0;
-    });
+    getOffers(products);
+  }, [products]);
 
-    setOfferItems(offers);
+  useEffect(() => {
+    get_shops(id);
+    setQueryParameters({ shopId: id });
   }, []);
+
+  useEffect(() => {
+    getShopProducts();
+  }, [queryParameters]);
 
   return (
     <>
@@ -36,7 +46,7 @@ const Shop = () => {
           <span className="star">
             <FaStar />
           </span>
-          {name}
+          {shops[0]?.name}
           <span className="star">
             <FaStar />
           </span>
@@ -53,8 +63,8 @@ const Shop = () => {
           </span>
         </div>
 
-        <ItemsSlider items={offerItems} />
-        <Products items={items} />
+        <ItemsSlider items={offers} />
+        <Products items={products} />
       </div>
 
       <Footer />
