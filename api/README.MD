@@ -211,7 +211,7 @@ Adds a new shop to the database. This endpoint is accessible only to site admins
 
 Deletes a shop from the database.
 
-- **URL:** `/api/shops/manage/delete/:id`
+- **URL:** `/shops/manage/delete/:id`
 - **Method:** `DELETE`
 - **Auth Required:** Yes
 - **Permissions Required:** Site Admin

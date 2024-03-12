@@ -1,7 +1,12 @@
 import { createContext, useContext, useState } from "react";
 import { useNotification } from "../../Notification/NotificationContext";
 import { notificationTypes } from "../../Notification/notificationEnum";
-import { add_shop, edit_shop, getShops } from "../../../services/shopService";
+import {
+  add_shop,
+  delete_shop,
+  edit_shop,
+  getShops,
+} from "../../../services/shopService";
 
 const ShopContext = createContext();
 
@@ -57,9 +62,24 @@ export const ShopProvider = ({ children }) => {
       );
   };
 
+  const deleteShop = async (shopId) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await delete_shop(shopId);
+    if (response.success) {
+      showNotification(
+        notificationTypes.SUCCESS,
+        response.message ? response.message : "shop deleted successfully"
+      );
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ? response.message : "error while deleting shop"
+      );
+  };
+
   return (
     <ShopContext.Provider
-      value={{ shops, updateShops, get_shops, editShop, addShop }}
+      value={{ shops, updateShops, get_shops, editShop, addShop, deleteShop }}
     >
       {children}
     </ShopContext.Provider>

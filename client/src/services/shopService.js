@@ -44,6 +44,20 @@ export const edit_shop = async (shopData) => {
   }
 };
 
+export const delete_shop = async (shopId) => {
+  try {
+    const response = await axios.delete(
+      `${baseUrl}/shops/manage/delete/${shopId}`,
+      {
+        headers: { Authorization: getToken() },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const getShopCategories = async (shopId) => {
   try {
     const response = await axios.get(

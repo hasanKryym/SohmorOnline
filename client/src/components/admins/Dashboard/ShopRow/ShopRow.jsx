@@ -1,7 +1,9 @@
 import "./ShopRow.css";
 import { FaTrashAlt } from "react-icons/fa";
 import { GrUserAdmin } from "react-icons/gr";
+import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 const ShopRow = ({ data }) => {
+  const { deleteShop } = useShop();
   return (
     <>
       {/* edit the table to be able to display the products data of the shop */}
@@ -22,7 +24,7 @@ const ShopRow = ({ data }) => {
                 <GrUserAdmin />
               </button>
               <button className="delete-btn">
-                <FaTrashAlt />
+                <FaTrashAlt onClick={() => deleteShop(shop._id)} />
               </button>
             </div>
           </td>
