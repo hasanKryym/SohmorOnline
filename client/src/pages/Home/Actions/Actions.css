@@ -21,6 +21,13 @@
   object-fit: cover;
 }
 
+.action .action_link {
+  width: 100%;
+}
+
+.action .action_link button {
+  width: inherit;
+}
 .action_details {
   display: flex;
   flex-direction: column;

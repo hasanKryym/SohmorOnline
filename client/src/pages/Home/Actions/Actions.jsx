@@ -2,6 +2,7 @@ import "./Actions.css";
 import { homeActions } from "./ActionsEnum";
 import imageAction1 from "../../../assets/images/homePage/shopbag.jpg";
 import imageAction2 from "../../../assets/images/homePage/buyOnline.jpg";
+import { Link } from "react-router-dom";
 
 const Actions = () => {
   return (
@@ -9,7 +10,7 @@ const Actions = () => {
       <div className="actions_container">
         <div className="title_container"></div>
 
-        {homeActions.map(({ title, description, button }, i) => {
+        {homeActions.map(({ title, description, button, link }, i) => {
           return (
             <article className={`action ${i % 2 !== 0 && "reverse"}`}>
               <img
@@ -19,7 +20,9 @@ const Actions = () => {
               <div className="action_details">
                 <h2 className="action_title">{title}</h2>
                 <p className="action_description">{description}</p>
-                <button className="custom-button">{button}</button>
+                <Link className="action_link" to={link}>
+                  <button className="custom-button">{button}</button>
+                </Link>
               </div>
             </article>
           );
