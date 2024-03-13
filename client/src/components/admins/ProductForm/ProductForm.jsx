@@ -15,7 +15,7 @@ const ProductForm = ({ clostProductForm, product }) => {
   const { user } = useUser();
 
   useEffect(() => {
-    getCategories(user.data.role.shop);
+    if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
   const [formData, setFormData] = useState({
     name: product?.name ?? "",

@@ -12,11 +12,14 @@ import {
   navbarLinks,
   headers,
 } from "../../../../enum/linksEnum/shopAdminLinks";
+import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
 
 const ShopAdminPanel = () => {
   const navigate = useNavigate();
   const { products, getShopProducts, queryParameters, setQueryParameters } =
     useProduct();
+
+  const { categories, getCategories } = useCategories();
   const { user } = useUser();
   // const [queryParameter, setQueryParameters] = useState({
   //   shopId: user.data.role.shop,
@@ -24,6 +27,7 @@ const ShopAdminPanel = () => {
 
   useEffect(() => {
     setQueryParameters({ shopId: user.data.role.shop });
+    getCategories(user.data.role.shop);
   }, []);
 
   // useEffect(() => {

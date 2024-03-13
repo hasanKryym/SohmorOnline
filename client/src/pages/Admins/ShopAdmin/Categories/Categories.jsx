@@ -16,7 +16,8 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    getCategories(user.data.role.shop);
+    console.log(categories);
+    if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
 
   const addShopCategory = async (e) => {
