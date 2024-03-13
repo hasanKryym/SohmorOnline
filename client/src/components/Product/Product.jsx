@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 
 const Product = ({ product }) => {
-  const { _id, name, description, image, price, rating } = product;
+  const { _id, name, description, image, price, offer, rating } = product;
 
   const [selectedPage, setSelectedPage] = useState(productNav.OVERVIEW);
 
@@ -17,7 +17,9 @@ const Product = ({ product }) => {
           <div className="product_info">
             <div className="title">
               {name}
-              <span className="price">${price}</span>
+              <span className="price">
+                ${offer !== 0 ? price - (price * offer) / 100 : price}
+              </span>
             </div>
             <div className="navigation">
               <ul className="list">
@@ -54,7 +56,7 @@ const Product = ({ product }) => {
               <div className="underline"></div>
             </div>
 
-            <p>{description}</p>
+            <p className="product_description">{description}</p>
 
             <div className="action-buttons">
               <button className="custom-button">Add To Cart</button>

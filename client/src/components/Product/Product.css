@@ -8,6 +8,11 @@
 .product {
   display: flex;
   gap: 2rem;
+  max-width: 1600px;
+}
+.product .product_info {
+  width: fit-content;
+  max-width: 50vw;
 }
 
 .product img {
@@ -37,6 +42,7 @@
   display: flex;
   list-style: none;
   padding: 1rem 0;
+  width: 100%;
 }
 
 .product .navigation .list .list-item {
@@ -75,6 +81,10 @@
 
 .product .navigation .list .list-item .underline.isSelected {
   background: var(--dark-charcoal);
+}
+
+.product .product_description {
+  max-width: 100%;
 }
 
 .product .action-buttons {
