@@ -16,10 +16,6 @@ const AddShop = () => {
 
   const { user } = useUser();
 
-  useEffect(() => {
-    getDomains();
-  }, []);
-
   const [formData, setFormData] = useState({
     name: "",
     description: "",

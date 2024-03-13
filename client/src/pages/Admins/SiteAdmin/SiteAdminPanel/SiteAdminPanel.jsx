@@ -11,9 +11,12 @@ import {
   navbarLinks,
   headers,
 } from "../../../../enum/linksEnum/siteAdminLinks";
+import { useDomain } from "../../../../context/Shop/Domains/DomainsContext";
 
 const SiteAdminPanel = () => {
   const { shops, get_shops } = useShop();
+  const { domains, getDomains } = useDomain();
+
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -24,7 +27,8 @@ const SiteAdminPanel = () => {
     ) {
       navigate("/");
     }
-    get_shops();
+    if (shops.length === 0) get_shops();
+    if (domains.length === 0) getDomains();
   }, []);
   return (
     <>
