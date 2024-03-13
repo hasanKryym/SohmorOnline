@@ -12,6 +12,7 @@ import { useEffect } from "react";
 const Product = () => {
   const { id } = useParams();
   const {
+    product,
     products,
     offers,
     queryParameters,
@@ -30,7 +31,7 @@ const Product = () => {
     <>
       <Navbar />
       <div>
-        <ProductDetails product={products[0]} />
+        <ProductDetails product={product} />
         <div className="title_container">Similar Products</div>
         {/* <Products items={shopItems} /> */}
         <Footer />

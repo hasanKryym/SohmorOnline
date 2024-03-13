@@ -5,12 +5,17 @@ import { CiSearch } from "react-icons/ci";
 import Footer from "../../components/Footer/Footer";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
 import { useEffect } from "react";
+import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Shops = () => {
-  const { shops, get_shops } = useShop();
+  const { shop, setShop, shops, get_shops } = useShop();
+  const { setProducts, setProduct } = useProduct();
 
   useEffect(() => {
-    get_shops();
+    if (shops.length === 0) get_shops();
+    setShop({});
+    setProduct({});
+    setProducts([]);
   }, []);
   return (
     <>

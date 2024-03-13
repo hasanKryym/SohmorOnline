@@ -12,6 +12,7 @@ const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
   const [shops, setShops] = useState([]);
+  const [shop, setShop] = useState({});
   const { showNotification, hideNotification } = useNotification();
 
   const updateShops = (newShopData) => {
@@ -22,7 +23,11 @@ export const ShopProvider = ({ children }) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await getShops(shopId);
     if (response.success) {
-      // if (shopId) return response.shops[0];
+      if (shopId) {
+        setShop(response.shops[0]);
+        hideNotification();
+        return;
+      }
       updateShops(response.shops);
       hideNotification();
       return response;
@@ -79,7 +84,16 @@ export const ShopProvider = ({ children }) => {
 
   return (
     <ShopContext.Provider
-      value={{ shops, updateShops, get_shops, editShop, addShop, deleteShop }}
+      value={{
+        shops,
+        shop,
+        setShop,
+        updateShops,
+        get_shops,
+        editShop,
+        addShop,
+        deleteShop,
+      }}
     >
       {children}
     </ShopContext.Provider>

@@ -15,6 +15,7 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const { showNotification, hideNotification } = useNotification();
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState({});
   const [offers, setOffers] = useState([]);
   const [queryParameters, setQueryParameters] = useState({});
 
@@ -37,11 +38,18 @@ export const ProductProvider = ({ children }) => {
   const getShopProducts = async () => {
     if (!queryParameters.shopId) {
       showNotification(notificationTypes.INFO);
+      setProducts([]);
       return;
     }
     showNotification(notificationTypes.LOAD, "");
     const response = await getProducts(queryParameters);
     if (response.success) {
+      if (queryParameters._id) {
+        console.log(queryParameters);
+        setProduct(response.products[0]);
+        hideNotification();
+        return;
+      }
       setProducts(response.products);
       hideNotification();
     } else
@@ -71,37 +79,6 @@ export const ProductProvider = ({ children }) => {
         response.message ? response.message : "error while adding new product"
       );
   };
-
-  // const editProduct = async (productId, updatedProduct) => {
-  //   if (!productId || !updatedProduct) {
-  //     showNotification(
-  //       notificationTypes.INFO,
-  //       "Please provide the productId and the updated product"
-  //     );
-  //     return;
-  //   }
-
-  //   showNotification(notificationTypes.LOAD, "");
-  //   const response = await edit_product(productId, updatedProduct);
-  //   if (response.success) {
-  //     showNotification(notificationTypes.SUCCESS, response.message);
-  //     updatedProduct._id = productId;
-  //     setProducts(
-  //       products.map((product) => {
-  //         if (product._id === productId) {
-  //           return updatedProduct;
-  //         }
-  //         return product;
-  //       })
-  //     );
-  //     return response;
-  //   } else {
-  //     showNotification(
-  //       notificationTypes.ERROR,
-  //       response.message ? response.message : "Error while editing the product"
-  //     );
-  //   }
-  // };
 
   const editProduct = async (productId, updatedFields) => {
     if (!productId || !updatedFields) {
@@ -172,7 +149,10 @@ export const ProductProvider = ({ children }) => {
   return (
     <ProductContext.Provider
       value={{
+        product,
+        setProduct,
         products,
+        setProducts,
         offers,
         queryParameters,
         setQueryParameters,

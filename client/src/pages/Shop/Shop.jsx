@@ -14,7 +14,7 @@ import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Shop = () => {
   const { id } = useParams();
-  const { shops, get_shops } = useShop();
+  const { shop, get_shops } = useShop();
   const {
     products,
     offers,
@@ -29,13 +29,11 @@ const Shop = () => {
   }, [products]);
 
   useEffect(() => {
-    get_shops(id);
-    setQueryParameters({ shopId: id });
+    if (!shop.name) {
+      get_shops(id);
+    }
+    if (products.length === 0) setQueryParameters({ shopId: id });
   }, []);
-
-  // useEffect(() => {
-  //   getShopProducts();
-  // }, [queryParameters]);
 
   return (
     <>
@@ -46,7 +44,7 @@ const Shop = () => {
           <span className="star">
             <FaStar />
           </span>
-          {shops[0]?.name}
+          {shop?.name}
           <span className="star">
             <FaStar />
           </span>
