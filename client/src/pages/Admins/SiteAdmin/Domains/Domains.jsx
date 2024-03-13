@@ -12,9 +12,9 @@ const Domains = () => {
   const handleChange = (event) => {
     setNewDomain(event.target.value);
   };
-  // useEffect(() => {
-  //   getDomains();
-  // }, []);
+  useEffect(() => {
+    if (domains.length === 0) getDomains();
+  }, []);
 
   const addNewDomain = async (e) => {
     e.preventDefault();
