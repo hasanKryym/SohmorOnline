@@ -48,7 +48,7 @@ export const ShopProvider = ({ children }) => {
     } else {
       showNotification(
         notificationTypes.ERROR,
-        response.message ? response.message : "error while editing shop"
+        response.message ? response.message : "error while adding the shop"
       );
       return response;
     }
@@ -58,7 +58,7 @@ export const ShopProvider = ({ children }) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await edit_shop(shopData);
     if (response.success) {
-      setShops([response.shop]);
+      setShop(response.shop);
       showNotification(notificationTypes.SUCCESS, response.message);
     } else
       showNotification(

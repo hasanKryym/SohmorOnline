@@ -26,13 +26,11 @@ const ShopAdminPanel = () => {
   // });
 
   useEffect(() => {
-    setQueryParameters({ shopId: user.data.role.shop });
-    getCategories(user.data.role.shop);
-  }, []);
+    if (products.length === 0)
+      setQueryParameters({ shopId: user.data.role.shop });
 
-  // useEffect(() => {
-  //   getShopProducts();
-  // }, [queryParameters]);
+    if (categories.length === 0) getCategories(user.data.role.shop);
+  }, []);
 
   useEffect(() => {
     if (
@@ -41,7 +39,6 @@ const ShopAdminPanel = () => {
     ) {
       navigate("/");
     }
-    // getShopProducts(queryParameters);
   }, []);
 
   const [showProductForm, setShowProductForm] = useState(false);

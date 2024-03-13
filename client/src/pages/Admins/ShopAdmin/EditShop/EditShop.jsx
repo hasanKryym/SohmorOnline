@@ -12,25 +12,25 @@ import AddImage from "../../../../components/UploadCare/UploadCare";
 const EditShop = () => {
   const { showNotification } = useNotification();
   const { domains, getDomains } = useDomain();
-  const { shops, get_shops, editShop } = useShop();
+  const { shop, shops, get_shops, editShop } = useShop();
 
   const { user } = useUser();
 
   useEffect(() => {
-    get_shops(user.data.role.shop);
-    getDomains();
+    if (!shop.name) get_shops(user.data.role.shop);
+    if (domains.length === 0) getDomains();
   }, []);
 
   useEffect(() => {
     setFormData({
-      name: shops[0]?.name,
-      description: shops[0]?.description,
-      address: shops[0]?.address,
-      phoneNumber: shops[0]?.phoneNumber,
-      domain: shops[0]?.domain,
-      image: shops[0]?.image,
+      name: shop?.name,
+      description: shop?.description,
+      address: shop?.address,
+      phoneNumber: shop?.phoneNumber,
+      domain: shop?.domain,
+      image: shop?.image,
     });
-  }, [shops]);
+  }, [shop]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -64,6 +64,7 @@ const EditShop = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     if (
       !formData.name ||
       !formData.description ||
@@ -80,12 +81,12 @@ const EditShop = () => {
     }
 
     if (
-      formData.name === shops[0].name &&
-      formData.description === shops[0].description &&
-      formData.image === shops[0].image &&
-      formData.address === shops[0].address &&
-      formData.phoneNumber === shops[0].phoneNumber &&
-      formData.domain === shops[0].domain
+      formData.name === shop.name &&
+      formData.description === shop.description &&
+      formData.image === shop.image &&
+      formData.address === shop.address &&
+      formData.phoneNumber === shop.phoneNumber &&
+      formData.domain === shop.domain
     )
       return;
     editShop(formData);
