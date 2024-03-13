@@ -122,12 +122,14 @@ UserSchema.statics.register = async function (userData) {
 
   const newUser = new this(userData);
   await newUser.save();
-
-  const token = newUser.createJWT();
-
   // Exclude password from user object
   const userWithoutPassword = newUser.toObject();
   delete userWithoutPassword.password;
+
+  if (userData?.role?.position === "shopAdmin")
+    return { user: userWithoutPassword, token: null };
+
+  const token = newUser.createJWT();
 
   return { user: userWithoutPassword, token };
 };

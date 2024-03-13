@@ -8,6 +8,7 @@ import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import { useDomain } from "../../../../context/Shop/Domains/DomainsContext";
 import { useNotification } from "../../../../context/Notification/NotificationContext";
 import AddImage from "../../../../components/UploadCare/UploadCare";
+import userPositions from "../../../../enum/userEnum/userPositionsEnum";
 
 const AddShop = () => {
   const { showNotification } = useNotification();
@@ -15,6 +16,26 @@ const AddShop = () => {
   const { shops, get_shops, editShop, addShop } = useShop();
 
   const { user } = useUser();
+
+  useEffect(() => {
+    if (domains.length === 0) getDomains();
+  }, []);
+
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    number: "",
+    role: {
+      position: userPositions.SHOP_ADMIN,
+      shop: "",
+    },
+  });
+  const handleUserDataChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -54,7 +75,12 @@ const AddShop = () => {
       !formData.image ||
       !formData.address ||
       !formData.phoneNumber ||
-      formData.domain.length === 0
+      formData.domain.length === 0 ||
+      !userData.name ||
+      !userData.email ||
+      !userData.password ||
+      !userData.address ||
+      !userData.number
     ) {
       showNotification(
         notificationTypes.INFO,
@@ -63,8 +89,8 @@ const AddShop = () => {
       return;
     }
 
-    const response = await addShop(formData);
-    if (response.success)
+    const response = await addShop(formData, userData);
+    if (response.success) {
       setFormData({
         name: "",
         description: "",
@@ -73,6 +99,18 @@ const AddShop = () => {
         domain: "",
         image: "",
       });
+      setUserData({
+        name: "",
+        email: "",
+        password: "",
+        address: "",
+        number: "",
+        role: {
+          position: userPositions.SHOP_ADMIN,
+          shop: "",
+        },
+      });
+    }
   };
   return (
     <>
@@ -131,6 +169,50 @@ const AddShop = () => {
               </li>
             ))}
           </ul>
+          <div className="title_container">Admin Info:</div>
+          <label className="form-label">name:</label>
+          <input
+            type="text"
+            name="name"
+            value={userData.name}
+            onChange={handleUserDataChange}
+            className="custom-input"
+          />
+
+          <label className="form-label">email:</label>
+          <input
+            type="text"
+            name="email"
+            value={userData.email}
+            onChange={handleUserDataChange}
+            className="custom-input"
+          />
+
+          <label className="form-label">password:</label>
+          <input
+            type="password"
+            name="password"
+            value={userData.password}
+            onChange={handleUserDataChange}
+            className="custom-input"
+          />
+
+          <label className="form-label">address:</label>
+          <input
+            type="address"
+            name="address"
+            value={userData.address}
+            onChange={handleUserDataChange}
+            className="custom-input"
+          />
+          <label className="form-label">number:</label>
+          <input
+            type="text"
+            name="number"
+            value={userData.number}
+            onChange={handleUserDataChange}
+            className="custom-input"
+          />
           <div className="shopForm_buttons-container">
             <button type="submit" className="custom-button">
               Add Shop

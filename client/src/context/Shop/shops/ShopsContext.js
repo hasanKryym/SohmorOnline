@@ -7,6 +7,7 @@ import {
   edit_shop,
   getShops,
 } from "../../../services/shopService";
+import { register } from "../../../services/userService";
 
 const ShopContext = createContext();
 
@@ -39,12 +40,22 @@ export const ShopProvider = ({ children }) => {
     }
   };
 
-  const addShop = async (shopData) => {
+  const addShop = async (shopData, adminData) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await add_shop(shopData);
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
-      return response;
+      const shop = response.shop;
+      adminData.role.shop = shop._id;
+      const res = await register(adminData);
+      if (res.success) {
+        showNotification(notificationTypes.SUCCESS, response.message);
+        return response;
+      } else {
+        showNotification(
+          notificationTypes.ERROR,
+          response.message ? response.message : "error while adding admin"
+        );
+      }
     } else {
       showNotification(
         notificationTypes.ERROR,
