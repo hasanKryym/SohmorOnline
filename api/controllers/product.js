@@ -8,6 +8,7 @@ const {
 const asyncWrapper = require("../middleware/async");
 const Product = require("../models/Product");
 const { Shop } = require("../models/Shop");
+const { ProductReview } = require("../models/Review");
 
 const addProduct = asyncWrapper(async (req, res) => {
   const { name, description, price, rating, offer, image, categories } =
@@ -142,9 +143,28 @@ const getProducts = asyncWrapper(async (req, res) => {
   });
 });
 
+const addReview = asyncWrapper(async (req, res) => {
+  const review = req.body;
+  const { productId, rating, comment } = review;
+
+  if (!productId) throw new BadRequestError("please Provide the product Id");
+  if (!rating && !comment)
+    throw new BadRequestError("please Provide the rating or the comment");
+  review.userId = req.user.userId;
+
+  const responseObj = await ProductReview.addReview(review);
+
+  return res
+    .status(
+      responseObj.success ? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR
+    )
+    .json(responseObj);
+});
+
 module.exports = {
   addProduct,
   getProducts,
   editProduct,
   deleteProducts,
+  addReview,
 };
