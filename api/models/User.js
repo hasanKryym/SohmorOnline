@@ -70,11 +70,6 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
-UserSchema.pre("save", async function () {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
 UserSchema.methods.createJWT = function () {
   return jwt.sign(
     { userId: this._id, name: this.name, role: this.role },
@@ -88,6 +83,12 @@ UserSchema.methods.createJWT = function () {
 UserSchema.methods.comparePassword = async function (canditatePassword) {
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
   return isMatch;
+};
+
+UserSchema.methods.hashPassword = async function (password) {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
 };
 
 UserSchema.statics.login = async function (email, password) {
@@ -121,6 +122,7 @@ UserSchema.statics.register = async function (userData) {
   if (username) throw new BadRequestError("username already exists");
 
   const newUser = new this(userData);
+  newUser.password = await newUser.hashPassword(userData.password); // Assign hashed password
   await newUser.save();
   // Exclude password from user object
   const userWithoutPassword = newUser.toObject();
@@ -143,7 +145,7 @@ UserSchema.statics.updateCart = async function (userId, cartItems) {
     const user = await User.findById(userId);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new NotFoundError("User not found");
     }
 
     // Update the user's cart based on the provided cart items
