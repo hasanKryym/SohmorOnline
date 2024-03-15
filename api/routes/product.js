@@ -10,6 +10,7 @@ const {
   editProduct,
   addReview,
   getReview,
+  getProductsById,
 } = require("../controllers/product");
 
 router.route("/manage/add").post(authenticate, checkShopAdmin, addProduct);
@@ -18,6 +19,7 @@ router
   .route("/manage/delete")
   .delete(authenticate, checkShopAdmin, deleteProducts);
 router.route("/").get(getProducts);
+router.route("/getById").post(getProductsById);
 
 router.route("/review").post(authenticate, addReview);
 router.route("/review").get(authenticate, getReview);

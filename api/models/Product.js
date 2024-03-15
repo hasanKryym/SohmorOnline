@@ -99,6 +99,17 @@ ProductSchema.statics.getProducts = async function (queryParameters) {
   return products;
 };
 
+ProductSchema.statics.getProductsById = async function (productIds) {
+  try {
+    const products = await this.find({ _id: { $in: productIds } }).populate(
+      "categories"
+    );
+    return products;
+  } catch (error) {
+    throw new Error(`Error fetching products by IDs: ${error.message}`);
+  }
+};
+
 const Product = mongoose.model("Product", ProductSchema);
 
 module.exports = Product;

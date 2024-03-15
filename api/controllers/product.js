@@ -143,6 +143,19 @@ const getProducts = asyncWrapper(async (req, res) => {
   });
 });
 
+const getProductsById = asyncWrapper(async (req, res) => {
+  const { productsIds } = req.body;
+  if (!productsIds)
+    throw new BadRequestError("Please provide the products ids");
+  const products = await Product.getProductsById(productsIds);
+
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    products,
+    message: "products retrieved successfully",
+  });
+});
+
 const addReview = asyncWrapper(async (req, res) => {
   const review = req.body;
   const { productId, rating, comment } = review;
@@ -182,6 +195,7 @@ module.exports = {
   getProducts,
   editProduct,
   deleteProducts,
+  getProductsById,
   addReview,
   getReview,
 };
