@@ -1,0 +1,53 @@
+.rating-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  z-index: 1000;
+}
+
+.rating-form-container .star-rating {
+  margin-bottom: 20px;
+}
+
+.rating-form-container .star-rating span {
+  font-size: 24px;
+  color: #ffd700; /* Golden yellow */
+  cursor: pointer;
+}
+
+.rating-form-container .star-rating span.star-empty {
+  color: #ccc; /* Light gray */
+}
+
+.rating-form-container .comment-input {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.rating-form-container .buttons_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* .rating-form-container button {
+  background-color: #007bff; 
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.rating-form-container button:hover {
+  background-color: #0056b3; 
+} */

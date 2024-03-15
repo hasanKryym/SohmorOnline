@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../../Notification/NotificationContext";
 import {
   addProduct,
+  add_review,
   deleteProduct,
   edit_product,
   getProducts,
@@ -146,6 +147,22 @@ export const ProductProvider = ({ children }) => {
     );
   };
 
+  const addReview = async (review) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await add_review(review);
+    if (response.success)
+      showNotification(notificationTypes.SUCCESS, response.message);
+    else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message
+          ? response.message
+          : "error while deleteing the products"
+      );
+
+    return response;
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -162,6 +179,7 @@ export const ProductProvider = ({ children }) => {
         updateProducts,
         deleteProductsById,
         editProduct,
+        addReview,
       }}
     >
       {children}

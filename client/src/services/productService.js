@@ -93,3 +93,21 @@ export const deleteProduct = async (productsToDelete) => {
     }
   }
 };
+
+export const add_review = async (review) => {
+  try {
+    const response = await axios.post(`${baseUrl}/products/review`, review, {
+      headers: {
+        Authorization: getToken(),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while adding the product Review: ${error.message}`);
+      throw error;
+    }
+  }
+};

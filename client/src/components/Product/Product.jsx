@@ -3,14 +3,24 @@ import "./Product.css";
 import { pagesNavArr, productNav } from "./ProuctEnum";
 import { FaStar } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
+import RatingForm from "../RatingForm/RatingForm";
 
 const Product = ({ product }) => {
   const { _id, name, description, image, price, offer, rating } = product;
+  const [showRatingForm, setShowRatingForm] = useState(false);
+
+  const closeRatingForm = () => {
+    setShowRatingForm(false);
+  };
 
   const [selectedPage, setSelectedPage] = useState(productNav.OVERVIEW);
 
   return (
     <>
+      {showRatingForm && (
+        <RatingForm closeRatingForm={closeRatingForm} productId={_id} />
+      )}
+
       <div className="product_container">
         <div className="product">
           <img src={image} alt="" />
@@ -65,7 +75,10 @@ const Product = ({ product }) => {
               </button>
             </div>
 
-            <button className="custom-button rate-button">
+            <button
+              onClick={() => setShowRatingForm(true)}
+              className="custom-button rate-button"
+            >
               Rate this{" "}
               <span className="star">
                 <FaStar />
