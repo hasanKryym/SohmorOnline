@@ -6,19 +6,27 @@ import {
   deleteProduct,
   edit_product,
   getProducts,
+  get_review,
 } from "../../../services/productService";
 import { notificationTypes } from "../../Notification/notificationEnum";
+import { useUser } from "../../User/UserContext";
 
 // Create the context
 const ProductContext = createContext();
 
 // Create a provider component
 export const ProductProvider = ({ children }) => {
+  const { user } = useUser();
   const { showNotification, hideNotification } = useNotification();
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [offers, setOffers] = useState([]);
   const [queryParameters, setQueryParameters] = useState({});
+
+  const [userReview, setUserReview] = useState({
+    rating: 0,
+    comment: "",
+  });
 
   const updateProducts = (newProduct) => {
     setProducts((prevState) => [...prevState, newProduct]);
@@ -46,8 +54,8 @@ export const ProductProvider = ({ children }) => {
     const response = await getProducts(queryParameters);
     if (response.success) {
       if (queryParameters._id) {
-        console.log(queryParameters);
         setProduct(response.products[0]);
+        if (user.status.isLoggedIn) getUserReview(queryParameters._id);
         hideNotification();
         return;
       }
@@ -163,6 +171,20 @@ export const ProductProvider = ({ children }) => {
     return response;
   };
 
+  const getUserReview = async (productId) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await get_review(productId);
+    if (response.success) {
+      setUserReview(response.review);
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message
+          ? response.message
+          : "error while retrieving user review"
+      );
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -173,6 +195,8 @@ export const ProductProvider = ({ children }) => {
         offers,
         queryParameters,
         setQueryParameters,
+        userReview,
+        setUserReview,
         getShopProducts,
         getOffers,
         addNewProduct,

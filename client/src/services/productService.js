@@ -111,3 +111,24 @@ export const add_review = async (review) => {
     }
   }
 };
+
+export const get_review = async (productId) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/products/review?productId=${productId}`,
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while adding the product Review: ${error.message}`);
+      throw error;
+    }
+  }
+};

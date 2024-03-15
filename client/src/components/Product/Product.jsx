@@ -4,8 +4,10 @@ import { pagesNavArr, productNav } from "./ProuctEnum";
 import { FaStar } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import RatingForm from "../RatingForm/RatingForm";
+import { useUser } from "../../context/User/UserContext";
 
 const Product = ({ product }) => {
+  const { isLoggedIn, showLoginNotification } = useUser();
   const { _id, name, description, image, price, offer, rating } = product;
   const [showRatingForm, setShowRatingForm] = useState(false);
 
@@ -76,7 +78,13 @@ const Product = ({ product }) => {
             </div>
 
             <button
-              onClick={() => setShowRatingForm(true)}
+              onClick={() => {
+                if (!isLoggedIn()) {
+                  showLoginNotification();
+                  return;
+                }
+                setShowRatingForm(true);
+              }}
               className="custom-button rate-button"
             >
               Rate this{" "}

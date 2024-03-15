@@ -72,6 +72,22 @@ ProductReviewSchema.statics.addReview = async function (review) {
   }
 };
 
+ProductReviewSchema.statics.getReview = async function (productId, userId) {
+  try {
+    const userReview = await this.findOne({ productId, userId });
+    const rating = userReview?.rating ?? 0;
+    const comment = userReview?.comment ?? "";
+
+    return {
+      success: true,
+      review: { rating, comment },
+      message: "review retrieved successfully",
+    };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 // schema for shop reviews
 const ShopReviewSchema = new mongoose.Schema({
   shopId: {

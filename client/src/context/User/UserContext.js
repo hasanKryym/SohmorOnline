@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNotification } from "../Notification/NotificationContext";
+import { notificationTypes } from "../Notification/notificationEnum";
 
 const UserContext = createContext();
 
@@ -24,6 +26,19 @@ export const UserProvider = ({ children }) => {
         },
   });
 
+  const { showNotification } = useNotification();
+
+  const isLoggedIn = () => {
+    return user.status.isLoggedIn;
+  };
+
+  const showLoginNotification = () => {
+    showNotification(
+      notificationTypes.INFO,
+      "Please login to access this feature"
+    );
+  };
+
   // Function to update user data
   // const updateUserData = (newUserData) => {
   //   setUser((prevUser) => ({
@@ -40,7 +55,9 @@ export const UserProvider = ({ children }) => {
   // }, [user.status.isLoggedIn]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser, isLoggedIn, showLoginNotification }}
+    >
       {children}
     </UserContext.Provider>
   );

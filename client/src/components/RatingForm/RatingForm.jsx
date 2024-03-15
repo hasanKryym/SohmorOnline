@@ -3,8 +3,9 @@ import "./RatingForm.css";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const RatingForm = ({ closeRatingForm, productId }) => {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+  const { userReview, setUserReview } = useProduct();
+  const [rating, setRating] = useState(userReview.rating);
+  const [comment, setComment] = useState(userReview.comment);
   const { addReview } = useProduct();
 
   const handleRatingChange = (newRating) => {
@@ -20,12 +21,10 @@ const RatingForm = ({ closeRatingForm, productId }) => {
 
     if (!rating && !comment) return;
 
-    console.log(productId);
     if (productId) {
       const response = await addReview({ productId, rating, comment });
       if (response.success) {
-        setRating(0);
-        setComment("");
+        setUserReview({ rating, comment });
       }
     }
   };

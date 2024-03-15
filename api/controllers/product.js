@@ -161,10 +161,27 @@ const addReview = asyncWrapper(async (req, res) => {
     .json(responseObj);
 });
 
+const getReview = asyncWrapper(async (req, res) => {
+  const { productId } = req.query;
+  const userId = req.user.userId;
+
+  if (!productId || !userId)
+    throw new BadRequestError("please provide the product Id");
+
+  const response = await ProductReview.getReview(productId, userId);
+
+  return res
+    .status(
+      response.success ? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR
+    )
+    .json(response);
+});
+
 module.exports = {
   addProduct,
   getProducts,
   editProduct,
   deleteProducts,
   addReview,
+  getReview,
 };
