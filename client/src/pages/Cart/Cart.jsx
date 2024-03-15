@@ -7,8 +7,8 @@ import { useCart } from "../../context/Cart/CartContext";
 
 const Cart = () => {
   const [showOrderSummary, setShowOrderSummary] = useState(false);
-  const { cartItems } = useCart();
-  console.log(cartItems);
+  const { cartItems, cartProductsDetails } = useCart();
+  console.log(cartProductsDetails);
 
   const closeSummary = () => {
     setShowOrderSummary(false);
@@ -39,9 +39,9 @@ const Cart = () => {
               <th>Quantity</th>
               <th>Price</th>
               <th>Total</th>
-
-              <CartProduct />
-              <CartProduct />
+              {cartProductsDetails.map((product) => {
+                return <CartProduct product={product} />;
+              })}
             </table>
           </div>
         </div>

@@ -38,6 +38,22 @@ export const getProducts = async (queryParameter) => {
   }
 };
 
+export const getProductsByIds = async (productsIds) => {
+  try {
+    const response = await axios.post(`${baseUrl}/products/getById`, {
+      productsIds,
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while fetching products: ${error.message}`);
+      throw error;
+    }
+  }
+};
+
 export const addProduct = async (product) => {
   try {
     const response = await axios.post(

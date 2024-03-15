@@ -3,6 +3,7 @@ import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
 import { updateUserCart } from "../../services/userService";
 import { useUser } from "../User/UserContext";
+import { useProduct } from "../Shop/Products/ProductsContext";
 
 // Create the context
 const CartContext = createContext();
@@ -11,12 +12,52 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const { showNotification } = useNotification();
   const { user } = useUser();
+  const { getProductsById } = useProduct();
 
   const [cartItems, setCartItems] = useState(user?.data?.cart ?? []);
 
+  const [cartProductsDetails, setCartProductsDetails] = useState([]);
+
   useEffect(() => {
-    if (cartItems !== user?.data?.cart) updateCart(cartItems);
+    if (cartItems !== user?.data?.cart) {
+      updateCart(cartItems);
+    }
+    getProductsDetails();
   }, [cartItems]);
+
+  //   useEffect(() => {
+  //     if (cartItems.length !== 0 || cartProductsDetails.length !== 0)
+  //       getProductsDetails();
+  //   }, []);
+
+  const getProductsDetails = async () => {
+    const productsIds = cartItems.map(({ product }) => {
+      return product;
+    });
+    const response = await getProductsById(productsIds);
+
+    // response.products.map((product) => {
+    //   cartItems.map((item) => {
+    //     if (product._id === item.product) product.quantity = item.quantity;
+    //   });
+    // });
+
+    // Create a hash map of cart items for efficient lookup
+    const cartItemMap = {};
+    cartItems.forEach((item) => {
+      cartItemMap[item.product] = item.quantity;
+    });
+
+    // Update products in response with quantities from the cart
+    response.products.forEach((product) => {
+      const quantity = cartItemMap[product._id];
+      if (quantity !== undefined) {
+        product.quantity = quantity;
+      }
+    });
+
+    setCartProductsDetails(response.products);
+  };
 
   const addToCart = (item) => {
     setCartItems((prevItems) => [...prevItems, item]);
@@ -53,6 +94,7 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        cartProductsDetails,
         addToCart,
         removeFromCart,
         clearCart,

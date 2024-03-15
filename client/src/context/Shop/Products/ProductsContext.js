@@ -6,6 +6,7 @@ import {
   deleteProduct,
   edit_product,
   getProducts,
+  getProductsByIds,
   get_review,
 } from "../../../services/productService";
 import { notificationTypes } from "../../Notification/notificationEnum";
@@ -185,6 +186,15 @@ export const ProductProvider = ({ children }) => {
       );
   };
 
+  const getProductsById = async (productsIds) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await getProductsByIds(productsIds);
+    if (response.success) {
+      hideNotification();
+      return response;
+    } else showNotification(notificationTypes.ERROR, response.message);
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -204,6 +214,7 @@ export const ProductProvider = ({ children }) => {
         deleteProductsById,
         editProduct,
         addReview,
+        getProductsById,
       }}
     >
       {children}

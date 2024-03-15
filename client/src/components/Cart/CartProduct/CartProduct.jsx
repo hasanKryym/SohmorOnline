@@ -2,16 +2,19 @@ import "./CartProduct.css";
 import hamburger from "../../../assets/images/shop page/Jack Daniels Burgers - Host The Toast.jpg";
 import { Link } from "react-router-dom";
 
-const CartProducts = () => {
+const CartProducts = ({ product }) => {
   return (
     <tr className="cart_product">
       <td className="product-data">
         <div className="product-details">
-          <img src={hamburger} alt="" />
+          <img src={product.image} alt="" />
           <div className="info">
-            <h4>Hamburger</h4>
-            <Link to={"/"} className="shop-link charcoal">
-              simple
+            <h4>{product.name}</h4>
+            <Link
+              to={`/shops/products/${product._id}`}
+              className="shop-link charcoal"
+            >
+              view
             </Link>
           </div>
         </div>
@@ -19,16 +22,16 @@ const CartProducts = () => {
 
       <td className="product-data">
         <button>-</button>
-        <span className="quantity">1</span>
+        <span className="quantity">{product.quantity}</span>
         <button>+</button>
       </td>
 
       <td className="product-data">
-        <span className="price">$8</span>
+        <span className="price">${product.price}</span>
       </td>
 
       <td className="product-data">
-        <span className="total">$8</span>
+        <span className="total">${product.quantity * product.price}</span>
       </td>
     </tr>
   );
