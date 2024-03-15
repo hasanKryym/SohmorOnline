@@ -22,6 +22,7 @@ import { DomainProvider } from "./context/Shop/Domains/DomainsContext";
 import EditShop from "./pages/Admins/ShopAdmin/EditShop/EditShop";
 import AddShop from "./pages/Admins/SiteAdmin/AddShop/AddShop";
 import BackNavigationHandler from "./components/BackNavigationHandler/BackNavigationHandler";
+import { CartProvider } from "./context/Cart/CartContext";
 
 function App() {
   return (
@@ -34,42 +35,47 @@ function App() {
                 <CategoriesProvider>
                   <Notification />
                   <Router>
-                    <ScrollToTop />
-                    {/* <BackNavigationHandler /> */}
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/cart" element={<Cart />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/shops" element={<Shops />} />
-                      <Route path="/shops/:id" element={<Shop />} />
-                      <Route path="/shops/products/:id" element={<Product />} />
-                      <Route
-                        path="/shops/adminPanel/dashboard"
-                        element={<ShopAdminPanel />}
-                      />
-                      <Route
-                        path="/shops/adminPanel/manage/categories"
-                        element={<Categories />}
-                      />
-                      <Route
-                        path="/siteAdmin/adminPanel/dashboard"
-                        element={<SiteAdminPanel />}
-                      />
-                      <Route
-                        path="/siteAdmin/adminPanel/domains"
-                        element={<Domains />}
-                      />
-                      <Route
-                        path="/shops/adminPanel/manage/editShop"
-                        element={<EditShop />}
-                      />
-                      <Route
-                        path="/siteAdmin/adminPanel/manage/addShop"
-                        element={<AddShop />}
-                      />
-                    </Routes>
+                    <CartProvider>
+                      <ScrollToTop />
+                      {/* <BackNavigationHandler /> */}
+                      <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/shops" element={<Shops />} />
+                        <Route path="/shops/:id" element={<Shop />} />
+                        <Route
+                          path="/shops/products/:id"
+                          element={<Product />}
+                        />
+                        <Route
+                          path="/shops/adminPanel/dashboard"
+                          element={<ShopAdminPanel />}
+                        />
+                        <Route
+                          path="/shops/adminPanel/manage/categories"
+                          element={<Categories />}
+                        />
+                        <Route
+                          path="/siteAdmin/adminPanel/dashboard"
+                          element={<SiteAdminPanel />}
+                        />
+                        <Route
+                          path="/siteAdmin/adminPanel/domains"
+                          element={<Domains />}
+                        />
+                        <Route
+                          path="/shops/adminPanel/manage/editShop"
+                          element={<EditShop />}
+                        />
+                        <Route
+                          path="/siteAdmin/adminPanel/manage/addShop"
+                          element={<AddShop />}
+                        />
+                      </Routes>
+                    </CartProvider>
                   </Router>
                 </CategoriesProvider>
               </ProductProvider>
