@@ -1,8 +1,25 @@
 import "./CartProduct.css";
 import hamburger from "../../../assets/images/shop page/Jack Daniels Burgers - Host The Toast.jpg";
 import { Link } from "react-router-dom";
+import { useCart } from "../../../context/Cart/CartContext";
 
 const CartProducts = ({ product }) => {
+  const {
+    cartProductsDetails,
+    setCartProductsDetails,
+    cartItems,
+    setCartItems,
+  } = useCart();
+
+  const updateProductQuantity = () => {
+    const newproductQuantity = cartItems.map((item) => {
+      if (item.product === product._id) item.quantity = product.quantity;
+      return item;
+    });
+    console.log(newproductQuantity);
+
+    setCartItems(newproductQuantity);
+  };
   return (
     <tr className="cart_product">
       <td className="product-data">
@@ -10,20 +27,27 @@ const CartProducts = ({ product }) => {
           <img src={product.image} alt="" />
           <div className="info">
             <h4>{product.name}</h4>
-            <Link
+            {/* <Link
               to={`/shops/products/${product._id}`}
               className="shop-link charcoal"
             >
               view
-            </Link>
+            </Link> */}
           </div>
         </div>
       </td>
 
       <td className="product-data">
-        <button>-</button>
+        <button
+          onClick={() => {
+            product.quantity--;
+            updateProductQuantity();
+          }}
+        >
+          -
+        </button>
         <span className="quantity">{product.quantity}</span>
-        <button>+</button>
+        <button onClick={() => product.quantity++}>+</button>
       </td>
 
       <td className="product-data">

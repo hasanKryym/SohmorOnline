@@ -18,7 +18,11 @@ export const DomainProvider = ({ children }) => {
     if (response.success) {
       setDomains(response.domains);
       hideNotification();
-    } else showNotification(notificationTypes.ERROR, response.message);
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ?? "error while fetching domains"
+      );
   };
 
   const addDomain = async (domain) => {

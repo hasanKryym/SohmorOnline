@@ -47,7 +47,7 @@ export const ProductProvider = ({ children }) => {
 
   const getShopProducts = async () => {
     if (!queryParameters.shopId) {
-      showNotification(notificationTypes.INFO);
+      // showNotification(notificationTypes.INFO, "Please provide the shopId");
       setProducts([]);
       return;
     }

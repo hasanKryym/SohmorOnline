@@ -11,7 +11,7 @@ const CartContext = createContext();
 // Create a provider component
 export const CartProvider = ({ children }) => {
   const { showNotification } = useNotification();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { getProductsById } = useProduct();
 
   const [cartItems, setCartItems] = useState(user?.data?.cart ?? []);
@@ -22,13 +22,12 @@ export const CartProvider = ({ children }) => {
     if (cartItems !== user?.data?.cart) {
       updateCart(cartItems);
     }
-    getProductsDetails();
+    if (cartItems.length !== 0) getProductsDetails();
   }, [cartItems]);
 
-  //   useEffect(() => {
-  //     if (cartItems.length !== 0 || cartProductsDetails.length !== 0)
-  //       getProductsDetails();
-  //   }, []);
+  useEffect(() => {
+    setCartItems(user.data.cart);
+  }, [user.data.cart]);
 
   const getProductsDetails = async () => {
     const productsIds = cartItems.map(({ product }) => {
@@ -86,6 +85,13 @@ export const CartProvider = ({ children }) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await updateUserCart(cartItems);
     if (response.success) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        data: {
+          ...prevUser.data,
+          cart: response.updatedCart,
+        },
+      }));
       showNotification(notificationTypes.SUCCESS, response.message);
     } else showNotification(notificationTypes.ERROR, response.message);
   };
@@ -94,7 +100,9 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        setCartItems,
         cartProductsDetails,
+        setCartProductsDetails,
         addToCart,
         removeFromCart,
         clearCart,

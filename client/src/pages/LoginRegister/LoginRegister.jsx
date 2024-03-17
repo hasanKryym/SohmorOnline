@@ -40,7 +40,6 @@ const Login = () => {
     const response = await login(formData);
     if (response.success) {
       localStorage.setItem("token", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
       setUser((prevUser) => ({
         ...prevUser,
         status: {

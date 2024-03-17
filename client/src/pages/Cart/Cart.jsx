@@ -7,8 +7,7 @@ import { useCart } from "../../context/Cart/CartContext";
 
 const Cart = () => {
   const [showOrderSummary, setShowOrderSummary] = useState(false);
-  const { cartItems, cartProductsDetails } = useCart();
-  console.log(cartProductsDetails);
+  const { cartProductsDetails } = useCart();
 
   const closeSummary = () => {
     setShowOrderSummary(false);
@@ -30,7 +29,7 @@ const Cart = () => {
                 </span>
               </h2>
             </div>
-            <span>2 items</span>
+            <span>{cartProductsDetails.length} items</span>
           </div>
           <div className="underline-sky-blue"></div>
           <div className="cart-details">
