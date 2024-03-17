@@ -84,9 +84,8 @@ const OrderSummary = ({ onClose }) => {
                 />
               </div>
             </div>
-
-            <button type="submit">Submit</button>
-            <div className="underline-beige"></div>
+            <br />
+            <div className="underline-sky-blue"></div>
 
             <div className="summary-total">
               <p>Total</p>
