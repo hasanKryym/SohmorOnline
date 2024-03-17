@@ -1,7 +1,7 @@
 import "./CartProduct.css";
-import hamburger from "../../../assets/images/shop page/Jack Daniels Burgers - Host The Toast.jpg";
-import { Link } from "react-router-dom";
 import { useCart } from "../../../context/Cart/CartContext";
+import { debounce } from "lodash";
+import { useCallback, useState } from "react";
 
 const CartProducts = ({ product }) => {
   const {
@@ -11,15 +11,26 @@ const CartProducts = ({ product }) => {
     setCartItems,
   } = useCart();
 
-  const updateProductQuantity = () => {
-    const newproductQuantity = cartItems.map((item) => {
-      if (item.product === product._id) item.quantity = product.quantity;
-      return item;
-    });
-    console.log(newproductQuantity);
+  // const updateProductQuantity = () => {
+  //   const newproductQuantity = cartItems.map((item) => {
+  //     if (item.product === product._id) item.quantity = product.quantity;
+  //     return item;
+  //   });
+  //   setCartItems(newproductQuantity);
+  // };
 
-    setCartItems(newproductQuantity);
-  };
+  const [productQuantity, setProductQuantity] = useState(product.quantity);
+
+  const updateProductQuantity = useCallback(
+    debounce((quantity) => {
+      const newproductQuantity = cartItems.map((item) => {
+        if (item.product === product._id) item.quantity = quantity;
+        return item;
+      });
+      setCartItems(newproductQuantity);
+    }, 500),
+    [product.quantity]
+  );
   return (
     <tr className="cart_product">
       <td className="product-data">
@@ -40,14 +51,27 @@ const CartProducts = ({ product }) => {
       <td className="product-data">
         <button
           onClick={() => {
-            product.quantity--;
-            updateProductQuantity();
+            setProductQuantity((prevState) => {
+              const newValue = prevState > 1 ? prevState - 1 : 1;
+              updateProductQuantity(newValue);
+              return newValue; // Return the new value for immediate update
+            });
           }}
         >
           -
         </button>
-        <span className="quantity">{product.quantity}</span>
-        <button onClick={() => product.quantity++}>+</button>
+        <span className="quantity">{productQuantity}</span>
+        <button
+          onClick={() => {
+            setProductQuantity((prevState) => {
+              const newValue = prevState + 1;
+              updateProductQuantity(newValue);
+              return newValue;
+            });
+          }}
+        >
+          +
+        </button>
       </td>
 
       <td className="product-data">
@@ -55,7 +79,7 @@ const CartProducts = ({ product }) => {
       </td>
 
       <td className="product-data">
-        <span className="total">${product.quantity * product.price}</span>
+        <span className="total">${productQuantity * product.price}</span>
       </td>
     </tr>
   );
