@@ -62,6 +62,11 @@ const UserSchema = new mongoose.Schema({
         ref: "Product",
         required: true,
       },
+      shop: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Shop",
+        required: true,
+      },
       quantity: {
         type: Number,
         required: true,
@@ -144,6 +149,7 @@ UserSchema.statics.updateCart = async function (userId, cartItems) {
   try {
     const User = this;
     const user = await User.findById(userId);
+    console.log(cartItems);
 
     if (!user) {
       throw new NotFoundError("User not found");
