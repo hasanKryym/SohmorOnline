@@ -5,11 +5,17 @@ import { FaStar } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import RatingForm from "../RatingForm/RatingForm";
 import { useUser } from "../../context/User/UserContext";
+import { useCart } from "../../context/Cart/CartContext";
+import { useShop } from "../../context/Shop/shops/ShopsContext";
 
 const Product = ({ product }) => {
   const { isLoggedIn, showLoginNotification } = useUser();
   const { _id, name, description, image, price, offer, rating } = product;
   const [showRatingForm, setShowRatingForm] = useState(false);
+  const { addToCart } = useCart();
+  const { shop } = useShop();
+
+  console.log(shop);
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
@@ -71,7 +77,14 @@ const Product = ({ product }) => {
             <p className="product_description">{description}</p>
 
             <div className="action-buttons">
-              <button className="custom-button">Add To Cart</button>
+              <button
+                onClick={() => {
+                  addToCart({ product: _id, shop: shop._id, quantity: 1 });
+                }}
+                className="custom-button"
+              >
+                Add To Cart
+              </button>
               <button className="custom-button heart">
                 <FaHeart />
               </button>
