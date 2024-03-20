@@ -2,6 +2,7 @@ import "./CartProduct.css";
 import { useCart } from "../../../context/Cart/CartContext";
 import { debounce } from "lodash";
 import { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 
 const CartProducts = ({ product }) => {
   const {
@@ -38,12 +39,9 @@ const CartProducts = ({ product }) => {
           <img src={product.image} alt="" />
           <div className="info">
             <h4>{product.name}</h4>
-            {/* <Link
-              to={`/shops/products/${product._id}`}
-              className="shop-link charcoal"
-            >
-              view
-            </Link> */}
+            <Link to={`/shops/${product.shop}`} className="shop-link charcoal">
+              view Shop
+            </Link>
           </div>
         </div>
       </td>

@@ -44,14 +44,22 @@ export const CartProvider = ({ children }) => {
     // Create a hash map of cart items for efficient lookup
     const cartItemMap = {};
     cartItems.forEach((item) => {
-      cartItemMap[item.product] = item.quantity;
+      // cartItemMap[item.product] = item.quantity;
+      const quantity = item.quantity;
+      const shop = item.shop;
+      cartItemMap[item.product] = { quantity, shop };
     });
 
     // Update products in response with quantities from the cart
     response.products.forEach((product) => {
-      const quantity = cartItemMap[product._id];
+      const quantity = cartItemMap[product._id].quantity;
+      const shop = cartItemMap[product._id].shop;
       if (quantity !== undefined) {
         product.quantity = quantity;
+      }
+
+      if (shop !== undefined) {
+        product.shop = shop;
       }
     });
 

@@ -149,7 +149,6 @@ UserSchema.statics.updateCart = async function (userId, cartItems) {
   try {
     const User = this;
     const user = await User.findById(userId);
-    console.log(cartItems);
 
     if (!user) {
       throw new NotFoundError("User not found");
