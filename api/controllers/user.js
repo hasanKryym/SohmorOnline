@@ -16,6 +16,13 @@ const updateCart = asyncWrapper(async (req, res) => {
     .json({ success: true, message: "cart updated successfully", updatedCart });
 });
 
+const clearCart = asyncWrapper(async (req, res) => {
+  const userId = req.user.userId;
+  const response = await User.clearCart(userId);
+  return res.status(StatusCodes.OK).json(response);
+});
+
 module.exports = {
   updateCart,
+  clearCart,
 };

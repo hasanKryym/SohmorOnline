@@ -5,6 +5,7 @@ const {
   UnauthenticatedError,
   BadRequestError,
   NotFoundError,
+  InternalServerError,
 } = require("../errors");
 
 const UserSchema = new mongoose.Schema({
@@ -167,7 +168,25 @@ UserSchema.statics.updateCart = async function (userId, cartItems) {
 
     return user.cart; // Return the updated cart
   } catch (error) {
-    throw new Error(`Failed to update cart: ${error.message}`);
+    throw new InternalServerError(`Failed to update cart: ${error.message}`);
+  }
+};
+
+UserSchema.statics.clearCart = async function (userId) {
+  try {
+    const User = this;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new NotFoundError("User not found");
+    }
+
+    user.cart = [];
+    await user.save();
+
+    return { success: true, message: "cart cleared successfully" };
+  } catch (error) {
+    throw new InternalServerError(`Failed to clear cart: ${error.message}`);
   }
 };
 
