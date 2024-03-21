@@ -187,10 +187,10 @@ export const ProductProvider = ({ children }) => {
   };
 
   const getProductsById = async (productsIds) => {
-    showNotification(notificationTypes.LOAD, "");
+    // showNotification(notificationTypes.LOAD, "");
     const response = await getProductsByIds(productsIds);
     if (response.success) {
-      hideNotification();
+      // hideNotification();
       return response;
     } else showNotification(notificationTypes.ERROR, response.message);
   };

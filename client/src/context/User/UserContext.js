@@ -5,8 +5,6 @@ import { notificationTypes } from "../Notification/notificationEnum";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  // The error is that in the localStorage the userObject is not being updated so the cart returns back to its initial state on refresh
-  // I have to figure a way to update to localStarage user object when the user data changes
   const [user, setUser] = useState({
     status: {
       isLoggedIn: localStorage.getItem("token") ? true : false,

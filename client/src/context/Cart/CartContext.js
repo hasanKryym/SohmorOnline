@@ -20,7 +20,6 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     if (cartItems !== user?.data?.cart) {
-      console.log("called");
       updateCart(cartItems);
     }
     if (cartItems.length !== 0) getProductsDetails();
