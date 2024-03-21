@@ -145,6 +145,38 @@ UserSchema.statics.register = async function (userData) {
 //CART
 
 // Static method to update the user's cart
+// UserSchema.statics.updateCart = async function (userId, cartItems) {
+//   try {
+//     const User = this;
+//     const user = await User.findById(userId);
+
+//     if (!user) {
+//       throw new NotFoundError("User not found");
+//     }
+
+//     // Update the user's cart based on the provided cart items
+//     cartItems.forEach((item) => {
+//       const index = user.cart.findIndex((cartItem) =>
+//         cartItem.product.equals(item.product)
+//       );
+//       if (index !== -1) {
+//         // If the product already exists in the cart, update its quantity
+//         user.cart[index].quantity = item.quantity;
+//       } else {
+//         // If the product is not in the cart, add it
+//         user.cart.push(item);
+//       }
+//     });
+
+//     // Save the updated user document
+//     await user.save();
+
+//     return user.cart; // Return the updated cart
+//   } catch (error) {
+//     throw new InternalServerError(`Failed to update cart: ${error.message}`);
+//   }
+// };
+
 UserSchema.statics.updateCart = async function (userId, cartItems) {
   try {
     const User = this;
@@ -154,19 +186,7 @@ UserSchema.statics.updateCart = async function (userId, cartItems) {
       throw new NotFoundError("User not found");
     }
 
-    // Update the user's cart based on the provided cart items
-    cartItems.forEach((item) => {
-      const index = user.cart.findIndex((cartItem) =>
-        cartItem.product.equals(item.product)
-      );
-      if (index !== -1) {
-        // If the product already exists in the cart, update its quantity
-        user.cart[index].quantity = item.quantity;
-      } else {
-        // If the product is not in the cart, add it
-        user.cart.push(item);
-      }
-    });
+    user.cart = cartItems;
 
     // Save the updated user document
     await user.save();

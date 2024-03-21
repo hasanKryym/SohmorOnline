@@ -15,8 +15,6 @@ const Product = ({ product }) => {
   const { addToCart } = useCart();
   const { shop } = useShop();
 
-  console.log(shop);
-
   const closeRatingForm = () => {
     setShowRatingForm(false);
   };
