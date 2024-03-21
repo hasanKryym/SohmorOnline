@@ -7,7 +7,7 @@ import { useCart } from "../../context/Cart/CartContext";
 
 const Cart = () => {
   const [showOrderSummary, setShowOrderSummary] = useState(false);
-  const { cartProductsDetails } = useCart();
+  const { cartProductsDetails, clearCart } = useCart();
 
   const closeSummary = () => {
     setShowOrderSummary(false);
@@ -48,12 +48,22 @@ const Cart = () => {
                   })}
                 </table>
               </div>
-              <div className="middle two-rem">
+              <div
+                className="middle two-rem"
+                style={{ display: "flex", gap: "1rem" }}
+              >
                 <button
                   onClick={() => setShowOrderSummary(true)}
                   className="custom-button"
                 >
                   CHECKOUT
+                </button>
+
+                <button
+                  onClick={() => clearCart()}
+                  className="secondary-button"
+                >
+                  clear
                 </button>
               </div>
             </>

@@ -3,14 +3,10 @@ import { useCart } from "../../../context/Cart/CartContext";
 import { debounce } from "lodash";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 
 const CartProducts = ({ product }) => {
-  const {
-    cartProductsDetails,
-    setCartProductsDetails,
-    cartItems,
-    setCartItems,
-  } = useCart();
+  const { cartItems, setCartItems, removeFromCart } = useCart();
 
   // const updateProductQuantity = () => {
   //   const newproductQuantity = cartItems.map((item) => {
@@ -78,6 +74,15 @@ const CartProducts = ({ product }) => {
 
       <td className="product-data">
         <span className="total">${productQuantity * product.price}</span>
+      </td>
+      <td className="product-data">
+        <button
+          onClick={() => {
+            removeFromCart(product._id);
+          }}
+        >
+          <FaTrashAlt />
+        </button>
       </td>
     </tr>
   );

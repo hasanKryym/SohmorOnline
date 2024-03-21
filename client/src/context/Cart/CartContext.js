@@ -20,6 +20,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     if (cartItems !== user?.data?.cart) {
+      console.log("called");
       updateCart(cartItems);
     }
     if (cartItems.length !== 0) getProductsDetails();
@@ -67,15 +68,27 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (item) => {
-    setCartItems((prevItems) => [...prevItems, item]);
+    let flag = true;
+    cartItems.map((cartItem) => {
+      if (cartItem.product === item.product) flag = false;
+    });
+    if (flag) setCartItems((prevItems) => [...prevItems, item]);
+    else
+      showNotification(
+        notificationTypes.INFO,
+        "product is already present in the cart"
+      );
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.product !== itemId)
+    );
   };
 
   const clearCart = () => {
     setCartItems([]);
+    setCartProductsDetails([]);
   };
 
   const getTotalItems = () => {
