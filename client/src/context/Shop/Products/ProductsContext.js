@@ -21,6 +21,7 @@ export const ProductProvider = ({ children }) => {
   const { showNotification, hideNotification } = useNotification();
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
+  const [prouctReviews, setProductReviews] = useState([]);
   const [offers, setOffers] = useState([]);
   const [queryParameters, setQueryParameters] = useState({});
 

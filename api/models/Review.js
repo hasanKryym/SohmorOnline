@@ -81,7 +81,40 @@ ProductReviewSchema.statics.getReview = async function (productId, userId) {
     return {
       success: true,
       review: { rating, comment },
-      message: "review retrieved successfully",
+      message: "User review retrieved successfully",
+    };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+// ProductReviewSchema.statics.getReviews = async function (productId, userId) {
+//   try {
+//     const reviews = await this.find({ productId });
+//     return {
+//       success: true,
+//       reviews,
+//       message: "Product reviews retrieved successfully",
+//     };
+//   } catch (error) {
+//     return { success: false, message: error.message };
+//   }
+// };
+
+ProductReviewSchema.statics.getReviews = async function (
+  productId,
+  excludeUserId
+) {
+  try {
+    let query = { productId };
+    if (excludeUserId) {
+      query.userId = { $ne: excludeUserId };
+    }
+    const reviews = await this.find(query);
+    return {
+      success: true,
+      reviews,
+      message: "Product reviews retrieved successfully",
     };
   } catch (error) {
     return { success: false, message: error.message };

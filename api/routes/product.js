@@ -11,6 +11,7 @@ const {
   addReview,
   getReview,
   getProductsById,
+  getProductReviews,
 } = require("../controllers/product");
 
 router.route("/manage/add").post(authenticate, checkShopAdmin, addProduct);
@@ -23,5 +24,6 @@ router.route("/getById").post(getProductsById);
 
 router.route("/review").post(authenticate, addReview);
 router.route("/review").get(authenticate, getReview);
+router.route("/reviews").get(authenticate, getProductReviews);
 
 module.exports = router;

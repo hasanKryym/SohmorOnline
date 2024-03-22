@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Product.css";
 import { pagesNavArr, productNav } from "./ProuctEnum";
 import { FaStar } from "react-icons/fa";
@@ -20,6 +20,10 @@ const Product = ({ product }) => {
   };
 
   const [selectedPage, setSelectedPage] = useState(productNav.OVERVIEW);
+
+  useEffect(() => {
+    console.log("changed");
+  }, [selectedPage]);
 
   return (
     <>
@@ -44,6 +48,7 @@ const Product = ({ product }) => {
                     <li
                       key={id}
                       onClick={(e) => {
+                        if (e.currentTarget.id === productNav.RATING) return;
                         setSelectedPage(e.currentTarget.id);
                       }}
                       className="list-item"

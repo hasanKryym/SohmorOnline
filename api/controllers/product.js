@@ -190,6 +190,22 @@ const getReview = asyncWrapper(async (req, res) => {
     .json(response);
 });
 
+const getProductReviews = asyncWrapper(async (req, res) => {
+  const { productId } = req.query;
+  const userId = req.user.userId;
+
+  if (!productId || !userId)
+    throw new BadRequestError("please provide the product Id");
+
+  const response = await ProductReview.getReviews(productId, userId);
+
+  return res
+    .status(
+      response.success ? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR
+    )
+    .json(response);
+});
+
 module.exports = {
   addProduct,
   getProducts,
@@ -198,4 +214,5 @@ module.exports = {
   getProductsById,
   addReview,
   getReview,
+  getProductReviews,
 };
