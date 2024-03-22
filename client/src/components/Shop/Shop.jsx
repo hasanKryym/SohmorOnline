@@ -15,12 +15,12 @@ const Shop = ({ shop }) => {
         <p className="description charcoal">{description}</p>
 
         <div className="footer">
-          <span className="rating">
+          {/* <span className="rating">
             <span className="star">
               <FaStar />
             </span>
             {rating}
-          </span>
+          </span> */}
           <Link to={`/shops/${shop._id}`}>
             <button className="custom-button">View</button>
           </Link>

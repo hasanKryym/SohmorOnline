@@ -199,14 +199,15 @@ export const ProductProvider = ({ children }) => {
     const response = await getProduct_reviews(productId);
     if (response.success) {
       setProductReviews(response.reviews);
-      hideNotification();
-    } else
-      showNotification(
-        notificationTypes.ERROR,
-        response.message
-          ? response.message
-          : "error while retrieving product reviews"
-      );
+    } else console.log(response.message);
+
+    hideNotification();
+    // showNotification(
+    //   notificationTypes.ERROR,
+    //   response.message
+    //     ? response.message
+    //     : "error while retrieving product reviews"
+    // );
   };
 
   const getProductsById = async (productsIds) => {

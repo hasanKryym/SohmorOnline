@@ -25,6 +25,7 @@ const RatingForm = ({ closeRatingForm, productId }) => {
       const response = await addReview({ productId, rating, comment });
       if (response.success) {
         setUserReview({ rating, comment });
+        closeRatingForm();
       }
     }
   };

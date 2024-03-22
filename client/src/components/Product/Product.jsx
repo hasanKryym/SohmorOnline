@@ -47,6 +47,13 @@ const Product = ({ product }) => {
                       key={id}
                       onClick={(e) => {
                         if (e.currentTarget.id === productNav.RATING) return;
+                        if (
+                          !isLoggedIn() &&
+                          e.currentTarget.id === productNav.COMMENTS
+                        ) {
+                          showLoginNotification();
+                          return;
+                        }
                         setSelectedPage(e.currentTarget.id);
                       }}
                       className="list-item"
@@ -82,6 +89,10 @@ const Product = ({ product }) => {
             <div className="action-buttons">
               <button
                 onClick={() => {
+                  if (!isLoggedIn()) {
+                    showLoginNotification();
+                    return;
+                  }
                   addToCart({ product: _id, shop: shop._id, quantity: 1 });
                 }}
                 className="custom-button"
