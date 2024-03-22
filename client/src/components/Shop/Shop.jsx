@@ -1,6 +1,5 @@
 import "./Shop.css";
 import { FaStar } from "react-icons/fa";
-import Image from "../../assets/images/shops page/Designing a Modern Fast Food Restaurant.jpg";
 import { Link } from "react-router-dom";
 
 const Shop = ({ shop }) => {
@@ -9,7 +8,7 @@ const Shop = ({ shop }) => {
   return (
     <>
       <div className="shop">
-        <img src={Image} alt="" />
+        <img src={image} alt="" />
         <div className="title">
           <h3>{name}</h3>
         </div>

@@ -15,6 +15,7 @@ import { useProduct } from "../../context/Shop/Products/ProductsContext";
 const Shop = () => {
   const { id } = useParams();
   const { shop, get_shops } = useShop();
+  const { setProductReviews } = useProduct();
   const {
     products,
     offers,
@@ -35,6 +36,10 @@ const Shop = () => {
     if (products.length === 0) setQueryParameters({ shopId: id });
   }, []);
 
+  useEffect(() => {
+    setProductReviews([]);
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -51,17 +56,21 @@ const Shop = () => {
         </div>
         <Slider />
 
-        <div className="title_container">
-          <span className="flame">
-            <FaFireFlameCurved />
-          </span>
-          OFFERS
-          <span className="flame">
-            <FaFireFlameCurved />
-          </span>
-        </div>
+        {offers.length !== 0 && (
+          <>
+            <div className="title_container">
+              <span className="flame">
+                <FaFireFlameCurved />
+              </span>
+              OFFERS
+              <span className="flame">
+                <FaFireFlameCurved />
+              </span>
+            </div>
+            <ItemsSlider items={offers} />
+          </>
+        )}
 
-        <ItemsSlider items={offers} />
         <Products items={products} />
       </div>
 

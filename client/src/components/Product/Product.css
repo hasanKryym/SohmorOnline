@@ -12,6 +12,7 @@
 }
 .product .product_info {
   width: fit-content;
+  width: 50vw;
   max-width: 50vw;
 }
 

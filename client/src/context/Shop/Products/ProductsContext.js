@@ -5,6 +5,7 @@ import {
   add_review,
   deleteProduct,
   edit_product,
+  getProduct_reviews,
   getProducts,
   getProductsByIds,
   get_review,
@@ -21,7 +22,7 @@ export const ProductProvider = ({ children }) => {
   const { showNotification, hideNotification } = useNotification();
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
-  const [prouctReviews, setProductReviews] = useState([]);
+  const [productReviews, setProductReviews] = useState([]);
   const [offers, setOffers] = useState([]);
   const [queryParameters, setQueryParameters] = useState({});
 
@@ -45,6 +46,11 @@ export const ProductProvider = ({ children }) => {
   useEffect(() => {
     getShopProducts();
   }, [queryParameters]);
+
+  useEffect(() => {
+    if (!product._id) return;
+    getProductReviews(product._id);
+  }, [product]);
 
   const getShopProducts = async () => {
     if (!queryParameters.shopId) {
@@ -187,6 +193,22 @@ export const ProductProvider = ({ children }) => {
       );
   };
 
+  const getProductReviews = async (productId) => {
+    if (productReviews.length !== 0) return;
+    showNotification(notificationTypes.LOAD, "");
+    const response = await getProduct_reviews(productId);
+    if (response.success) {
+      setProductReviews(response.reviews);
+      hideNotification();
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message
+          ? response.message
+          : "error while retrieving product reviews"
+      );
+  };
+
   const getProductsById = async (productsIds) => {
     // showNotification(notificationTypes.LOAD, "");
     const response = await getProductsByIds(productsIds);
@@ -215,6 +237,9 @@ export const ProductProvider = ({ children }) => {
         deleteProductsById,
         editProduct,
         addReview,
+        productReviews,
+        setProductReviews,
+        getProductReviews,
         getProductsById,
       }}
     >

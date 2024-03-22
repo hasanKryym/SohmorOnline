@@ -7,6 +7,8 @@ import RatingForm from "../RatingForm/RatingForm";
 import { useUser } from "../../context/User/UserContext";
 import { useCart } from "../../context/Cart/CartContext";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
+import { useProduct } from "../../context/Shop/Products/ProductsContext";
+import Comments from "./Comments/Comments";
 
 const Product = ({ product }) => {
   const { isLoggedIn, showLoginNotification } = useUser();
@@ -20,10 +22,6 @@ const Product = ({ product }) => {
   };
 
   const [selectedPage, setSelectedPage] = useState(productNav.OVERVIEW);
-
-  useEffect(() => {
-    console.log("changed");
-  }, [selectedPage]);
 
   return (
     <>
@@ -76,8 +74,10 @@ const Product = ({ product }) => {
               </ul>
               <div className="underline"></div>
             </div>
-
-            <p className="product_description">{description}</p>
+            {selectedPage === productNav.OVERVIEW && (
+              <p className="product_description">{description}</p>
+            )}
+            {selectedPage === productNav.COMMENTS && <Comments />}
 
             <div className="action-buttons">
               <button

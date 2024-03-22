@@ -2,7 +2,7 @@ import "./Cart.css";
 import Navbar from "../../components/Navbar/Navbar";
 import CartProduct from "../../components/Cart/CartProduct/CartProduct";
 import OrderSummary from "../../components/Cart/OrderSummary/OrderSummary";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../../context/Cart/CartContext";
 
 const Cart = () => {

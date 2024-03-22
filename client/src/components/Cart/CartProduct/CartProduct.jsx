@@ -35,9 +35,9 @@ const CartProducts = ({ product }) => {
           <img src={product.image} alt="" />
           <div className="info">
             <h4>{product.name}</h4>
-            <Link to={`/shops/${product.shop}`} className="shop-link charcoal">
+            {/* <Link to={`/shops/${product.shop}`} className="shop-link charcoal">
               view Shop
-            </Link>
+            </Link> */}
           </div>
         </div>
       </td>

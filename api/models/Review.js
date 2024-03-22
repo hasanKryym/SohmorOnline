@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Product = require("./Product");
+const User = require("./User");
 
 // schema for product reviews
 const ProductReviewSchema = new mongoose.Schema({
@@ -110,10 +111,19 @@ ProductReviewSchema.statics.getReviews = async function (
     if (excludeUserId) {
       query.userId = { $ne: excludeUserId };
     }
-    const reviews = await this.find(query);
+    let reviews = await this.find(query);
+
+    // Create a new array of plain JavaScript objects with the added username property
+    const updatedReviews = await Promise.all(
+      reviews.map(async (review) => {
+        const user = await User.findById(review.userId);
+        return { ...review.toObject(), username: user.name };
+      })
+    );
+
     return {
       success: true,
-      reviews,
+      reviews: updatedReviews,
       message: "Product reviews retrieved successfully",
     };
   } catch (error) {
