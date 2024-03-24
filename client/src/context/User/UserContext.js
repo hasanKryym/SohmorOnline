@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
+import { editUser } from "../../services/userService";
 
 const UserContext = createContext();
 
@@ -44,6 +45,34 @@ export const UserProvider = ({ children }) => {
     );
   };
 
+  const editUserData = async (userData) => {
+    if (
+      userData.name === user.data.name &&
+      userData.address === user.data.address &&
+      userData.number === user.data.number
+    )
+      return;
+    showNotification(notificationTypes.LOAD, "");
+
+    const response = await editUser(userData);
+
+    if (response.success) {
+      // setUser(response?.newUserData);
+      const newUser = response?.newUserData;
+      setUser({
+        ...user,
+        data: {
+          ...user.data,
+          name: newUser.name,
+          address: newUser.address,
+          number: newUser.number,
+        },
+      });
+      console.log(response);
+      showNotification(notificationTypes.SUCCESS, "Data updated successfully");
+    } else showNotification(notificationTypes.ERROR, response.message);
+  };
+
   // Function to update user data
   // const updateUserData = (newUserData) => {
   //   setUser((prevUser) => ({
@@ -61,7 +90,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, isLoggedIn, showLoginNotification }}
+      value={{ user, setUser, editUserData, isLoggedIn, showLoginNotification }}
     >
       {children}
     </UserContext.Provider>

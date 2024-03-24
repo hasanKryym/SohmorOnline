@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema({
     required: [true, "please provide name"],
     minlength: 3,
     maxlength: 50,
-    unique: true,
   },
 
   email: {
@@ -233,7 +232,32 @@ UserSchema.statics.replaceCart = async function (userId, newCartItems) {
 
     return user.cart; // Return the updated cart
   } catch (error) {
-    throw new Error(`Failed to replace cart: ${error.message}`);
+    throw new InternalServerError(`Failed to replace cart: ${error.message}`);
+  }
+};
+
+UserSchema.statics.editUserData = async function (userId, userData) {
+  try {
+    const newUserData = await this.findByIdAndUpdate(userId, userData, {
+      new: true,
+    });
+
+    if (!newUserData) {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+
+    return {
+      success: true,
+      newUserData,
+      message: "User data updated successfully",
+    };
+  } catch (error) {
+    throw new InternalServerError(
+      `Failed to update user data: ${error.message}`
+    );
   }
 };
 

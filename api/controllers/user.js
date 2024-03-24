@@ -22,7 +22,16 @@ const clearCart = asyncWrapper(async (req, res) => {
   return res.status(StatusCodes.OK).json(response);
 });
 
+const editUserData = asyncWrapper(async (req, res) => {
+  const userId = req.user.userId;
+  const { userData } = req.body;
+  if (!userData) throw new BadRequestError("please provide userData");
+  const response = await User.editUserData(userId, userData);
+  return res.status(StatusCodes.OK).json(response);
+});
+
 module.exports = {
   updateCart,
   clearCart,
+  editUserData,
 };
