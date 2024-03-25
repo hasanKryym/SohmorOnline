@@ -40,6 +40,7 @@ const Shop = () => {
     setProductReviews([]);
   }, []);
 
+  console.log(shop);
   return (
     <>
       <Navbar />
@@ -54,7 +55,7 @@ const Shop = () => {
             <FaStar />
           </span>
         </div>
-        <Slider />
+        <Slider images={shop?.sliderImages ?? []} />
 
         {offers.length !== 0 && (
           <>

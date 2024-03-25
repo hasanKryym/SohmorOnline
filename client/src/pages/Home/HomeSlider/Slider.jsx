@@ -11,7 +11,7 @@ import "./Slider.css";
 import image1 from "../../../assets/images/homePage/homeSlider1.jpg";
 import shopbag from "../../../assets/images/homePage/shopbag.jpg";
 
-const Slider = () => {
+const Slider = ({ images }) => {
   return (
     <>
       <div className="swiper_container">
@@ -34,12 +34,17 @@ const Slider = () => {
             disableOnInteraction: false,
           }}
         >
-          <SwiperSlide>
-            <img src={image1} alt="" />
-          </SwiperSlide>
-          <SwiperSlide>
+          {images.map((link) => {
+            return (
+              <SwiperSlide>
+                <img src={link} alt="" />
+              </SwiperSlide>
+            );
+          })}
+
+          {/* <SwiperSlide>
             <img src={shopbag} alt="" />
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
       </div>
     </>

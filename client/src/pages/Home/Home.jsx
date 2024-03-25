@@ -12,7 +12,6 @@ import { useEffect } from "react";
 const Home = () => {
   const navigate = useNavigate();
   const { user } = useUser();
-  console.log(user);
 
   useEffect(() => {
     if (user.data.role.position === UserPositions.SHOP_ADMIN)
@@ -24,7 +23,7 @@ const Home = () => {
     <>
       <div className="homeContainer">
         <Navbar />
-        <Slider />
+        {/* <Slider /> */}
         <Features />
         <Actions />
         <Footer />

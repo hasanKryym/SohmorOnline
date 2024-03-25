@@ -23,6 +23,7 @@ import EditShop from "./pages/Admins/ShopAdmin/EditShop/EditShop";
 import AddShop from "./pages/Admins/SiteAdmin/AddShop/AddShop";
 import BackNavigationHandler from "./components/BackNavigationHandler/BackNavigationHandler";
 import { CartProvider } from "./context/Cart/CartContext";
+import SliderImages from "./pages/Admins/ShopAdmin/SliderImages/SliderImages";
 
 function App() {
   return (
@@ -73,6 +74,10 @@ function App() {
                         <Route
                           path="/siteAdmin/adminPanel/manage/addShop"
                           element={<AddShop />}
+                        />
+                        <Route
+                          path="/shops/adminPanel/manage/sliderImages"
+                          element={<SliderImages />}
                         />
                       </Routes>
                     </CartProvider>
