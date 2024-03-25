@@ -23,7 +23,6 @@ const AccountInfo = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log(formData);
     e.preventDefault();
     editUserData(formData);
 

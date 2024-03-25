@@ -68,7 +68,6 @@ export const UserProvider = ({ children }) => {
           number: newUser.number,
         },
       });
-      console.log(response);
       showNotification(notificationTypes.SUCCESS, "Data updated successfully");
     } else showNotification(notificationTypes.ERROR, response.message);
   };
