@@ -1,11 +1,12 @@
 .swiper_container {
-  background: var(--terracotta-red);
+  /* background: var(--terracotta-red); */
   width: 100vw;
   max-width: 2000px;
   overflow-x: hidden;
+  max-width: 1500px;
 }
 .swiper_container .swiper {
-  padding: 2rem;
+  /* padding: 2rem; */
   max-height: inherit;
 }
 
@@ -16,9 +17,9 @@
 }
 
 .swiper img {
-  width: 100vw;
+  width: inherit;
   height: 550px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 520px) {

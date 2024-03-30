@@ -34,7 +34,6 @@ const ShopAdminPanel = () => {
     if (categories.length === 0) getCategories(user.data.role.shop);
     console.log(shop);
     if (!shop.name) {
-      console.log("called");
       get_shops(user.data.role.shop);
     }
   }, []);

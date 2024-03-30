@@ -1,0 +1,20 @@
+.images_container {
+  width: 90vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.images_container .slider_img {
+  width: 400px;
+  height: 400px;
+  background: var(--dark-charcoal);
+}
+
+.images_container .slider_img img {
+  height: 350px;
+  width: 400px;
+  object-fit: cover;
+}
