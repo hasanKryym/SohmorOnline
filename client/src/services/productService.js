@@ -6,6 +6,7 @@ const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 export const getProducts = async (queryParameter) => {
   let url = `${baseUrl}/products?shopId=${queryParameter.shopId}`;
   if (queryParameter._id) url += `&_id=${queryParameter._id}`;
+  if (queryParameter.search) url += `&search=${queryParameter.search}`;
   try {
     const response = await axios.get(url, queryParameter, {
       headers: {

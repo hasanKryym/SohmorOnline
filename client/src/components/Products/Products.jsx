@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Products = ({ items }) => {
+  const [searchInput, setSearchInput] = useState("");
   const {
     products,
     offers,
@@ -19,16 +20,29 @@ const Products = ({ items }) => {
         <div className="title_container">Products</div>
         <div className="middle">
           <div className="search-input_container">
-            <input
-              className="custom-input"
-              type="text"
-              name=""
-              id=""
-              placeholder="Search products..."
-            />
-            <button className="search-btn">
-              <CiSearch />
-            </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchInput)
+                  setQueryParameters({
+                    ...queryParameters,
+                    search: searchInput,
+                  });
+              }}
+            >
+              <input
+                className="custom-input"
+                type="text"
+                name=""
+                id=""
+                placeholder="Search products..."
+                onChange={(e) => setSearchInput(e.currentTarget.value)}
+                value={searchInput}
+              />
+              <button type="submit" className="search-btn">
+                <CiSearch />
+              </button>
+            </form>
           </div>
           <button className="custom-button">filter</button>
         </div>
