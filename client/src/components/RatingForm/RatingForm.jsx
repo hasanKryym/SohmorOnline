@@ -20,6 +20,7 @@ const RatingForm = ({ closeRatingForm, productId }) => {
     event.preventDefault();
 
     if (!rating && !comment) return;
+    if (userReview.rating === rating && userReview.comment === comment) return;
 
     if (productId) {
       const response = await addReview({ productId, rating, comment });
