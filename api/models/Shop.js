@@ -118,7 +118,14 @@ ShopSchema.statics.deleteShop = async function (shopId) {
 };
 
 ShopSchema.statics.getShops = async function (queryParameters) {
-  const shops = await this.find(queryParameters);
+  let query = this.find(queryParameters);
+
+  if (queryParameters._id) {
+    // Populate the categories field
+    query = query.populate("categories");
+  }
+
+  const shops = await query.exec();
   return shops;
 };
 
