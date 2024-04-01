@@ -15,7 +15,7 @@ import { useProduct } from "../../context/Shop/Products/ProductsContext";
 const Shop = () => {
   const { id } = useParams();
   const { shop, get_shops } = useShop();
-  const { setProductReviews } = useProduct();
+  const { setProductReviews, setProduct } = useProduct();
   const {
     products,
     offers,
@@ -37,10 +37,10 @@ const Shop = () => {
   }, []);
 
   useEffect(() => {
+    setProduct({});
     setProductReviews([]);
   }, []);
 
-  console.log(shop);
   return (
     <>
       <Navbar />

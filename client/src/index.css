@@ -49,6 +49,7 @@ code {
   justify-content: center;
 }
 .center-card {
+  z-index: 100;
   position: fixed;
   top: 10px;
   right: 50%;

@@ -7,6 +7,8 @@ export const getProducts = async (queryParameter) => {
   let url = `${baseUrl}/products?shopId=${queryParameter.shopId}`;
   if (queryParameter._id) url += `&_id=${queryParameter._id}`;
   if (queryParameter.search) url += `&search=${queryParameter.search}`;
+  if (queryParameter.categories)
+    url += `&categories=${queryParameter.categories}`;
   try {
     const response = await axios.get(url, queryParameter, {
       headers: {
