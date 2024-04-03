@@ -27,7 +27,6 @@ const SiteAdminPanel = () => {
     ) {
       navigate("/");
     }
-    if (shops.length === 0) get_shops();
     if (domains.length === 0) getDomains();
   }, []);
   return (

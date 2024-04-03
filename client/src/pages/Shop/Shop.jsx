@@ -14,7 +14,7 @@ import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Shop = () => {
   const { id } = useParams();
-  const { shop, get_shops } = useShop();
+  const { shop, setShopQueryParams } = useShop();
   const { setProductReviews, setProduct } = useProduct();
   const {
     products,
@@ -31,7 +31,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (!shop.name) {
-      get_shops(id);
+      setShopQueryParams((prevState) => ({ ...prevState, shopId: id }));
     }
     if (products.length === 0) setQueryParameters({ shopId: id });
   }, []);

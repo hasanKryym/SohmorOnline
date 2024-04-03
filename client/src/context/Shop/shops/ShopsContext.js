@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../../Notification/NotificationContext";
 import { notificationTypes } from "../../Notification/notificationEnum";
 import {
@@ -14,17 +14,22 @@ const ShopContext = createContext();
 export const ShopProvider = ({ children }) => {
   const [shops, setShops] = useState([]);
   const [shop, setShop] = useState({});
+  const [shopQueryParams, setShopQueryParams] = useState({});
   const { showNotification, hideNotification } = useNotification();
 
   const updateShops = (newShopData) => {
     setShops(newShopData);
   };
 
-  const get_shops = async (shopId) => {
+  useEffect(() => {
+    get_shops();
+  }, [shopQueryParams]);
+
+  const get_shops = async () => {
     showNotification(notificationTypes.LOAD, "");
-    const response = await getShops(shopId);
+    const response = await getShops(shopQueryParams);
     if (response.success) {
-      if (shopId) {
+      if (shopQueryParams.shopId) {
         setShop(response.shops[0]);
         hideNotification();
         return;
@@ -99,6 +104,8 @@ export const ShopProvider = ({ children }) => {
         shops,
         shop,
         setShop,
+        shopQueryParams,
+        setShopQueryParams,
         updateShops,
         get_shops,
         editShop,

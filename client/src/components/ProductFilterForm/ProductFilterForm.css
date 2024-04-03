@@ -1,0 +1,10 @@
+.product_filter-form .middle {
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.product_filter-form .products-filter_form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}

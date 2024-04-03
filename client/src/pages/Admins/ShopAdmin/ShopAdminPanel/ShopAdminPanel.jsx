@@ -14,6 +14,7 @@ import {
 } from "../../../../enum/linksEnum/shopAdminLinks";
 import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
+import { Filter } from "../../../../components/Filter/Filter";
 
 const ShopAdminPanel = () => {
   const navigate = useNavigate();
@@ -22,10 +23,7 @@ const ShopAdminPanel = () => {
 
   const { categories, getCategories } = useCategories();
   const { user } = useUser();
-  const { shop, get_shops } = useShop();
-  // const [queryParameter, setQueryParameters] = useState({
-  //   shopId: user.data.role.shop,
-  // });
+  const { shop, setShopQueryParams } = useShop();
 
   useEffect(() => {
     if (products.length === 0)
@@ -34,7 +32,10 @@ const ShopAdminPanel = () => {
     if (categories.length === 0) getCategories(user.data.role.shop);
     console.log(shop);
     if (!shop.name) {
-      get_shops(user.data.role.shop);
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
     }
   }, []);
 
@@ -72,6 +73,8 @@ const ShopAdminPanel = () => {
           </button>
         </div>
         {showProductForm && <ProductForm clostProductForm={closeProductForm} />}
+        {/* <Filter /> */}
+
         <Dashboard headers={headers} data={products} />
       </div>
     </>

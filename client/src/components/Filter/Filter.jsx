@@ -88,4 +88,30 @@ const Filter = ({ closeFilterPage, clearSearchInput }) => {
   );
 };
 
-export default Filter;
+const ShopsFilter = () => {
+  return (
+    <>
+      <div className="blur-bg">
+        <div className="center-card filter_container">
+          <div className="header">
+            <h3>filters</h3>
+            <span className="refresh" title="reset filters">
+              <MdRefresh />
+            </span>
+          </div>
+          <div className="shop_categories">
+            <h3>Categories:</h3>
+            <br />
+            <ul className="shop_categories-list_container"></ul>
+          </div>
+          <div className="btns_container">
+            <button className="custom-button">Save</button>
+            <button className="secondary-button">cancel</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export { Filter, ShopsFilter };

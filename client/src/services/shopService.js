@@ -3,9 +3,9 @@ import axios from "axios";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
-export const getShops = async (shopId) => {
+export const getShops = async (queryParameter) => {
   let url = `${baseUrl}/shops`;
-  if (shopId) url += `?shopId=${shopId}`;
+  if (queryParameter.shopId) url += `?shopId=${queryParameter.shopId}`;
   try {
     const response = await axios.get(url);
     return response.data;
