@@ -6,6 +6,7 @@ import ShopRow from "./ShopRow/ShopRow";
 import { useState } from "react";
 import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 import ProductFilterForm from "../../ProductFilterForm/ProductFilterForm";
+import ShopFilterForm from "../../ShopFilterForm/ShopFilterForm";
 
 const Dashboard = ({ headers, data }) => {
   const location = useLocation();
@@ -13,7 +14,14 @@ const Dashboard = ({ headers, data }) => {
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title title_container">Dashboard</h1>
-      <ProductFilterForm />
+
+      {location.pathname === "/shops/adminPanel/dashboard" && (
+        <ProductFilterForm />
+      )}
+
+      {location.pathname === "/siteAdmin/adminPanel/dashboard" && (
+        <ShopFilterForm />
+      )}
       <nav className="dashboard-nav">
         <ul className="dashboard-nav-list">
           <li>{/* <Link to="/dashboard">Home</Link> */}</li>
