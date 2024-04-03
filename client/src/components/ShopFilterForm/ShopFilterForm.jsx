@@ -57,7 +57,7 @@ const ShopFilterForm = () => {
                 type="text"
                 name=""
                 id=""
-                placeholder="Search products..."
+                placeholder="Search shops..."
                 onChange={(e) => setSearchInput(e.currentTarget.value)}
                 value={searchInput}
               />
