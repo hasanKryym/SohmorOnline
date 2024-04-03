@@ -31,7 +31,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (!shop.name) {
-      setShopQueryParams((prevState) => ({ ...prevState, shopId: id }));
+      setShopQueryParams((prevState) => ({ shopId: id }));
     }
     if (products.length === 0) setQueryParameters({ shopId: id });
   }, []);

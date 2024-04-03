@@ -6,6 +6,7 @@ import {
   delete_shop,
   edit_shop,
   getShops,
+  get_Domains,
 } from "../../../services/shopService";
 import { register } from "../../../services/userService";
 
@@ -15,6 +16,7 @@ export const ShopProvider = ({ children }) => {
   const [shops, setShops] = useState([]);
   const [shop, setShop] = useState({});
   const [shopQueryParams, setShopQueryParams] = useState({});
+  const [shopsDomains, setShopsDomains] = useState([]);
   const { showNotification, hideNotification } = useNotification();
 
   const updateShops = (newShopData) => {
@@ -24,6 +26,17 @@ export const ShopProvider = ({ children }) => {
   useEffect(() => {
     get_shops();
   }, [shopQueryParams]);
+
+  const getDomains = async () => {
+    const response = await get_Domains();
+    if (response.success) {
+      setShopsDomains(response.domains);
+    }
+  };
+
+  useEffect(() => {
+    getDomains();
+  }, []);
 
   const get_shops = async () => {
     showNotification(notificationTypes.LOAD, "");
@@ -106,6 +119,7 @@ export const ShopProvider = ({ children }) => {
         setShop,
         shopQueryParams,
         setShopQueryParams,
+        shopsDomains,
         updateShops,
         get_shops,
         editShop,

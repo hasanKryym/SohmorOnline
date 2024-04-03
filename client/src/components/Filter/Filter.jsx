@@ -88,7 +88,13 @@ const Filter = ({ closeFilterPage, clearSearchInput }) => {
   );
 };
 
-const ShopsFilter = () => {
+const ShopsFilter = ({ clearSearchInput, closeFilterPage }) => {
+  const { shopQueryParams, setShopQueryParams, shopsDomains } = useShop();
+
+  const [shopsFilter, setShopsFilter] = useState({
+    domain: shopQueryParams?.domain ?? "",
+  });
+
   return (
     <>
       <div className="blur-bg">
@@ -100,13 +106,52 @@ const ShopsFilter = () => {
             </span>
           </div>
           <div className="shop_categories">
-            <h3>Categories:</h3>
+            <h3>Domains:</h3>
             <br />
-            <ul className="shop_categories-list_container"></ul>
+            <ul className="shop_categories-list_container">
+              {shopsDomains.map((domain) => {
+                return (
+                  <li
+                    onClick={() =>
+                      setShopsFilter((prevState) => ({
+                        ...prevState,
+                        domain: domain._id,
+                      }))
+                    }
+                    key={domain._id}
+                    id={domain._id}
+                    className={`shop_categories-list ${
+                      shopsFilter.domain === domain._id && "isSelected"
+                    }`}
+                  >
+                    {domain.name}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
           <div className="btns_container">
-            <button className="custom-button">Save</button>
-            <button className="secondary-button">cancel</button>
+            <button
+              onClick={() => {
+                clearSearchInput();
+                setShopQueryParams((prevState) => ({
+                  ...prevState,
+                  domain: shopsFilter.domain,
+                  shopId: "",
+                  search: "",
+                }));
+                closeFilterPage();
+              }}
+              className="custom-button"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => closeFilterPage()}
+              className="secondary-button"
+            >
+              cancel
+            </button>
           </div>
         </div>
       </div>

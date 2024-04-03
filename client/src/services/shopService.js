@@ -6,12 +6,19 @@ const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 export const getShops = async (queryParameter) => {
   let url = `${baseUrl}/shops`;
   let usedParams = false;
+
   if (queryParameter.shopId) {
     url += `?shopId=${queryParameter.shopId}`;
     usedParams = true;
   }
+
   if (queryParameter.search) {
     url += `${usedParams ? "&" : "?"}search=${queryParameter.search}`;
+    usedParams = true;
+  }
+
+  if (queryParameter.domain) {
+    url += `${usedParams ? "&" : "?"}domain=${queryParameter.domain}`;
     usedParams = true;
   }
   try {

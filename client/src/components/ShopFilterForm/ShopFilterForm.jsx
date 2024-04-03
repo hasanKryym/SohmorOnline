@@ -3,6 +3,7 @@ import { useShop } from "../../context/Shop/shops/ShopsContext";
 import "./ShopFilterForm.css";
 import { CiSearch } from "react-icons/ci";
 import { MdRefresh } from "react-icons/md";
+import { ShopsFilter } from "../Filter/Filter";
 
 const ShopFilterForm = () => {
   const { shopQueryParams, setShopQueryParams } = useShop();
@@ -19,12 +20,12 @@ const ShopFilterForm = () => {
   };
   return (
     <>
-      {/* {showFilterContainer && (
-        <Filter
+      {showFilterContainer && (
+        <ShopsFilter
           closeFilterPage={closeFilterPage}
           clearSearchInput={clearSearchInput}
         />
-      )} */}
+      )}
       <div className="product_filter-form">
         <div className="middle">
           <div className="search-input_container">
@@ -36,7 +37,8 @@ const ShopFilterForm = () => {
                   setShopQueryParams({
                     ...shopQueryParams,
                     search: searchInput,
-                    _id: "",
+                    shopId: "",
+                    domain: "",
                   });
               }}
             >

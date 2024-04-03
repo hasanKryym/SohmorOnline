@@ -6,14 +6,3 @@
   gap: 4rem;
   padding: 0rem 2rem;
 }
-
-.products_container .middle {
-  gap: 1rem;
-  margin-bottom: 4rem;
-}
-
-.products_container .products-filter_form {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
