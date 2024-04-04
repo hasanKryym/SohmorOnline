@@ -30,8 +30,22 @@ const editUserData = asyncWrapper(async (req, res) => {
   return res.status(StatusCodes.OK).json(response);
 });
 
+const editUserFav = asyncWrapper(async (req, res) => {
+  const { newFavorites } = req.body;
+  const userId = req.user.userId;
+  if (!newFavorites) throw new BadRequestError("please provide newFavorites");
+
+  const response = await User.editFavorites(userId, newFavorites);
+  return res
+    .status(
+      response.success ? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR
+    )
+    .json(response);
+});
+
 module.exports = {
   updateCart,
   clearCart,
   editUserData,
+  editUserFav,
 };

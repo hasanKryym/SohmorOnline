@@ -73,6 +73,11 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
+
+  fav: {
+    shops: [{ type: mongoose.Schema.Types.ObjectId, ref: "Shop" }],
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+  },
 });
 
 UserSchema.methods.createJWT = function () {
@@ -140,41 +145,6 @@ UserSchema.statics.register = async function (userData) {
 
   return { user: userWithoutPassword, token };
 };
-
-//CART
-
-// Static method to update the user's cart
-// UserSchema.statics.updateCart = async function (userId, cartItems) {
-//   try {
-//     const User = this;
-//     const user = await User.findById(userId);
-
-//     if (!user) {
-//       throw new NotFoundError("User not found");
-//     }
-
-//     // Update the user's cart based on the provided cart items
-//     cartItems.forEach((item) => {
-//       const index = user.cart.findIndex((cartItem) =>
-//         cartItem.product.equals(item.product)
-//       );
-//       if (index !== -1) {
-//         // If the product already exists in the cart, update its quantity
-//         user.cart[index].quantity = item.quantity;
-//       } else {
-//         // If the product is not in the cart, add it
-//         user.cart.push(item);
-//       }
-//     });
-
-//     // Save the updated user document
-//     await user.save();
-
-//     return user.cart; // Return the updated cart
-//   } catch (error) {
-//     throw new InternalServerError(`Failed to update cart: ${error.message}`);
-//   }
-// };
 
 UserSchema.statics.updateCart = async function (userId, cartItems) {
   try {
@@ -258,6 +228,39 @@ UserSchema.statics.editUserData = async function (userId, userData) {
     throw new InternalServerError(
       `Failed to update user data: ${error.message}`
     );
+  }
+};
+
+UserSchema.statics.editFavorites = async function (userId, newFavorites) {
+  try {
+    // Find the user by userId and populate the shops and products fields
+    const user = await this.findById(userId);
+
+    if (!user) {
+      throw new BadRequestError("User not found");
+    }
+
+    // Update the user's favorites with the newFavorites object
+    user.fav = newFavorites;
+
+    // Save the updated user object
+    await user.save();
+
+    // Populate the shops and products fields of the updated user
+    const updatedUser = await this.findById(userId)
+      .populate("fav.shops")
+      .populate("fav.products");
+
+    return {
+      success: true,
+      message: "Favorites updated successfully",
+      user: updatedUser,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Failed to update favorites: ${error.message}`,
+    };
   }
 };
 
