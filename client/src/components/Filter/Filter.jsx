@@ -101,7 +101,16 @@ const ShopsFilter = ({ clearSearchInput, closeFilterPage }) => {
         <div className="center-card filter_container">
           <div className="header">
             <h3>filters</h3>
-            <span className="refresh" title="reset filters">
+            <span
+              style={{ fontSize: "24px", cursor: "pointer" }}
+              onClick={() => {
+                clearSearchInput();
+                setShopQueryParams({});
+                closeFilterPage();
+              }}
+              className="refresh"
+              title="reset filters"
+            >
               <MdRefresh />
             </span>
           </div>
