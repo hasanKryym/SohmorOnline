@@ -22,6 +22,7 @@ export const ProductProvider = ({ children }) => {
   const { showNotification, hideNotification } = useNotification();
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
+  const [isFav, setIsFav] = useState(false);
   const [productReviews, setProductReviews] = useState([]);
   const [offers, setOffers] = useState([]);
   const [queryParameters, setQueryParameters] = useState({});
@@ -48,8 +49,18 @@ export const ProductProvider = ({ children }) => {
   }, [queryParameters]);
 
   useEffect(() => {
-    if (!product._id) return;
+    if (!product._id) {
+      setIsFav(false);
+      return;
+    }
     getProductReviews(product._id);
+
+    user.data.fav.products.forEach(({ _id }) => {
+      if (_id === product._id) {
+        setIsFav(true);
+        return;
+      }
+    });
   }, [product]);
 
   const getShopProducts = async () => {
@@ -242,6 +253,8 @@ export const ProductProvider = ({ children }) => {
         setProductReviews,
         getProductReviews,
         getProductsById,
+        isFav,
+        setIsFav,
       }}
     >
       {children}

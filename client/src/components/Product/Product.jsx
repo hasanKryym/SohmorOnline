@@ -11,11 +11,12 @@ import { useProduct } from "../../context/Shop/Products/ProductsContext";
 import Comments from "./Comments/Comments";
 
 const Product = ({ product }) => {
-  const { isLoggedIn, showLoginNotification } = useUser();
+  const { user, isLoggedIn, showLoginNotification, editFav } = useUser();
   const { _id, name, description, image, price, offer, rating } = product;
   const [showRatingForm, setShowRatingForm] = useState(false);
   const { addToCart } = useCart();
   const { shop } = useShop();
+  const { isFav, setIsFav } = useProduct();
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
@@ -99,7 +100,34 @@ const Product = ({ product }) => {
               >
                 Add To Cart
               </button>
-              <button className="custom-button heart">
+
+              <button
+                title={`${
+                  isFav ? "remove from favorites" : "add to favorites"
+                }`}
+                onClick={() => {
+                  if (!isFav) {
+                    editFav({
+                      ...user.data.fav, // Spread the entire fav object
+                      products: [...user.data.fav.products, _id], // Add the new productId to the products array
+                    });
+                    setIsFav(true);
+                  } else {
+                    const newProductsFav = user.data.fav.products.filter(
+                      (product) => {
+                        return product._id !== _id;
+                      }
+                    );
+
+                    editFav({
+                      ...user.data.fav, // Spread the entire fav object
+                      products: newProductsFav, // Add the new productId to the products array
+                    });
+                    setIsFav(false);
+                  }
+                }}
+                className={`custom-button heart ${isFav && "isFavorate"}`}
+              >
                 <FaHeart />
               </button>
             </div>

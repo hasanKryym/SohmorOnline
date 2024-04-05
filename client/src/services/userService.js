@@ -70,3 +70,24 @@ export const editUser = async (userData) => {
     }
   }
 };
+
+export const editUserFav = async (newFavorites) => {
+  if (!newFavorites) return;
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/users/fav`,
+      { newFavorites },
+      {
+        headers: { Authorization: getToken() },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while logging in: ${error.message}`);
+      throw error;
+    }
+  }
+};

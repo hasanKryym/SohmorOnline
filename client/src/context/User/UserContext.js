@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
-import { editUser } from "../../services/userService";
+import { editUser, editUserFav } from "../../services/userService";
 
 const UserContext = createContext();
 
@@ -24,15 +24,19 @@ export const UserProvider = ({ children }) => {
             shop: null,
           },
           cart: [],
+          fav: {
+            shops: [],
+            products: [],
+          },
         },
   });
+
+  const { showNotification, hideNotification } = useNotification();
 
   useEffect(() => {
     // Update localStorage whenever user state changes
     localStorage.setItem("user", JSON.stringify(user.data));
   }, [user]);
-
-  const { showNotification } = useNotification();
 
   const isLoggedIn = () => {
     return user.status.isLoggedIn;
@@ -72,6 +76,24 @@ export const UserProvider = ({ children }) => {
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 
+  const editFav = async (newFavorites) => {
+    if (!newFavorites) return;
+    showNotification(notificationTypes.LOAD, "");
+    const response = await editUserFav(newFavorites);
+    if (response.success) {
+      const newUser = response?.user;
+      setUser({
+        ...user,
+        data: {
+          ...user.data,
+          fav: newUser.fav,
+        },
+      });
+      // showNotification(notificationTypes.SUCCESS, response.message);
+      hideNotification();
+    } else showNotification(notificationTypes.ERROR, response.message);
+  };
+
   // Function to update user data
   // const updateUserData = (newUserData) => {
   //   setUser((prevUser) => ({
@@ -89,7 +111,14 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, editUserData, isLoggedIn, showLoginNotification }}
+      value={{
+        user,
+        setUser,
+        editUserData,
+        isLoggedIn,
+        showLoginNotification,
+        editFav,
+      }}
     >
       {children}
     </UserContext.Provider>
