@@ -9,6 +9,7 @@ import {
   get_Domains,
 } from "../../../services/shopService";
 import { register } from "../../../services/userService";
+import { useUser } from "../../User/UserContext";
 
 // Add shops to fav functionality
 
@@ -17,9 +18,11 @@ const ShopContext = createContext();
 export const ShopProvider = ({ children }) => {
   const [shops, setShops] = useState([]);
   const [shop, setShop] = useState({});
+  const [isFav, setIsFav] = useState(false);
   const [shopQueryParams, setShopQueryParams] = useState({});
   const [shopsDomains, setShopsDomains] = useState([]);
   const { showNotification, hideNotification } = useNotification();
+  const { user } = useUser();
 
   const updateShops = (newShopData) => {
     setShops(newShopData);
@@ -39,6 +42,20 @@ export const ShopProvider = ({ children }) => {
   useEffect(() => {
     getDomains();
   }, []);
+
+  useEffect(() => {
+    if (!shop._id) {
+      setIsFav(false);
+      return;
+    }
+
+    user.data.fav.shops.forEach(({ _id }) => {
+      if (_id === shop._id) {
+        setIsFav(true);
+        return;
+      }
+    });
+  }, [shop]);
 
   const get_shops = async () => {
     showNotification(notificationTypes.LOAD, "");
@@ -127,6 +144,8 @@ export const ShopProvider = ({ children }) => {
         editShop,
         addShop,
         deleteShop,
+        isFav,
+        setIsFav,
       }}
     >
       {children}

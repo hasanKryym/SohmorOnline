@@ -4,7 +4,9 @@
 .shop_container .title_container {
   font-size: 48px;
   gap: 1rem;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .shop_container .title_container .star {
@@ -12,6 +14,12 @@
 }
 
 .shop_container .title_container .flame {
-  /* color: linear-gradient(135deg, #ff4500, #ffa500); */
   color: #ffa500;
+}
+
+.star_btn {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 32px;
 }
