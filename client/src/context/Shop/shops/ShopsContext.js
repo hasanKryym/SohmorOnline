@@ -11,8 +11,6 @@ import {
 import { register } from "../../../services/userService";
 import { useUser } from "../../User/UserContext";
 
-// Add shops to fav functionality
-
 const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
