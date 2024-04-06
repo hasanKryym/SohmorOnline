@@ -9,4 +9,5 @@
 
 .comments_section .user_comment {
   color: var(--dark-charcoal);
+  padding-left: 1rem;
 }
