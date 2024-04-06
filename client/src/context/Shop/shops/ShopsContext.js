@@ -10,6 +10,8 @@ import {
 } from "../../../services/shopService";
 import { register } from "../../../services/userService";
 
+// Add shops to fav functionality
+
 const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
