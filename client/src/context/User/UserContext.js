@@ -108,6 +108,7 @@ export const UserProvider = ({ children }) => {
     if (response.success) {
       console.log(response.order);
       showNotification(notificationTypes.SUCCESS, response.message);
+      return response;
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 

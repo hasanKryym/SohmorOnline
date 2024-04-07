@@ -5,7 +5,7 @@ import { useUser } from "../../../context/User/UserContext";
 
 const OrderSummary = ({ onClose }) => {
   const { user, createOrder } = useUser();
-  const { cartProductsDetails } = useCart();
+  const { cartProductsDetails, clearCart } = useCart();
 
   const [totalPrice, setTotalPrice] = useState(
     cartProductsDetails.reduce((total, product) => {
@@ -27,9 +27,12 @@ const OrderSummary = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createOrder();
+    const response = await createOrder();
+    if (response.success) {
+      onClose();
+    }
   };
 
   return (
