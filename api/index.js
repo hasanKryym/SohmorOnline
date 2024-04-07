@@ -37,7 +37,7 @@ app.use("/auth", authRouter);
 app.use("/shops", shopsRouter);
 app.use("/products", productsRouter);
 app.use("/users", authenticate, usersRouter);
-app.user("/orders", authenticate, ordersRouter);
+app.use("/orders", authenticate, ordersRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
