@@ -65,7 +65,7 @@ export const editUser = async (userData) => {
     if (error.response) {
       return error.response.data;
     } else {
-      console.error(`Error while logging in: ${error.message}`);
+      console.error(`Error while editing user: ${error.message}`);
       throw error;
     }
   }
@@ -86,7 +86,7 @@ export const editUserFav = async (newFavorites) => {
     if (error.response) {
       return error.response.data;
     } else {
-      console.error(`Error while logging in: ${error.message}`);
+      console.error(`Error while adding to fav: ${error.message}`);
       throw error;
     }
   }

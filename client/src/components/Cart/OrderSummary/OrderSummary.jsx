@@ -4,7 +4,7 @@ import "./OrderSummary.css";
 import { useUser } from "../../../context/User/UserContext";
 
 const OrderSummary = ({ onClose }) => {
-  const { user } = useUser();
+  const { user, createOrder } = useUser();
   const { cartProductsDetails } = useCart();
 
   const [totalPrice, setTotalPrice] = useState(
@@ -29,7 +29,7 @@ const OrderSummary = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User Info:", userInfo);
+    createOrder();
   };
 
   return (
@@ -94,7 +94,7 @@ const OrderSummary = ({ onClose }) => {
 
             <div className="summary-button">
               <button type="submit" className="custom-button">
-                CHECKOUT
+                ORDER
               </button>
               <button
                 onClick={() => onClose()}

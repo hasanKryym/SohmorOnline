@@ -46,6 +46,10 @@ const OrderSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+// Add a virtual property to format the createdAt field with the desired timezone
+OrderSchema.virtual("createdAtFormatted").get(function () {
+  return moment(this.createdAt).tz("Asia/Beirut").format("YYYY-MM-DD HH:mm:ss");
+});
 
 // Static function to create an order
 OrderSchema.statics.createOrder = async function (userId, products) {

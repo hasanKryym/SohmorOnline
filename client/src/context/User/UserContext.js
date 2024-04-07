@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
 import { editUser, editUserFav } from "../../services/userService";
+import { addOrder } from "../../services/ordersService";
 
 const UserContext = createContext();
 
@@ -94,20 +95,21 @@ export const UserProvider = ({ children }) => {
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 
-  // Function to update user data
-  // const updateUserData = (newUserData) => {
-  //   setUser((prevUser) => ({
-  //     ...prevUser,
-  //     data: {
-  //       ...prevUser.data,
-  //       ...newUserData,
-  //     },
-  //   }));
-  // };
+  const createOrder = async () => {
+    if (user.data.cart.length === 0) {
+      showNotification(
+        notificationTypes.INFO,
+        "Please insert products to your cart first"
+      );
+    }
+    showNotification(notificationTypes.LOAD, "");
+    const response = await addOrder(user.data.cart);
 
-  // useEffect(() => {
-  //   updateUserData(JSON.parse(localStorage.getItem("user")));
-  // }, [user.status.isLoggedIn]);
+    if (response.success) {
+      console.log(response.order);
+      showNotification(notificationTypes.SUCCESS, response.message);
+    } else showNotification(notificationTypes.ERROR, response.message);
+  };
 
   return (
     <UserContext.Provider
@@ -118,6 +120,7 @@ export const UserProvider = ({ children }) => {
         isLoggedIn,
         showLoginNotification,
         editFav,
+        createOrder,
       }}
     >
       {children}
