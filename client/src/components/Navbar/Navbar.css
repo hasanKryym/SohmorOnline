@@ -8,6 +8,7 @@
     rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 .navbar .nav_bars {
+  display: none;
   font-size: 24px;
   color: var(--dark-charcoal);
 }
@@ -47,6 +48,19 @@
 }
 
 @media screen and (max-width: 650px) {
+  .navbar {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    z-index: 998;
+  }
+  .navbar .nav_bars {
+    display: initial;
+  }
+
+  .Logo {
+    width: 130px;
+  }
   .navbar .nav-list {
     z-index: 999;
     display: flex;

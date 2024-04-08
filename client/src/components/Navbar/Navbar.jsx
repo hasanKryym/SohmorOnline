@@ -5,7 +5,7 @@ import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { pagesLinks } from "./pagesLinksEnum";
 import { useUser } from "../../context/User/UserContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 
@@ -13,6 +13,21 @@ const Navbar = () => {
   const { user } = useUser();
   const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 650) setShowSidebar(true);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Initial call to set initial slidesPerView
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const navbarLinks = [
     {
