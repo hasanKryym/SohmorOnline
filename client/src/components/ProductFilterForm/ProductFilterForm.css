@@ -1,10 +1,32 @@
-.product_filter-form .middle {
+.product_filter-container .middle {
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.product_filter-form .products-filter_form {
+.product_filter-container .products-filter_form {
   display: flex;
   gap: 1rem;
   align-items: center;
+  min-width: 300px;
+}
+
+.product_filter-container .products-filter_form .custom-input {
+  min-width: 300px;
+}
+
+@media screen and (max-width: 550px) {
+  .product_filter-container .middle {
+    display: flex;
+    flex-direction: column;
+  }
+  .product_filter-container .filter_btn-container {
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 300px;
+  }
+
+  .product_filter-container .refresh {
+    display: none;
+  }
 }

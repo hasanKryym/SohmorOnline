@@ -27,7 +27,7 @@ const ProductFilterForm = () => {
           clearSearchInput={clearSearchInput}
         />
       )}
-      <div className="product_filter-form">
+      <div className="product_filter-container">
         <div className="middle">
           <div className="search-input_container">
             <form
@@ -74,12 +74,14 @@ const ProductFilterForm = () => {
               </button>
             </form>
           </div>
-          <button
-            onClick={() => setShowFilterContainer(true)}
-            className="custom-button"
-          >
-            filter
-          </button>
+          <div className="filter_btn-container">
+            <button
+              onClick={() => setShowFilterContainer(true)}
+              className="custom-button"
+            >
+              filter
+            </button>
+          </div>
         </div>
       </div>
     </>
