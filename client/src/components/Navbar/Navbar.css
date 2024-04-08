@@ -60,6 +60,7 @@
 
   .Logo {
     width: 130px;
+    object-fit: cover;
   }
   .navbar .nav-list {
     z-index: 999;
