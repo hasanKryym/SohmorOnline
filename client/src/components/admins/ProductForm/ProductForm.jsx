@@ -17,6 +17,7 @@ const ProductForm = ({ clostProductForm, product }) => {
   useEffect(() => {
     if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
+
   const [formData, setFormData] = useState({
     name: product?.name ?? "",
     description: product?.description ?? "",
@@ -25,13 +26,16 @@ const ProductForm = ({ clostProductForm, product }) => {
     rating: product?.rating ?? 0,
     image: product?.image ?? "",
     categories: product?.categories ?? [],
+    isAvailable: product?.isAvailable ?? true,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : value;
+
     setFormData({
       ...formData,
-      [name]: name === "offer" ? parseInt(value) : value,
+      [name]: name === "offer" ? parseInt(newValue) : newValue,
     });
   };
 
@@ -79,6 +83,7 @@ const ProductForm = ({ clostProductForm, product }) => {
       price: "",
       image: "",
       categories: [],
+      isAvailable: true,
     });
     clostProductForm();
   };
@@ -150,9 +155,13 @@ const ProductForm = ({ clostProductForm, product }) => {
               />
             </>
           )}
-          <label className="form-label">Image:</label>
-          <AddImage setFormData={setFormData} />
-          <br />
+          <label className="form-label">
+            Image:{" "}
+            <span>
+              <AddImage setFormData={setFormData} />
+            </span>
+          </label>
+
           <label className="form-label">Categories:</label>
           <ul className="form-categories">
             {categories.map((category) => (
@@ -160,6 +169,7 @@ const ProductForm = ({ clostProductForm, product }) => {
                 <label className="form-checkbox-label">
                   <input
                     type="checkbox"
+                    name="categories"
                     value={category._id}
                     checked={formData.categories.includes(category._id)}
                     onChange={handleCategoryChange}
@@ -170,6 +180,17 @@ const ProductForm = ({ clostProductForm, product }) => {
               </li>
             ))}
           </ul>
+
+          <label className="form-label">
+            Is Available:
+            <input
+              type="checkbox"
+              name="isAvailable"
+              checked={formData.isAvailable}
+              onChange={handleChange}
+            />
+          </label>
+
           <div className="productForm_buttons-container">
             {product ? (
               <button type="submit" className="custom-button">
