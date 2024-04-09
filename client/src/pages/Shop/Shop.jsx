@@ -16,7 +16,7 @@ import { CiStar } from "react-icons/ci";
 
 const Shop = () => {
   const { id } = useParams();
-  const { user, editFav } = useUser();
+  const { user, editFav, isLoggedIn, showLoginNotification } = useUser();
   const { shop, setShopQueryParams, isFav, setIsFav } = useShop();
   const { setProductReviews, setProduct } = useProduct();
   const {
@@ -54,6 +54,10 @@ const Shop = () => {
           <button
             title={`${isFav ? "remove from favorites" : "add to favorites"}`}
             onClick={() => {
+              if (!isLoggedIn()) {
+                showLoginNotification();
+                return;
+              }
               if (!isFav) {
                 editFav({
                   ...user.data.fav, // Spread the entire fav object

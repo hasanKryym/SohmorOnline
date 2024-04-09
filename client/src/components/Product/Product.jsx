@@ -12,7 +12,8 @@ import Comments from "./Comments/Comments";
 
 const Product = ({ product }) => {
   const { user, isLoggedIn, showLoginNotification, editFav } = useUser();
-  const { _id, name, description, image, price, offer, rating } = product;
+  const { _id, name, description, image, price, offer, rating, isAvailable } =
+    product;
   const [showRatingForm, setShowRatingForm] = useState(false);
   const { addToCart } = useCart();
   const { shop } = useShop();
@@ -89,6 +90,7 @@ const Product = ({ product }) => {
 
             <div className="action-buttons">
               <button
+                disabled={!isAvailable}
                 onClick={() => {
                   if (!isLoggedIn()) {
                     showLoginNotification();
@@ -106,6 +108,10 @@ const Product = ({ product }) => {
                   isFav ? "remove from favorites" : "add to favorites"
                 }`}
                 onClick={() => {
+                  if (!isLoggedIn()) {
+                    showLoginNotification();
+                    return;
+                  }
                   if (!isFav) {
                     editFav({
                       ...user.data.fav, // Spread the entire fav object

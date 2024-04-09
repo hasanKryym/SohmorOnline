@@ -16,14 +16,22 @@
   font-size: 18px;
 }
 
-.shop_item .image_container .offer {
+.shop_item .image_container .offer,
+.out_of_stock {
   position: absolute;
   top: 0;
   right: 0;
-  background: var(--vibrant-yellow);
   padding: 0.5rem 1.5rem;
   border-radius: 8px;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+.shop_item .image_container .offer {
+  background: var(--vibrant-yellow);
+}
+
+.shop_item .image_container .out_of_stock {
+  background: var(--dark-charcoal);
+  color: var(--light-beige);
 }
 
 .shop_item img {

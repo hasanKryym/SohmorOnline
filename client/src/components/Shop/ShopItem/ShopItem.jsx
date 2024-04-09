@@ -3,13 +3,15 @@ import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const ShopItem = ({ item }) => {
-  const { _id, name, description, image, price, rating, offer } = item;
+  const { _id, name, description, image, price, rating, offer, isAvailable } =
+    item;
   return (
     <>
       <div className="shop_item">
         <div className="image_container">
           <img src={image} alt="" />
-          {offer > 0 && <div className="offer">{offer}%</div>}
+          {offer > 0 && isAvailable && <div className="offer">{offer}%</div>}
+          {!isAvailable && <div className="out_of_stock">out of stock</div>}
         </div>
         <div className="item_details">
           <div className="title">
