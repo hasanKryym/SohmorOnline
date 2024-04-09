@@ -70,7 +70,7 @@
   }
 
   .profile-sidebar:hover {
-    width: 0;
+    width: 100vw;
   }
 
   .profile-sidebar .name {
