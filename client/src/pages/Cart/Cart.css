@@ -60,3 +60,33 @@
 .cart_container .cart-details tr:hover {
   background-color: #eaf2fa;
 }
+
+/* For smaller screen sizes */
+@media screen and (max-width: 768px) {
+  .cart_container .cart-details table {
+    font-size: 14px; /* Reduce font size for better readability */
+    overflow-x: auto; /* Add horizontal scrolling for table overflow */
+  }
+
+  .cart_container .cart-details th,
+  .cart_container .cart-details td {
+    padding: 8px; /* Decrease padding for tighter layout */
+  }
+
+  .cart_container .cart-details th:first-child {
+    text-align: left; /* Ensure product details are left-aligned */
+  }
+
+  .cart_container .cart-details .product-data {
+    text-align: center; /* Center product data */
+  }
+
+  .cart_container .cart .middle {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center items */
+  }
+
+  .cart_container .cart .middle button {
+    margin-bottom: 1rem; /* Add space between buttons */
+  }
+}

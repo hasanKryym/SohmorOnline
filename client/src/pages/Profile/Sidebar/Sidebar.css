@@ -58,3 +58,43 @@
   font-size: 24px;
   padding-right: 0.8rem;
 }
+
+@media screen and (max-width: 1000px) {
+  .profile-sidebar {
+    width: 100vw;
+    top: initial;
+    bottom: 0;
+    transform: initial;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .profile-sidebar:hover {
+    width: 0;
+  }
+
+  .profile-sidebar .name {
+    display: none;
+  }
+
+  .profile-sidebar .profile-sidebar-list {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .profile-sidebar .profile-sidebar-list_element {
+    height: 70px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .profile-sidebar .profile-sidebar-list_element a {
+    text-decoration: none;
+    color: var(--sky-blue);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
