@@ -10,6 +10,7 @@ const {
   addCategory,
   getCategories,
   editShop,
+  shopActivation,
 } = require("../controllers/shop");
 const authenticate = require("../middleware/authentication");
 const checkSiteAdmin = require("../middleware/admins/authSiteAdmin");
@@ -30,5 +31,7 @@ router
   .route("/manage/addCategory")
   .post(authenticate, checkShopAdmin, addCategory);
 router.route("/categories").get(getCategories);
+
+router.route("/activation").patch(authenticate, checkSiteAdmin, shopActivation);
 
 module.exports = router;

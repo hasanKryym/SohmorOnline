@@ -24,4 +24,5 @@ export const headers = [
   "Address",
   "Phone Nb",
   "Rating(5)",
+  "isActive",
 ];

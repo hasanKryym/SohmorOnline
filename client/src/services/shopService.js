@@ -130,3 +130,21 @@ export const get_Domains = async () => {
     return error.response.data;
   }
 };
+
+export const shopActivation = async (shopId, isActive) => {
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/shops/activation`,
+      { shopId, isActive },
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};

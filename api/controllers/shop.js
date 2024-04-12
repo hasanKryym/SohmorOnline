@@ -102,6 +102,19 @@ const deleteShop = asyncWrapper(async (req, res) => {
   }
 });
 
+const shopActivation = asyncWrapper(async (req, res) => {
+  const { shopId, isActive } = req.body;
+  const updatedShop = await Shop.findByIdAndUpdate(shopId, {
+    isActive: isActive,
+  });
+
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    message: "shop activation updated successfully",
+    shop: updatedShop,
+  });
+});
+
 const getShops = asyncWrapper(async (req, res) => {
   const { search, domain, categories, minRating, maxRating, shopId, all } =
     req.query;
@@ -209,6 +222,7 @@ module.exports = {
   addShop,
   editShop,
   deleteShop,
+  shopActivation,
   getShops,
   addDomain,
   getDomains,
