@@ -4,6 +4,7 @@ const {
   InternalServerError,
   BadRequestError,
 } = require("../errors");
+const { ProductReview } = require("./Review");
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -92,6 +93,10 @@ ProductSchema.statics.deleteProducts = async function (
       { $pull: { products: { $in: productsToDelete } } }, // Remove deleted products from the shop's products array
       { new: true }
     );
+
+    // Also, delete the reviews associated with the deleted products
+    await ProductReview.deleteMany({ productId: { $in: productsToDelete } });
+
     return { success: true, message: "Products deleted successfully", result };
   } else {
     throw new NotFoundError("No products found with the provided IDs");

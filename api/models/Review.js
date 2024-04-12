@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Product = require("./Product");
+// const Product = require("./Product");
 const User = require("./User");
 
 // schema for product reviews
@@ -32,6 +32,7 @@ const ProductReviewSchema = new mongoose.Schema({
 ProductReviewSchema.statics.addReview = async function (review) {
   try {
     const { productId, userId, rating, comment } = review;
+    console.log(review);
 
     // Check if the user has already reviewed the product
     const existingReview = await this.findOne({ productId, userId });
@@ -48,6 +49,7 @@ ProductReviewSchema.statics.addReview = async function (review) {
     }
 
     // Calculate the new average rating for the product
+    const Product = require("./Product");
     const product = await Product.findById(productId);
     const allReviews = await this.find({ productId });
     const totalRatings = allReviews.reduce(
