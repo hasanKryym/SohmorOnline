@@ -88,7 +88,6 @@ export const UserProvider = ({ children }) => {
 
   const editFav = async () => {
     showNotification(notificationTypes.LOAD, "");
-    console.log(user.data.fav);
     const response = await editUserFav(user.data.fav);
     if (response.success) {
       const newUser = response?.user;

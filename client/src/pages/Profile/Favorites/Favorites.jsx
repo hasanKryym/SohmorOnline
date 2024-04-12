@@ -10,7 +10,6 @@ import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 
 const Favorites = () => {
   const { user, favorites } = useUser();
-  console.log(favorites);
 
   const favoritesPages = {
     SHOPS: "shops",
