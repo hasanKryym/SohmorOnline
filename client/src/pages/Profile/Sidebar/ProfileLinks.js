@@ -18,13 +18,13 @@ export const profileLinks = [
 
   {
     name: "Order History",
-    link: "/orderHistory",
+    link: "/profile/orderHistory",
     icon: <FaHistory />,
   },
 
   {
-    name: "Featured",
-    link: "/featured",
+    name: "Favorites",
+    link: "/profile/favorites",
     icon: <FaStar />,
   },
 ];

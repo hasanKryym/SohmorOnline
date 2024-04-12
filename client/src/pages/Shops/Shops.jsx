@@ -12,11 +12,11 @@ const Shops = () => {
   const { shop, setShop, shops } = useShop();
   const { setProducts, setProduct } = useProduct();
 
-  useEffect(() => {
-    setShop({});
-    setProduct({});
-    setProducts([]);
-  }, []);
+  // useEffect(() => {
+  //   setShop({});
+  //   setProduct({});
+  //   setProducts([]);
+  // }, []);
   return (
     <>
       <Navbar />

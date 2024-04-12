@@ -24,6 +24,8 @@ import AddShop from "./pages/Admins/SiteAdmin/AddShop/AddShop";
 import BackNavigationHandler from "./components/BackNavigationHandler/BackNavigationHandler";
 import { CartProvider } from "./context/Cart/CartContext";
 import SliderImages from "./pages/Admins/ShopAdmin/SliderImages/SliderImages";
+import Favorites from "./pages/Profile/Favorites/Favorites";
+import RouteChangeListener from "./components/RouteChangeListener/RouteChangeListener";
 
 function App() {
   return (
@@ -38,11 +40,16 @@ function App() {
                   <Router>
                     <CartProvider>
                       <ScrollToTop />
+                      <RouteChangeListener />
                       {/* <BackNavigationHandler /> */}
                       <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route
+                          path="/profile/favorites"
+                          element={<Favorites />}
+                        />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/shops" element={<Shops />} />

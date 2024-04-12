@@ -39,10 +39,10 @@ const Shop = () => {
     if (products.length === 0) setQueryParameters({ shopId: id });
   }, []);
 
-  useEffect(() => {
-    setProduct({});
-    setProductReviews([]);
-  }, []);
+  // useEffect(() => {
+  // setProduct({});
+  // setProductReviews([]);
+  // }, []);
 
   return (
     <>

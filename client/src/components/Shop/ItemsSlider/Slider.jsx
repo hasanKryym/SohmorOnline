@@ -47,13 +47,14 @@ const Slider = ({ items }) => {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {items.map((item) => {
-            return (
-              <SwiperSlide key={item.id}>
-                <ShopItem item={item} />
-              </SwiperSlide>
-            );
-          })}
+          {items.length !== 0 &&
+            items.map((item) => {
+              return (
+                <SwiperSlide key={item.id}>
+                  <ShopItem item={item} />
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </>

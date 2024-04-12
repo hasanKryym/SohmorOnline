@@ -39,9 +39,10 @@ const Products = ({ items }) => {
         <ProductFilterForm />
 
         <div className="items_container">
-          {items.map((item) => {
-            return <ShopItem key={item.id} item={item} />;
-          })}
+          {items.length !== 0 &&
+            items.map((item) => {
+              return <ShopItem key={item.id} item={item} />;
+            })}
         </div>
       </div>
     </>
