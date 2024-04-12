@@ -10,10 +10,13 @@ import {
 } from "../../../services/shopService";
 import { register } from "../../../services/userService";
 import { useUser } from "../../User/UserContext";
+import { useLocation } from "react-router-dom";
 
 const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
+  const location = useLocation();
+
   const [shops, setShops] = useState([]);
   const [shop, setShop] = useState({});
   const [isFav, setIsFav] = useState(false);
@@ -56,8 +59,14 @@ export const ShopProvider = ({ children }) => {
   }, [shop]);
 
   const get_shops = async () => {
+    let all = false;
     showNotification(notificationTypes.LOAD, "");
-    const response = await getShops(shopQueryParams);
+    if (
+      location.pathname === "/siteAdmin/adminPanel/dashboard" ||
+      location.pathname === "/shops/adminPanel/dashboard"
+    )
+      all = true;
+    const response = await getShops(shopQueryParams, all);
     if (response.success) {
       if (shopQueryParams.shopId) {
         setShop(response.shops[0]);

@@ -57,6 +57,11 @@ const ShopSchema = new mongoose.Schema({
     max: 5,
     default: 0,
   },
+
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 // static method to create a new shop

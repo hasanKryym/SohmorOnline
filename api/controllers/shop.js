@@ -103,7 +103,7 @@ const deleteShop = asyncWrapper(async (req, res) => {
 });
 
 const getShops = asyncWrapper(async (req, res) => {
-  const { search, domain, categories, minRating, maxRating, shopId } =
+  const { search, domain, categories, minRating, maxRating, shopId, all } =
     req.query;
   const queryObject = {};
 
@@ -134,6 +134,11 @@ const getShops = asyncWrapper(async (req, res) => {
     if (minRating) queryObject.rating.$gte = parseInt(minRating); // Filter for minimum rating
     if (maxRating) queryObject.rating.$lte = parseInt(maxRating); // Filter for maximum rating
   }
+
+  // Check if the user is a site admin
+  // const { role } = req.user.data;
+  // if (!req.user || req.user.role.position !== userPositions.SITE_ADMIN || !all)
+  if (!all) queryObject.isActive = true;
 
   const shops = await Shop.getShops(queryObject);
 

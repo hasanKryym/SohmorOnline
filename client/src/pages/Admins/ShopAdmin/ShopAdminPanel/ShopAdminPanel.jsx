@@ -30,7 +30,6 @@ const ShopAdminPanel = () => {
       setQueryParameters({ shopId: user.data.role.shop });
 
     if (categories.length === 0) getCategories(user.data.role.shop);
-    console.log(shop);
     if (!shop.name) {
       setShopQueryParams((prevState) => ({
         ...prevState,
@@ -47,6 +46,15 @@ const ShopAdminPanel = () => {
       navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    if (shop.name) {
+      if (!shop.isActive) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    }
+  }, [shop]);
 
   const [showProductForm, setShowProductForm] = useState(false);
 

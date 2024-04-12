@@ -3,7 +3,7 @@ import axios from "axios";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const getToken = () => `Bearer ${localStorage.getItem("token")}`;
 
-export const getShops = async (queryParameter) => {
+export const getShops = async (queryParameter, all) => {
   let url = `${baseUrl}/shops`;
   let usedParams = false;
 
@@ -19,6 +19,10 @@ export const getShops = async (queryParameter) => {
 
   if (queryParameter.domain) {
     url += `${usedParams ? "&" : "?"}domain=${queryParameter.domain}`;
+    usedParams = true;
+  }
+  if (all) {
+    url += `${usedParams ? "&" : "?"}all=${all}`;
     usedParams = true;
   }
   try {

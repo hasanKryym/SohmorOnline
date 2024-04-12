@@ -32,12 +32,12 @@ function App() {
     <>
       <NotificationProvider>
         <UserProvider>
-          <ShopProvider>
-            <DomainProvider>
-              <ProductProvider>
-                <CategoriesProvider>
-                  <Notification />
-                  <Router>
+          <Router>
+            <ShopProvider>
+              <DomainProvider>
+                <ProductProvider>
+                  <CategoriesProvider>
+                    <Notification />
                     <CartProvider>
                       <ScrollToTop />
                       <RouteChangeListener />
@@ -88,11 +88,11 @@ function App() {
                         />
                       </Routes>
                     </CartProvider>
-                  </Router>
-                </CategoriesProvider>
-              </ProductProvider>
-            </DomainProvider>
-          </ShopProvider>
+                  </CategoriesProvider>
+                </ProductProvider>
+              </DomainProvider>
+            </ShopProvider>
+          </Router>
         </UserProvider>
       </NotificationProvider>
     </>
