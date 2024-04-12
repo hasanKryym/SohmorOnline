@@ -1,10 +1,21 @@
 import "./ShopItem.css";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useProduct } from "../../../context/Shop/Products/ProductsContext";
+import { useLocation } from "react-router-dom";
 
 const ShopItem = ({ item }) => {
+  const location = useLocation();
   const { _id, name, description, image, price, rating, offer, isAvailable } =
     item;
+
+  const { setQueryParameters } = useProduct();
+
+  const handleViewProduct = () => {
+    if (location.pathname === "/profile/favorites") {
+      setQueryParameters({ shopId: item.shopId });
+    }
+  };
   return (
     <>
       <div className="shop_item">
@@ -35,7 +46,10 @@ const ShopItem = ({ item }) => {
               </span>
               {rating}
             </span>
-            <Link to={`/shops/products/${_id}`}>
+            <Link
+              onClick={() => handleViewProduct()}
+              to={`/shops/products/${_id}`}
+            >
               <button className="custom-button">View</button>
             </Link>
           </div>

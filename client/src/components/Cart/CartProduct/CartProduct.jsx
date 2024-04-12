@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
+import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 
 const CartProducts = ({ product }) => {
   const { cartItems, setCartItems, removeFromCart } = useCart();
@@ -15,6 +16,10 @@ const CartProducts = ({ product }) => {
   //   });
   //   setCartItems(newproductQuantity);
   // };
+  const { setQueryParameters } = useProduct();
+  const handleViewProduct = () => {
+    setQueryParameters({ shopId: product.shopId });
+  };
 
   const [productQuantity, setProductQuantity] = useState(product.quantity);
 
@@ -35,9 +40,13 @@ const CartProducts = ({ product }) => {
           <img src={product.image} alt="" />
           <div className="info">
             <h4>{product.name}</h4>
-            {/* <Link to={`/shops/${product.shop}`} className="shop-link charcoal">
-              view Shop
-            </Link> */}
+            <Link
+              onClick={() => handleViewProduct()}
+              to={`/shops/products/${product._id}`}
+              className="shop-link charcoal"
+            >
+              view product
+            </Link>
           </div>
         </div>
       </td>
