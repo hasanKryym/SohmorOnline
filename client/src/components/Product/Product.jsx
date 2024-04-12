@@ -11,7 +11,7 @@ import { useProduct } from "../../context/Shop/Products/ProductsContext";
 import Comments from "./Comments/Comments";
 
 const Product = ({ product }) => {
-  const { user, isLoggedIn, showLoginNotification, editFav } = useUser();
+  const { user, setUser, isLoggedIn, showLoginNotification } = useUser();
   const { _id, name, description, image, price, offer, rating, isAvailable } =
     product;
   const [showRatingForm, setShowRatingForm] = useState(false);
@@ -113,22 +113,34 @@ const Product = ({ product }) => {
                     return;
                   }
                   if (!isFav) {
-                    editFav({
-                      ...user.data.fav, // Spread the entire fav object
-                      products: [...user.data.fav.products, _id], // Add the new productId to the products array
-                    });
+                    setUser((prevUser) => ({
+                      ...prevUser,
+                      data: {
+                        ...prevUser.data,
+                        fav: {
+                          ...prevUser.data.fav,
+                          products: [...prevUser.data.fav.products, _id],
+                        },
+                      },
+                    }));
                     setIsFav(true);
                   } else {
                     const newProductsFav = user.data.fav.products.filter(
-                      (product) => {
-                        return product._id !== _id;
+                      (id) => {
+                        return id !== _id;
                       }
                     );
 
-                    editFav({
-                      ...user.data.fav, // Spread the entire fav object
-                      products: newProductsFav, // Add the new productId to the products array
-                    });
+                    setUser((prevUser) => ({
+                      ...prevUser,
+                      data: {
+                        ...prevUser.data,
+                        fav: {
+                          ...prevUser.data.fav,
+                          products: newProductsFav,
+                        },
+                      },
+                    }));
                     setIsFav(false);
                   }
                 }}

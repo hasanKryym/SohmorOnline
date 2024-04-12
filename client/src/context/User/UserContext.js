@@ -34,6 +34,11 @@ export const UserProvider = ({ children }) => {
 
   const { showNotification, hideNotification } = useNotification();
 
+  const [favorites, setFavorites] = useState({
+    shops: [],
+    products: [],
+  });
+
   useEffect(() => {
     // Update localStorage whenever user state changes
     localStorage.setItem("user", JSON.stringify(user.data));
@@ -77,19 +82,24 @@ export const UserProvider = ({ children }) => {
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 
-  const editFav = async (newFavorites) => {
-    if (!newFavorites) return;
+  useEffect(() => {
+    editFav();
+  }, [user.data.fav]);
+
+  const editFav = async () => {
     showNotification(notificationTypes.LOAD, "");
-    const response = await editUserFav(newFavorites);
+    console.log(user.data.fav);
+    const response = await editUserFav(user.data.fav);
     if (response.success) {
       const newUser = response?.user;
-      setUser({
-        ...user,
-        data: {
-          ...user.data,
-          fav: newUser.fav,
-        },
-      });
+      // setUser({
+      //   ...user,
+      //   data: {
+      //     ...user.data,
+      //     fav: newUser.fav,
+      //   },
+      // });
+      setFavorites(newUser.fav);
       // showNotification(notificationTypes.SUCCESS, response.message);
       hideNotification();
     } else showNotification(notificationTypes.ERROR, response.message);
@@ -122,6 +132,7 @@ export const UserProvider = ({ children }) => {
         showLoginNotification,
         editFav,
         createOrder,
+        favorites,
       }}
     >
       {children}

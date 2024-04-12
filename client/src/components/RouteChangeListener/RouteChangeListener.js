@@ -29,6 +29,7 @@ const RouteChangeListener = () => {
     }
 
     if (!location.pathname.startsWith("/shops/products/")) {
+      setProduct({});
       setProductReviews([]);
     }
   }, [location.pathname]);

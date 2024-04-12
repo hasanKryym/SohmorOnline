@@ -16,9 +16,8 @@ import { CiStar } from "react-icons/ci";
 
 const Shop = () => {
   const { id } = useParams();
-  const { user, editFav, isLoggedIn, showLoginNotification } = useUser();
+  const { user, setUser, isLoggedIn, showLoginNotification } = useUser();
   const { shop, setShopQueryParams, isFav, setIsFav } = useShop();
-  const { setProductReviews, setProduct } = useProduct();
   const {
     products,
     offers,
@@ -39,11 +38,6 @@ const Shop = () => {
     if (products.length === 0) setQueryParameters({ shopId: id });
   }, []);
 
-  // useEffect(() => {
-  // setProduct({});
-  // setProductReviews([]);
-  // }, []);
-
   return (
     <>
       <Navbar />
@@ -59,20 +53,33 @@ const Shop = () => {
                 return;
               }
               if (!isFav) {
-                editFav({
-                  ...user.data.fav, // Spread the entire fav object
-                  shops: [...user.data.fav.shops, shop._id], // Add the new productId to the products array
-                });
+                setUser((prevUser) => ({
+                  ...prevUser,
+                  data: {
+                    ...prevUser.data,
+                    fav: {
+                      ...prevUser.data.fav,
+                      shops: [...prevUser.data.fav.shops, shop._id],
+                    },
+                  },
+                }));
+
                 setIsFav(true);
               } else {
-                const newshopsFav = user.data.fav.shops.filter(({ _id }) => {
+                const newshopsFav = user.data.fav.shops.filter((_id) => {
                   return _id !== shop._id;
                 });
 
-                editFav({
-                  ...user.data.fav, // Spread the entire fav object
-                  shops: newshopsFav, // Add the new productId to the products array
-                });
+                setUser((prevUser) => ({
+                  ...prevUser,
+                  data: {
+                    ...prevUser.data,
+                    fav: {
+                      ...prevUser.data.fav,
+                      shops: newshopsFav,
+                    },
+                  },
+                }));
                 setIsFav(false);
               }
             }}

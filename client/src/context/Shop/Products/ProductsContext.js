@@ -57,6 +57,7 @@ export const ProductProvider = ({ children }) => {
 
     user.data.fav.products.forEach((_id) => {
       if (_id === product._id) {
+        console.log(_id, product._id);
         setIsFav(true);
         return;
       }

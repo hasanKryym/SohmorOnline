@@ -9,9 +9,8 @@ import { useShop } from "../../../context/Shop/shops/ShopsContext";
 import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 
 const Favorites = () => {
-  const { user } = useUser();
-  const { setShop } = useShop();
-  const { setProducts, setProduct } = useProduct();
+  const { user, favorites } = useUser();
+  console.log(favorites);
 
   const favoritesPages = {
     SHOPS: "shops",
@@ -19,12 +18,6 @@ const Favorites = () => {
   };
 
   const [selectedPage, setSelectedPage] = useState(favoritesPages.PRODUCTS);
-
-  //   useEffect(() => {
-  //     setShop({});
-  //     setProduct({});
-  //     setProducts([]);
-  //   });
 
   return (
     <>
@@ -53,10 +46,10 @@ const Favorites = () => {
         </div>
         <div className="favorites_container">
           {selectedPage === favoritesPages.PRODUCTS
-            ? user.data.fav.products.map((product) => (
+            ? favorites.products.map((product) => (
                 <ShopItem key={product._id} item={product} />
               ))
-            : user.data.fav.shops.map((shop) => (
+            : favorites.shops.map((shop) => (
                 <Shop key={shop._id} shop={shop} />
               ))}
         </div>
