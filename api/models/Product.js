@@ -7,6 +7,10 @@ const {
 const { ProductReview } = require("./Review");
 
 const ProductSchema = new mongoose.Schema({
+  shopId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Shop",
+  },
   name: {
     type: String,
     required: true,

@@ -23,6 +23,7 @@ const addProduct = asyncWrapper(async (req, res) => {
     throw new BadRequestError("Required fields are missing.");
 
   const productData = {
+    shopId,
     name,
     description,
     price,
