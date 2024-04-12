@@ -5,7 +5,6 @@ import { FaRegUserCircle } from "react-icons/fa";
 
 const Comments = () => {
   const { productReviews } = useProduct();
-  console.log(productReviews);
 
   return (
     <>
