@@ -79,6 +79,8 @@ const ShopRegistration = () => {
       );
       return;
     }
+
+    console.log(formData, userData);
   };
   return (
     <>

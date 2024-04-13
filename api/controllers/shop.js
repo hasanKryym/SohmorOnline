@@ -9,7 +9,6 @@ const asyncWrapper = require("../middleware/async");
 const { Shop, Category, ShopRegistration } = require("../models/Shop");
 const userPositions = require("../Enums/userEnums/positionsEnums");
 const Domain = require("../models/Domain");
-const ShopRegistration = require("../models/ShopRegistration");
 
 const addShop = asyncWrapper(async (req, res) => {
   const {
