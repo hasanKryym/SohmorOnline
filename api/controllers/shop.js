@@ -10,6 +10,7 @@ const { Shop, Category, ShopRegistration } = require("../models/Shop");
 const userPositions = require("../Enums/userEnums/positionsEnums");
 const Domain = require("../models/Domain");
 const User = require("../models/User");
+const registrationRequestStatus = require("../Enums/shopEnums/shopRegistrationStatus");
 
 const addShop = asyncWrapper(async (req, res) => {
   const {
@@ -277,6 +278,19 @@ const changeRequestStatus = asyncWrapper(async (req, res) => {
     .json({ success: true, message: "status updated successfully", newStatus });
 });
 
+const getRegistrationRequests = asyncWrapper(async (req, res) => {
+  let { status } = req.query;
+  if (!status) status = registrationRequestStatus.PENDING;
+
+  const requests = await ShopRegistration.getRegistrationRequests(status);
+
+  return res.status(StatusCodes.ACCEPTED).json({
+    success: true,
+    message: "shop registration requests retrieved successfully",
+    requests,
+  });
+});
+
 module.exports = {
   addShop,
   editShop,
@@ -289,4 +303,5 @@ module.exports = {
   getCategories,
   addRegistrationRequest,
   changeRequestStatus,
+  getRegistrationRequests,
 };

@@ -7,6 +7,7 @@ const {
 } = require("../errors");
 const User = require("./User");
 const Product = require("./Product");
+const registrationRequestStatus = require("../Enums/shopEnums/shopRegistrationStatus");
 
 const ShopSchema = new mongoose.Schema({
   name: {
@@ -318,17 +319,38 @@ shopRegistrationSchema.statics.changeStatus = async function (
   newStatus
 ) {
   try {
-    const request = await this.findByIdAndUpdate(
-      requestId,
-      { status: newStatus },
-      { new: true }
-    );
-    if (!request) {
-      throw new NotFoundError("Registration request not found");
+    if (newStatus === registrationRequestStatus.REJECTED) {
+      const deletedRequest = await this.findByIdAndDelete(requestId);
+      if (!deletedRequest) {
+        throw new NotFoundError("Registration request not found");
+      }
+      return deletedRequest;
+    } else {
+      const request = await this.findByIdAndUpdate(
+        requestId,
+        { status: newStatus },
+        { new: true }
+      );
+      if (!request) {
+        throw new NotFoundError("Registration request not found");
+      }
+      return request;
     }
-    return request;
   } catch (error) {
     throw new InternalServerError("Failed to change status: " + error.message);
+  }
+};
+
+shopRegistrationSchema.statics.getRegistrationRequests = async function (
+  status
+) {
+  try {
+    const requests = await this.find({ status });
+    return requests;
+  } catch (error) {
+    throw new InternalServerError(
+      "Failed to retrieve registration requests: " + error.message
+    );
   }
 };
 

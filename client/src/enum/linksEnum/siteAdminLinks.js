@@ -14,6 +14,10 @@ export const navbarLinks = [
         name: "domains",
         link: "/siteAdmin/adminPanel/domains",
       },
+      {
+        name: "requests",
+        link: "/siteAdmin/adminPanel/registrationRequests",
+      },
     ],
   },
 ];

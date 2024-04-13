@@ -13,6 +13,7 @@ const {
   shopActivation,
   addRegistrationRequest,
   changeRequestStatus,
+  getRegistrationRequests,
 } = require("../controllers/shop");
 const authenticate = require("../middleware/authentication");
 const checkSiteAdmin = require("../middleware/admins/authSiteAdmin");
@@ -36,9 +37,10 @@ router.route("/categories").get(getCategories);
 
 router.route("/activation").patch(authenticate, checkSiteAdmin, shopActivation);
 
-router.route("/requests").post(authenticate, addRegistrationRequest);
 router
   .route("/requests")
-  .patch(authenticate, checkSiteAdmin, changeRequestStatus);
+  .post(authenticate, addRegistrationRequest)
+  .patch(authenticate, checkSiteAdmin, changeRequestStatus)
+  .get(authenticate, checkSiteAdmin, getRegistrationRequests);
 
 module.exports = router;

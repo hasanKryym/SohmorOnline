@@ -27,6 +27,7 @@ import SliderImages from "./pages/Admins/ShopAdmin/SliderImages/SliderImages";
 import Favorites from "./pages/Profile/Favorites/Favorites";
 import RouteChangeListener from "./components/RouteChangeListener/RouteChangeListener";
 import ShopRegistration from "./ShopRegistration/ShopRegistration";
+import RegistrationRequests from "./pages/Admins/SiteAdmin/RegistrationRequests/RegistrationRequests";
 
 function App() {
   return (
@@ -78,6 +79,10 @@ function App() {
                         <Route
                           path="/siteAdmin/adminPanel/domains"
                           element={<Domains />}
+                        />
+                        <Route
+                          path="/siteAdmin/adminPanel/registrationRequests"
+                          element={<RegistrationRequests />}
                         />
                         <Route
                           path="/shops/adminPanel/manage/editShop"

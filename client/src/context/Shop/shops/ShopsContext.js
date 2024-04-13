@@ -4,8 +4,10 @@ import { notificationTypes } from "../../Notification/notificationEnum";
 import {
   addShopRegistrationRequest,
   add_shop,
+  changeRequestStatus,
   delete_shop,
   edit_shop,
+  getRegistrationRequests,
   getShops,
   get_Domains,
 } from "../../../services/shopService";
@@ -23,6 +25,7 @@ export const ShopProvider = ({ children }) => {
   const [isFav, setIsFav] = useState(false);
   const [shopQueryParams, setShopQueryParams] = useState({});
   const [shopsDomains, setShopsDomains] = useState([]);
+  const [shopRegistrationRequests, setShopRegistrationRequests] = useState([]);
   const { showNotification, hideNotification } = useNotification();
   const { user } = useUser();
 
@@ -151,6 +154,32 @@ export const ShopProvider = ({ children }) => {
       );
   };
 
+  const changeShopRegistrationRequestStatus = async (requestId, newStatus) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await changeRequestStatus(requestId, newStatus);
+    if (response.success) {
+      showNotification(notificationTypes.SUCCESS, response.message);
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ?? "error while changing registration request status"
+      );
+  };
+
+  const getShopRegistrationRequests = async (status) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await getRegistrationRequests(status);
+    console.log(response);
+    if (response.success) {
+      setShopRegistrationRequests(response.requests);
+      hideNotification();
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ?? "error while changing registration request status"
+      );
+  };
+
   return (
     <ShopContext.Provider
       value={{
@@ -168,6 +197,9 @@ export const ShopProvider = ({ children }) => {
         isFav,
         setIsFav,
         addRegistrationRequest,
+        changeShopRegistrationRequestStatus,
+        shopRegistrationRequests,
+        getShopRegistrationRequests,
       }}
     >
       {children}

@@ -164,3 +164,35 @@ export const addShopRegistrationRequest = async (requestData) => {
     return error.response.data;
   }
 };
+
+export const changeRequestStatus = async (requestId, newStatus) => {
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/shops/requests`,
+      { requestId, newStatus },
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const getRegistrationRequests = async (status) => {
+  let url = `${baseUrl}/shops/requests`;
+  if (status) url += `?status=${status}`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: getToken(),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
