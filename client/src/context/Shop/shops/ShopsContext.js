@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../../Notification/NotificationContext";
 import { notificationTypes } from "../../Notification/notificationEnum";
 import {
+  addShopRegistrationRequest,
   add_shop,
   delete_shop,
   edit_shop,
@@ -137,6 +138,19 @@ export const ShopProvider = ({ children }) => {
       );
   };
 
+  const addRegistrationRequest = async (requestData) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await addShopRegistrationRequest(requestData);
+    console.log(response);
+    if (response.success) {
+      showNotification(notificationTypes.SUCCESS, response.message);
+    } else
+      showNotification(
+        notificationTypes.ERROR,
+        response.message ?? "error while adding registration request"
+      );
+  };
+
   return (
     <ShopContext.Provider
       value={{
@@ -153,6 +167,7 @@ export const ShopProvider = ({ children }) => {
         deleteShop,
         isFav,
         setIsFav,
+        addRegistrationRequest,
       }}
     >
       {children}

@@ -9,6 +9,7 @@ const asyncWrapper = require("../middleware/async");
 const { Shop, Category, ShopRegistration } = require("../models/Shop");
 const userPositions = require("../Enums/userEnums/positionsEnums");
 const Domain = require("../models/Domain");
+const User = require("../models/User");
 
 const addShop = asyncWrapper(async (req, res) => {
   const {
@@ -221,19 +222,42 @@ const getCategories = asyncWrapper(async (req, res) => {
 // SHOP REGISTRATION
 
 const addRegistrationRequest = asyncWrapper(async (req, res) => {
-  //   const requestData = {
-  //     status: "pending",
-  //     shopInfo: {
-  //       // Fill in shop info details
-  //     },
-  //     adminInfo: {
-  //       // Fill in admin info details
-  //     },
-  //   };
-
   const { requestData } = req.body;
-  if (!requestData)
-    throw new BadRequestError("please provide the request data");
+  if (!requestData) {
+    throw new BadRequestError("Please provide the request data");
+  }
+
+  const { shopInfo, adminInfo } = requestData;
+
+  // Check if the shop name already exists in the Shop schema
+  const existingShop = await Shop.findOne({ name: shopInfo.name });
+  if (existingShop) {
+    throw new BadRequestError("Shop name already exists");
+  }
+
+  // Check if the admin email already exists in the User schema
+  const existingAdmin = await User.findOne({ email: adminInfo.email });
+  if (existingAdmin) {
+    throw new BadRequestError("Admin email already exists");
+  }
+
+  // Check if the shop name already exists in the ShopRegistration schema
+  const existingRequest = await ShopRegistration.findOne({
+    "shopInfo.name": shopInfo.name,
+  });
+  if (existingRequest) {
+    throw new BadRequestError("Shop registration request already exists");
+  }
+
+  // Check if the admin email already exists in the ShopRegistration schema
+  const existingRequestAdmin = await ShopRegistration.findOne({
+    "adminInfo.email": adminInfo.email,
+  });
+  if (existingRequestAdmin) {
+    throw new BadRequestError(
+      "Admin email already exists in a registration request"
+    );
+  }
 
   const newRequest = await ShopRegistration.addRegistrationRequest(requestData);
 

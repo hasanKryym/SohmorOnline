@@ -4,10 +4,12 @@ import AddImage from "../components/UploadCare/UploadCare";
 import { useDomain } from "../context/Shop/Domains/DomainsContext";
 import { useNotification } from "../context/Notification/NotificationContext";
 import UserPositions from "../enum/userEnum/userPositionsEnum";
+import { useShop } from "../context/Shop/shops/ShopsContext";
 
 const ShopRegistration = () => {
   const { showNotification } = useNotification();
   const { domains, getDomains } = useDomain();
+  const { addRegistrationRequest } = useShop();
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -16,7 +18,7 @@ const ShopRegistration = () => {
     number: "",
     role: {
       position: UserPositions.SHOP_ADMIN,
-      shop: "",
+      shop: null,
     },
   });
   const handleUserDataChange = (e) => {
@@ -80,7 +82,12 @@ const ShopRegistration = () => {
       return;
     }
 
-    console.log(formData, userData);
+    const requestData = {
+      shopInfo: formData,
+      adminInfo: userData,
+    };
+
+    addRegistrationRequest(requestData);
   };
   return (
     <>
