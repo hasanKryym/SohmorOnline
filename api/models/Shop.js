@@ -319,7 +319,10 @@ shopRegistrationSchema.statics.changeStatus = async function (
   newStatus
 ) {
   try {
-    if (newStatus === registrationRequestStatus.REJECTED) {
+    if (
+      newStatus === registrationRequestStatus.REJECTED ||
+      newStatus === registrationRequestStatus.ACCEPTED
+    ) {
       const deletedRequest = await this.findByIdAndDelete(requestId);
       if (!deletedRequest) {
         throw new NotFoundError("Registration request not found");

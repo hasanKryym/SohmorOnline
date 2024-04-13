@@ -39,7 +39,7 @@ router.route("/activation").patch(authenticate, checkSiteAdmin, shopActivation);
 
 router
   .route("/requests")
-  .post(authenticate, addRegistrationRequest)
+  .post(addRegistrationRequest)
   .patch(authenticate, checkSiteAdmin, changeRequestStatus)
   .get(authenticate, checkSiteAdmin, getRegistrationRequests);
 

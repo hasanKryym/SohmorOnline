@@ -26,8 +26,8 @@ import { CartProvider } from "./context/Cart/CartContext";
 import SliderImages from "./pages/Admins/ShopAdmin/SliderImages/SliderImages";
 import Favorites from "./pages/Profile/Favorites/Favorites";
 import RouteChangeListener from "./components/RouteChangeListener/RouteChangeListener";
-import ShopRegistration from "./ShopRegistration/ShopRegistration";
 import RegistrationRequests from "./pages/Admins/SiteAdmin/RegistrationRequests/RegistrationRequests";
+import ShopRegistration from "./pages/ShopRegistration/ShopRegistration";
 
 function App() {
   return (

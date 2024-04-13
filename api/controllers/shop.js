@@ -247,7 +247,9 @@ const addRegistrationRequest = asyncWrapper(async (req, res) => {
     "shopInfo.name": shopInfo.name,
   });
   if (existingRequest) {
-    throw new BadRequestError("Shop registration request already exists");
+    throw new BadRequestError(
+      "Shop name already exists in a registration request"
+    );
   }
 
   // Check if the admin email already exists in the ShopRegistration schema
@@ -262,9 +264,12 @@ const addRegistrationRequest = asyncWrapper(async (req, res) => {
 
   const newRequest = await ShopRegistration.addRegistrationRequest(requestData);
 
-  return res
-    .status(StatusCodes.CREATED)
-    .json({ success: true, message: "Request added successfully", newRequest });
+  return res.status(StatusCodes.CREATED).json({
+    success: true,
+    message:
+      "Request added successfully; please wait for the admin to review your request. You'll be notified when your shop is ready.",
+    newRequest,
+  });
 });
 
 const changeRequestStatus = asyncWrapper(async (req, res) => {

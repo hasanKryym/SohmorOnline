@@ -144,7 +144,6 @@ export const ShopProvider = ({ children }) => {
   const addRegistrationRequest = async (requestData) => {
     showNotification(notificationTypes.LOAD, "");
     const response = await addShopRegistrationRequest(requestData);
-    console.log(response);
     if (response.success) {
       showNotification(notificationTypes.SUCCESS, response.message);
     } else
@@ -152,6 +151,7 @@ export const ShopProvider = ({ children }) => {
         notificationTypes.ERROR,
         response.message ?? "error while adding registration request"
       );
+    return response;
   };
 
   const changeShopRegistrationRequestStatus = async (requestId, newStatus) => {

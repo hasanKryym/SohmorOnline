@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { notificationTypes } from "../context/Notification/notificationEnum";
-import AddImage from "../components/UploadCare/UploadCare";
-import { useDomain } from "../context/Shop/Domains/DomainsContext";
-import { useNotification } from "../context/Notification/NotificationContext";
-import UserPositions from "../enum/userEnum/userPositionsEnum";
-import { useShop } from "../context/Shop/shops/ShopsContext";
+import { notificationTypes } from "../../context/Notification/notificationEnum";
+import AddImage from "../../components/UploadCare/UploadCare";
+import { useDomain } from "../../context/Shop/Domains/DomainsContext";
+import { useNotification } from "../../context/Notification/NotificationContext";
+import UserPositions from "../../enum/userEnum/userPositionsEnum";
+import { useShop } from "../../context/Shop/shops/ShopsContext";
 
 const ShopRegistration = () => {
   const { showNotification } = useNotification();
@@ -87,7 +87,29 @@ const ShopRegistration = () => {
       adminInfo: userData,
     };
 
-    addRegistrationRequest(requestData);
+    const response = await addRegistrationRequest(requestData);
+    console.log(response);
+    if (response.success) {
+      setFormData({
+        name: "",
+        description: "",
+        address: "",
+        phoneNumber: "",
+        domain: "",
+        image: "",
+      });
+      setUserData({
+        name: "",
+        email: "",
+        password: "",
+        address: "",
+        number: "",
+        role: {
+          position: UserPositions.SHOP_ADMIN,
+          shop: null,
+        },
+      });
+    }
   };
   return (
     <>
@@ -191,7 +213,7 @@ const ShopRegistration = () => {
           />
           <div className="shopForm_buttons-container">
             <button type="submit" className="custom-button">
-              Add Shop
+              Add Request
             </button>
           </div>
         </form>
