@@ -6,9 +6,10 @@ const {
   InternalServerError,
 } = require("../errors/index");
 const asyncWrapper = require("../middleware/async");
-const { Shop, Category } = require("../models/Shop");
+const { Shop, Category, ShopRegistration } = require("../models/Shop");
 const userPositions = require("../Enums/userEnums/positionsEnums");
 const Domain = require("../models/Domain");
+const ShopRegistration = require("../models/ShopRegistration");
 
 const addShop = asyncWrapper(async (req, res) => {
   const {
@@ -218,6 +219,41 @@ const getCategories = asyncWrapper(async (req, res) => {
   });
 });
 
+// SHOP REGISTRATION
+
+const addRegistrationRequest = asyncWrapper(async (req, res) => {
+  //   const requestData = {
+  //     status: "pending",
+  //     shopInfo: {
+  //       // Fill in shop info details
+  //     },
+  //     adminInfo: {
+  //       // Fill in admin info details
+  //     },
+  //   };
+
+  const { requestData } = req.body;
+  if (!requestData)
+    throw new BadRequestError("please provide the request data");
+
+  const newRequest = await ShopRegistration.addRegistrationRequest(requestData);
+
+  return res
+    .status(StatusCodes.CREATED)
+    .json({ success: true, message: "Request added successfully", newRequest });
+});
+
+const changeRequestStatus = asyncWrapper(async (req, res) => {
+  const { requestId, newStatus } = req.body;
+  const updatedRequest = await ShopRegistration.changeStatus(
+    requestId,
+    newStatus
+  );
+  return res
+    .status(StatusCodes.OK)
+    .json({ success: true, message: "status updated successfully", newStatus });
+});
+
 module.exports = {
   addShop,
   editShop,
@@ -228,4 +264,6 @@ module.exports = {
   getDomains,
   addCategory,
   getCategories,
+  addRegistrationRequest,
+  changeRequestStatus,
 };

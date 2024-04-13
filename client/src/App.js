@@ -26,6 +26,7 @@ import { CartProvider } from "./context/Cart/CartContext";
 import SliderImages from "./pages/Admins/ShopAdmin/SliderImages/SliderImages";
 import Favorites from "./pages/Profile/Favorites/Favorites";
 import RouteChangeListener from "./components/RouteChangeListener/RouteChangeListener";
+import ShopRegistration from "./ShopRegistration/ShopRegistration";
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/shops" element={<Shops />} />
+                        <Route
+                          path="/shops/register"
+                          element={<ShopRegistration />}
+                        />
                         <Route path="/shops/:id" element={<Shop />} />
                         <Route
                           path="/shops/products/:id"

@@ -6,7 +6,7 @@ export const homeActions = [
     description:
       "We are here and ready to assist you anytime. If you have any further questions feel free to contact our team. To register your shop please click on the button bellow.",
     button: "Register",
-    link: "",
+    link: pagesLinks.REGISTER,
   },
   {
     title: "Find what you're looking for!",

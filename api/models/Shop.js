@@ -3,6 +3,7 @@ const {
   BadRequestError,
   UnauthenticatedError,
   NotFoundError,
+  InternalServerError,
 } = require("../errors");
 const User = require("./User");
 const Product = require("./Product");
@@ -217,4 +218,123 @@ CategorySchema.statics.createCategory = async function (categoryData) {
 
 const Category = mongoose.model("Category", CategorySchema);
 
-module.exports = { Shop, Category };
+const shopRegistrationSchema = new mongoose.Schema({
+  status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
+  },
+  shopInfo: {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    domain: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Domain",
+      },
+    ],
+  },
+  adminInfo: {
+    name: {
+      type: String,
+      required: [true, "please provide name"],
+      minlength: 3,
+      maxlength: 50,
+    },
+
+    email: {
+      type: String,
+      required: [true, "please provide email"],
+      match: [
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        "Please provide a valid email",
+      ],
+      unique: true,
+    },
+
+    password: {
+      type: String,
+      required: [true, "please provide password (min 6 characters)"],
+      minlength: 6,
+    },
+    address: {
+      type: String,
+      required: [true, "please provide address"],
+    },
+
+    number: {
+      type: String,
+      required: [true, "please provide phone number"],
+    },
+
+    role: {
+      position: {
+        type: String,
+        enum: ["user", "shopAdmin", "siteAdmin", "delivery"],
+        default: "user",
+      },
+      shop: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Shop",
+        default: null,
+      },
+    },
+  },
+});
+
+shopRegistrationSchema.statics.addRegistrationRequest = async function (
+  requestData
+) {
+  try {
+    const newRequest = await this.create(requestData);
+    return newRequest;
+  } catch (error) {
+    throw new InternalServerError(
+      "Failed to add registration request: " + error.message
+    );
+  }
+};
+
+shopRegistrationSchema.statics.changeStatus = async function (
+  requestId,
+  newStatus
+) {
+  try {
+    const request = await this.findByIdAndUpdate(
+      requestId,
+      { status: newStatus },
+      { new: true }
+    );
+    if (!request) {
+      throw new NotFoundError("Registration request not found");
+    }
+    return request;
+  } catch (error) {
+    throw new InternalServerError("Failed to change status: " + error.message);
+  }
+};
+
+const ShopRegistration = mongoose.model(
+  "ShopRegistration",
+  shopRegistrationSchema
+);
+
+module.exports = { Shop, Category, ShopRegistration };

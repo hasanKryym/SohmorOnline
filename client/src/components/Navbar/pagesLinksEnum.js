@@ -4,6 +4,7 @@ const pagesLinks = {
   LOGIN: "/login",
   CART: "/cart",
   PROFILE: "/profile",
+  REGISTER: "/shops/register",
 };
 
 module.exports = { pagesLinks };

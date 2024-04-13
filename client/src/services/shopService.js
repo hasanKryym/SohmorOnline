@@ -142,7 +142,23 @@ export const shopActivation = async (shopId, isActive) => {
         },
       }
     );
-    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const addShopRegistrationRequest = async (requestData) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/shops/requests`,
+      { requestData },
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error.response.data;
