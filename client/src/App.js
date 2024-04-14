@@ -33,8 +33,8 @@ function App() {
   return (
     <>
       <NotificationProvider>
-        <UserProvider>
-          <Router>
+        <Router>
+          <UserProvider>
             <ShopProvider>
               <DomainProvider>
                 <ProductProvider>
@@ -102,8 +102,8 @@ function App() {
                 </ProductProvider>
               </DomainProvider>
             </ShopProvider>
-          </Router>
-        </UserProvider>
+          </UserProvider>
+        </Router>
       </NotificationProvider>
     </>
   );

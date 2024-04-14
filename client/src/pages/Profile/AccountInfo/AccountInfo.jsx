@@ -3,7 +3,7 @@ import { useUser } from "../../../context/User/UserContext";
 import "./AccountInfo.css";
 
 const AccountInfo = () => {
-  const { user, editUserData } = useUser();
+  const { user, editUserData, logout } = useUser();
   const userData = user.data;
 
   // State object for form fields
@@ -82,6 +82,9 @@ const AccountInfo = () => {
 
           <button className="custom-button" type="submit">
             Save
+          </button>
+          <button onClick={() => logout()} className="secondary-button">
+            Logout
           </button>
         </form>
       </div>

@@ -15,27 +15,31 @@ import {
 import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import { Filter } from "../../../../components/Filter/Filter";
+import { notificationTypes } from "../../../../context/Notification/notificationEnum";
+import { useNotification } from "../../../../context/Notification/NotificationContext";
 
 const ShopAdminPanel = () => {
   const navigate = useNavigate();
+  const { showNotification } = useNotification();
   const { products, getShopProducts, queryParameters, setQueryParameters } =
     useProduct();
 
   const { categories, getCategories } = useCategories();
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const { shop, setShopQueryParams } = useShop();
 
   useEffect(() => {
-    if (products.length === 0)
-      setQueryParameters({ shopId: user.data.role.shop });
-
-    if (categories.length === 0) getCategories(user.data.role.shop);
     if (!shop.name) {
       setShopQueryParams((prevState) => ({
         ...prevState,
         shopId: user.data.role.shop,
       }));
     }
+    if (shop.name) if (!shop.isActive) return;
+    if (products.length === 0)
+      setQueryParameters({ shopId: user.data.role.shop });
+
+    if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
 
   useEffect(() => {
@@ -50,8 +54,11 @@ const ShopAdminPanel = () => {
   useEffect(() => {
     if (shop.name) {
       if (!shop.isActive) {
-        localStorage.clear();
-        window.location.reload();
+        showNotification(
+          notificationTypes.WARNING,
+          "Your account is not activated please contact the admin to activate your account"
+        );
+        logout();
       }
     }
   }, [shop]);

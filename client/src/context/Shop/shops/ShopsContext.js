@@ -14,6 +14,7 @@ import {
 import { register } from "../../../services/userService";
 import { useUser } from "../../User/UserContext";
 import { useLocation } from "react-router-dom";
+import UserPositions from "../../../enum/userEnum/userPositionsEnum";
 
 const ShopContext = createContext();
 
@@ -34,6 +35,11 @@ export const ShopProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (
+      user.data.role.position === UserPositions.SHOP_ADMIN &&
+      !shopQueryParams.shopId
+    )
+      return;
     get_shops();
   }, [shopQueryParams]);
 

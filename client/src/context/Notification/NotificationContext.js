@@ -8,10 +8,16 @@ export const NotificationProvider = ({ children }) => {
 
   const showNotification = (type, message) => {
     setNotification({ type, message });
-    if (type !== notificationTypes.LOAD)
-      setTimeout(() => {
-        hideNotification();
-      }, 4000);
+    if (type !== notificationTypes.LOAD) {
+      if (type === notificationTypes.WARNING)
+        setTimeout(() => {
+          hideNotification();
+        }, 10000);
+      else
+        setTimeout(() => {
+          hideNotification();
+        }, 4000);
+    }
   };
 
   const hideNotification = () => {

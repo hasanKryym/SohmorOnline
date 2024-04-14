@@ -10,7 +10,7 @@ import UserPositions from "../../enum/userEnum/userPositionsEnum";
 const Login = () => {
   const navigate = useNavigate();
   const { user, setUser, updateUserData } = useUser();
-  const { showNotification } = useNotification();
+  const { showNotification, hideNotification } = useNotification();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -48,7 +48,8 @@ const Login = () => {
         },
         data: response.user,
       }));
-      showNotification(notificationTypes.SUCCESS, response.message);
+      // showNotification(notificationTypes.SUCCESS, response.message);
+      hideNotification();
       if (response.user.role.position === UserPositions.SHOP_ADMIN) {
         navigate("/shops/adminPanel/dashboard");
       } else if (response.user.role.position === UserPositions.SITE_ADMIN)

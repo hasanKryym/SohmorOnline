@@ -3,10 +3,13 @@ import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
 import { editUser, editUserFav } from "../../services/userService";
 import { addOrder } from "../../services/ordersService";
+import { useNavigate } from "react-router-dom";
+import UserPositions from "../../enum/userEnum/userPositionsEnum";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     status: {
       isLoggedIn: localStorage.getItem("token") ? true : false,
@@ -83,7 +86,8 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    editFav();
+    if (isLoggedIn() && user.data.role.position === UserPositions.USER)
+      editFav();
   }, [user.data.fav]);
 
   const editFav = async () => {
@@ -121,6 +125,36 @@ export const UserProvider = ({ children }) => {
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    setUser({
+      status: {
+        isLoggedIn: localStorage.getItem("token") ? true : false,
+        token: localStorage.getItem("token"),
+      },
+      data: JSON.parse(localStorage.getItem("user"))
+        ? JSON.parse(localStorage.getItem("user"))
+        : {
+            _id: "",
+            name: "",
+            email: "",
+            address: "",
+            number: "",
+            role: {
+              position: "user",
+              shop: null,
+            },
+            cart: [],
+            fav: {
+              shops: [],
+              products: [],
+            },
+          },
+    });
+
+    navigate("/");
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -132,6 +166,7 @@ export const UserProvider = ({ children }) => {
         editFav,
         createOrder,
         favorites,
+        logout,
       }}
     >
       {children}
