@@ -5,10 +5,12 @@ import {
   createShopCategory,
   getShopCategories,
 } from "../../../services/shopService";
+import { useLocation } from "react-router-dom";
 
 const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
+  const location = useLocation();
   const { showNotification, hideNotification } = useNotification();
   const [categories, setCategories] = useState([]);
 
@@ -23,7 +25,15 @@ export const CategoriesProvider = ({ children }) => {
 
     if (response.success) {
       setCategories(response.categories);
-      hideNotification();
+      if (
+        response.categories.length === 0 &&
+        location.pathname === "/shops/adminPanel/dashboard"
+      )
+        showNotification(
+          notificationTypes.WARNING,
+          "please note that you will not be able to insert a product unless you add at least 1 category to the shop"
+        );
+      else hideNotification();
     } else
       showNotification(
         notificationTypes.ERROR,
