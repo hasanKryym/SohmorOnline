@@ -8,6 +8,7 @@ const {
 const User = require("./User");
 const Product = require("./Product");
 const registrationRequestStatus = require("../Enums/shopEnums/shopRegistrationStatus");
+const { ProductReview } = require("./Review");
 
 const ShopSchema = new mongoose.Schema({
   name: {
@@ -114,6 +115,9 @@ ShopSchema.statics.deleteShop = async function (shopId) {
 
   // Delete all categories associated with the shop
   await Category.deleteMany({ _id: { $in: shop.categories } });
+
+  // Delete all shop products reviews
+  await ProductReview.deleteMany({ productId: { $in: shop.products } });
 
   // Delete all users with role.shop equal to the shop being deleted
   await User.deleteMany({ "role.shop": shopId });
