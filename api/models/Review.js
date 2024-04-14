@@ -32,7 +32,6 @@ const ProductReviewSchema = new mongoose.Schema({
 ProductReviewSchema.statics.addReview = async function (review) {
   try {
     const { productId, userId, rating, comment } = review;
-    console.log(review);
 
     // Check if the user has already reviewed the product
     const existingReview = await this.findOne({ productId, userId });
