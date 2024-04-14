@@ -13,19 +13,19 @@ export const navbarLinks = [
     ],
   },
 
-  {
-    title: "Delivery",
-    lists: [
-      {
-        name: "add Delivery",
-        link: "/shops/adminPanel/manage/delivery/add",
-      },
-      {
-        name: "Orders history",
-        link: "/shops/adminPanel/manage/ordersHistory",
-      },
-    ],
-  },
+  // {
+  //   title: "Delivery",
+  //   lists: [
+  //     {
+  //       name: "add Delivery",
+  //       link: "/shops/adminPanel/manage/delivery/add",
+  //     },
+  //     {
+  //       name: "Orders history",
+  //       link: "/shops/adminPanel/manage/ordersHistory",
+  //     },
+  //   ],
+  // },
 ];
 export const headers = [
   "Image",
