@@ -153,6 +153,16 @@ const ProductForm = ({ clostProductForm, product }) => {
                 onChange={handleChange}
                 className="custom-input"
               />
+
+              {formData.offer > 0 && (
+                <p>
+                  new Price $:
+                  {(
+                    formData.price -
+                    formData.price * (formData.offer / 100)
+                  ).toFixed(1)}
+                </p>
+              )}
             </>
           )}
           <label className="form-label">
