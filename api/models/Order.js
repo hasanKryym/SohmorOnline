@@ -46,10 +46,6 @@ const OrderSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-// Add a virtual property to format the createdAt field with the desired timezone
-OrderSchema.virtual("createdAtFormatted").get(function () {
-  return moment(this.createdAt).tz("Asia/Beirut").format("YYYY-MM-DD HH:mm:ss");
-});
 
 // Static function to create an order
 OrderSchema.statics.createOrder = async function (userId, products) {
@@ -60,6 +56,28 @@ OrderSchema.statics.createOrder = async function (userId, products) {
     });
 
     return { success: true, order, message: "order created successfully" };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+// Static function to retrieve orders based on provided criteria
+OrderSchema.statics.getOrders = async function (orderData) {
+  try {
+    // Construct the query object based on provided criteria
+    const query = {};
+    if (orderData.shopId) query["products.shopId"] = orderData.shopId;
+    if (orderData.userId) query.userId = orderData.userId;
+    if (orderData.status) query.status = orderData.status;
+
+    // Find orders that match the query
+    const orders = await this.find(query);
+
+    return {
+      success: true,
+      orders,
+      message: "Orders retrieved successfully",
+    };
   } catch (error) {
     return { success: false, message: error.message };
   }
