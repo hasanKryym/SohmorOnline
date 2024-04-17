@@ -12,7 +12,7 @@ const Actions = () => {
 
         {homeActions.map(({ title, description, button, link }, i) => {
           return (
-            <article className={`action ${i % 2 !== 0 && "reverse"}`}>
+            <article key={i} className={`action ${i % 2 !== 0 && "reverse"}`}>
               <img
                 src={(i === 0 && imageAction1) || (i === 1 && imageAction2)}
                 alt=""

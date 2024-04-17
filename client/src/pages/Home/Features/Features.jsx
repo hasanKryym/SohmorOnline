@@ -9,9 +9,9 @@ const Features = () => {
         <h2>Features</h2>
       </div>
       <div className="features_container">
-        {featuresData.map(({ title, description }) => {
+        {featuresData.map(({ title, description }, i) => {
           return (
-            <article className="feature">
+            <article key={i} className="feature">
               <h4 className="feature_title">{title}</h4>
               <p className="feature_description">{description}</p>
             </article>
