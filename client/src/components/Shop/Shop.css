@@ -23,11 +23,11 @@
 }
 .shop .description {
   padding: 1rem;
-  max-height: 5.3rem; /* Adjust this value to accommodate three lines of text */
+  max-height: 5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limit the description to three lines */
+  -webkit-line-clamp: 3; /* Limit the description to three lines */
   -webkit-box-orient: vertical;
 }
 
