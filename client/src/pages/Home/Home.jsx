@@ -8,6 +8,7 @@ import { useUser } from "../../context/User/UserContext";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import HomeSlider from "./HomeSlider/HomeSlider";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Home = () => {
     <>
       <div className="homeContainer">
         <Navbar />
-        {/* <Slider /> */}
+        <HomeSlider />
         <Features />
         <Actions />
         <Footer />

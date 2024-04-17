@@ -1,9 +1,11 @@
 .swiper_container {
-  /* background: var(--terracotta-red); */
   width: 100vw;
   max-width: 2000px;
   overflow-x: hidden;
   max-width: 1500px;
+}
+.swiper_container.homeSwiper {
+  background: var(--terracotta-red);
 }
 .swiper_container .swiper {
   /* padding: 2rem; */
@@ -20,6 +22,10 @@
   width: inherit;
   height: 550px;
   object-fit: cover;
+}
+
+.swiper .home_slider-img {
+  object-fit: contain;
 }
 
 @media screen and (max-width: 520px) {
