@@ -17,8 +17,8 @@ export const profileLinks = [
   },
 
   {
-    name: "Order History",
-    link: "/profile/orderHistory",
+    name: "My Orders",
+    link: "/profile/myOrders",
     icon: <FaHistory />,
   },
 

@@ -9,6 +9,8 @@ import { useCart } from "../../context/Cart/CartContext";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
 import Comments from "./Comments/Comments";
+import { notificationTypes } from "../../context/Notification/notificationEnum";
+import { useNotification } from "../../context/Notification/NotificationContext";
 
 const Product = ({ product }) => {
   const { user, setUser, isLoggedIn, showLoginNotification } = useUser();
@@ -18,6 +20,7 @@ const Product = ({ product }) => {
   const { addToCart } = useCart();
   const { shop } = useShop();
   const { isFav, setIsFav } = useProduct();
+  const { showNotification } = useNotification();
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
@@ -95,6 +98,15 @@ const Product = ({ product }) => {
                   if (!isLoggedIn()) {
                     showLoginNotification();
                     return;
+                  }
+                  if (user.data.cart.length !== 0) {
+                    if (user.data.cart[0].shop !== shop._id) {
+                      showNotification(
+                        notificationTypes.INFO,
+                        "Unable to add to cart; When adding to cart please make sure to add products from one shop"
+                      );
+                      return;
+                    }
                   }
                   addToCart({ product: _id, shop: shop._id, quantity: 1 });
                 }}

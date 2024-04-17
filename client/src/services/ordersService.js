@@ -23,3 +23,19 @@ export const addOrder = async (cart) => {
     }
   }
 };
+
+export const getOrders = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/orders`, {
+      headers: { Authorization: getToken() },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      console.error(`Error while creating order: ${error.message}`);
+      throw error;
+    }
+  }
+};

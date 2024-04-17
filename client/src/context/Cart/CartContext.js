@@ -10,7 +10,7 @@ const CartContext = createContext();
 
 // Create a provider component
 export const CartProvider = ({ children }) => {
-  const { showNotification } = useNotification();
+  const { showNotification, hideNotification } = useNotification();
   const { user, setUser } = useUser();
   const { getProductsById } = useProduct();
 
@@ -80,6 +80,10 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (itemId) => {
+    if (cartItems.length === 1) {
+      clearCart();
+      return;
+    }
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.product !== itemId)
     );
@@ -112,7 +116,8 @@ export const CartProvider = ({ children }) => {
           cart: response.updatedCart,
         },
       }));
-      showNotification(notificationTypes.SUCCESS, response.message);
+      // showNotification(notificationTypes.SUCCESS, response.message);
+      hideNotification();
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 

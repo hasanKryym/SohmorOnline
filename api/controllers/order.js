@@ -9,18 +9,22 @@ const orderStatus = require("../Enums/orderEnums/ordersEnums");
 const createOrder = asyncWrapper(async (req, res) => {
   const userId = req.user.userId;
   const { cart } = req.body;
+  const shopId = cart[0].shop;
+
+  const cartData = cart.map((cartProduct) => {
+    return { product: cartProduct.product, quantity: cartProduct.quantity };
+  });
 
   try {
     // Fetch the price for each product in the cart
     const productsWithPrice = await Promise.all(
-      cart.map(async (item) => {
+      cartData.map(async (item) => {
         const product = await Product.findById(item.product);
         if (!product) {
           throw new Error(`Product not found with id: ${item.product}`);
         }
         return {
           productId: product._id,
-          shopId: item.shop,
           price: product.price,
           quantity: item.quantity,
         };
@@ -28,7 +32,7 @@ const createOrder = asyncWrapper(async (req, res) => {
     );
 
     // Create the order
-    const response = await Order.createOrder(userId, productsWithPrice);
+    const response = await Order.createOrder(userId, shopId, productsWithPrice);
 
     return res
       .status(

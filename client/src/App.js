@@ -28,6 +28,7 @@ import Favorites from "./pages/Profile/Favorites/Favorites";
 import RouteChangeListener from "./components/RouteChangeListener/RouteChangeListener";
 import RegistrationRequests from "./pages/Admins/SiteAdmin/RegistrationRequests/RegistrationRequests";
 import ShopRegistration from "./pages/ShopRegistration/ShopRegistration";
+import Orders from "./pages/Profile/Orders/Orders";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
                           path="/profile/favorites"
                           element={<Favorites />}
                         />
+                        <Route path="/profile/myOrders" element={<Orders />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/shops" element={<Shops />} />

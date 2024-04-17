@@ -6,6 +6,11 @@ const OrderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  shopId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Shop",
+    required: true,
+  },
   products: [
     {
       productId: {
@@ -13,11 +18,7 @@ const OrderSchema = new mongoose.Schema({
         ref: "Product",
         required: true,
       },
-      shopId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Shop",
-        required: true,
-      },
+
       price: {
         type: Number,
         required: true,
@@ -48,14 +49,15 @@ const OrderSchema = new mongoose.Schema({
 });
 
 // Static function to create an order
-OrderSchema.statics.createOrder = async function (userId, products) {
+OrderSchema.statics.createOrder = async function (userId, shopId, products) {
   try {
     const order = await this.create({
       userId,
+      shopId,
       products,
     });
 
-    return { success: true, order, message: "order created successfully" };
+    return { success: true, order, message: "Order created successfully" };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -66,17 +68,14 @@ OrderSchema.statics.getOrders = async function (orderData) {
   try {
     // Construct the query object based on provided criteria
     const query = {};
-    if (orderData.shopId) query["products.shopId"] = orderData.shopId;
+    if (orderData.shopId) query.shopId = orderData.shopId;
     if (orderData.userId) query.userId = orderData.userId;
     if (orderData.status) query.status = orderData.status;
 
-    // Find orders that match the query
-    // const orders = await this.find(query);
-
-    // Find orders that match the query and populate the shops and products fields
+    // Find orders that match the query and populate the products field
     const orders = await this.find(query)
-      .populate("products.productId", "-_id") // Populate the products field with data from the Product model
-      .populate("products.shopId", "-_id"); // Populate the shops field with data from the Shop model
+      .populate("products.productId") // Populate the products field with data from the Product model
+      .populate("shopId"); // Populate the shopId field with data from the Shop model
 
     return {
       success: true,

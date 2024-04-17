@@ -1,0 +1,44 @@
+.order {
+  width: 400px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* Order.css */
+
+.order {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.order h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.order p {
+  font-size: 14px;
+  color: #666;
+}
+
+.orders_products-container {
+  margin-top: 15px;
+}
+
+.order_product {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Optional: Add hover effect for orders */
+.order:hover {
+  transform: translateY(-5px);
+}
