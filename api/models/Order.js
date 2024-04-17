@@ -71,7 +71,12 @@ OrderSchema.statics.getOrders = async function (orderData) {
     if (orderData.status) query.status = orderData.status;
 
     // Find orders that match the query
-    const orders = await this.find(query);
+    // const orders = await this.find(query);
+
+    // Find orders that match the query and populate the shops and products fields
+    const orders = await this.find(query)
+      .populate("products.productId", "-_id") // Populate the products field with data from the Product model
+      .populate("products.shopId", "-_id"); // Populate the shops field with data from the Shop model
 
     return {
       success: true,
