@@ -64,7 +64,7 @@ const getOrders = asyncWrapper(async (req, res) => {
   if (status) orderData.status = status;
   else orderData.status = orderStatus.PENDING;
 
-  const response = await Order.getOrders(orderData);
+  const response = await Order.getOrders(orderData, req.user.role.position);
 
   return res
     .status(

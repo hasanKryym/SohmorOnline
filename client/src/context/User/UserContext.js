@@ -43,11 +43,16 @@ export const UserProvider = ({ children }) => {
   });
 
   const [orders, setOrders] = useState([]);
+  const [ordersParams, setOrdersParams] = useState({});
 
   useEffect(() => {
     // Update localStorage whenever user state changes
     localStorage.setItem("user", JSON.stringify(user.data));
   }, [user]);
+
+  useEffect(() => {
+    if (isLoggedIn()) getUserOrders();
+  }, [ordersParams]);
 
   const isLoggedIn = () => {
     return user.status.isLoggedIn;
@@ -131,7 +136,7 @@ export const UserProvider = ({ children }) => {
 
   const getUserOrders = async () => {
     showNotification(notificationTypes.LOAD, "");
-    const response = await getOrders();
+    const response = await getOrders(ordersParams);
 
     if (response.success) {
       setOrders(response.orders);
@@ -168,6 +173,7 @@ export const UserProvider = ({ children }) => {
     });
 
     navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -183,6 +189,7 @@ export const UserProvider = ({ children }) => {
         favorites,
         orders,
         getUserOrders,
+        setOrdersParams,
         logout,
       }}
     >

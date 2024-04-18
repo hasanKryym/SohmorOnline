@@ -13,6 +13,8 @@ import { useShop } from "../../context/Shop/shops/ShopsContext";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
 import { useUser } from "../../context/User/UserContext";
 import { CiStar } from "react-icons/ci";
+import { FaWhatsappSquare } from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
 
 const Shop = () => {
   const { id } = useParams();
@@ -43,6 +45,15 @@ const Shop = () => {
       <Navbar />
 
       <div className="shop_container">
+        <div className="shop_info-container">
+          <span className="shop-info">
+            <FaWhatsappSquare className="whatsapp_logo" /> {shop.phoneNumber}
+          </span>
+
+          <span className="shop-info">
+            <IoLocationSharp /> <span>{shop.address}</span>
+          </span>
+        </div>
         <div className="title_container">
           {shop?.name}
           <button

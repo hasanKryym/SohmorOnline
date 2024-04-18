@@ -1,53 +1,118 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Order.css";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
+import { useState } from "react";
+import { ordersStatusArr } from "../../enum/OrderStatuses/orderstatuses";
 
 const Order = ({ order }) => {
-  const { _id, createdAt, products, status, shopId: shopData } = order;
+  const location = useLocation();
+
+  const inShopAdminOrdersPanel =
+    location.pathname === "/shops/adminPanel/oders";
+  console.log(order);
+  const {
+    _id,
+    createdAt,
+    products,
+    status,
+    shopId: shopData,
+    userId: userData,
+  } = order;
 
   const { setQueryParameters } = useProduct();
   const handleViewProduct = () => {
     setQueryParameters({ shopId: shopData._id });
   };
 
-  // Calculate total order amount
-  const totalAmount = products.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
+  // Define available statuses for the admin
+
+  // State to hold the selected status
+  const [selectedStatus, setSelectedStatus] = useState(status);
+
+  // Handler function to update the selected status
+  const handleStatusChange = (e) => {
+    setSelectedStatus(e.target.value);
+  };
 
   return (
-    <>
-      <div className="order">
-        <h4>Order ID: {_id}</h4>
-        <h3>shop: {shopData.name}</h3>
-        <p>status: {status}</p>
-        <p>Total Amount: ${totalAmount.toFixed(2)}</p>{" "}
-        {/* Display total amount */}
-        <div className="orders_products-container">
-          {products.map((product) => {
-            return (
-              <>
-                <div className="order_product">
-                  {product.quantity}{" "}
-                  {product?.productId?.name ? (
-                    <Link
-                      onClick={() => handleViewProduct()}
-                      to={`/shops/products/${product.productId._id}`}
-                    >
-                      {product?.productId?.name}
-                    </Link>
-                  ) : (
-                    "product was deleted by the shop"
-                  )}{" "}
-                  for ${product.quantity * product.price}
-                </div>
-              </>
-            );
-          })}
+    <div className="order">
+      <h4>Order ID: {_id}</h4>
+      {!inShopAdminOrdersPanel && (
+        <>
+          <h3>Shop: {shopData.name}</h3>
+          <p>Status: {status}</p>
+        </>
+      )}
+
+      {inShopAdminOrdersPanel && (
+        <>
+          <div className="user_order-data">
+            <h4>User Data: </h4>
+            <p>
+              <span>username: </span>
+              {userData.name}
+            </p>
+            <p>
+              <span>email: </span>
+              <a href={`mailto:${userData.email}`}>{userData.email}</a>
+            </p>
+            <p>
+              <span>number: </span>
+              {userData.number}
+            </p>
+            <p>
+              <span>address: </span>
+              {userData.address}
+            </p>
+          </div>
+        </>
+      )}
+
+      <p>
+        Total Amount: $
+        {products
+          .reduce(
+            (total, product) => total + product.price * product.quantity,
+            0
+          )
+          .toFixed(2)}
+      </p>
+      {/* Display dropdown for selecting status */}
+      {inShopAdminOrdersPanel ? (
+        <div className="status_dropdown">
+          status:{" "}
+          <select value={selectedStatus} onChange={handleStatusChange}>
+            {ordersStatusArr.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
         </div>
+      ) : (
+        <p>status: {status}</p>
+      )}
+
+      {/* Display products */}
+      <div className="orders_products-container">
+        {products.map((product) => (
+          <div className="order_product" key={product._id}>
+            {product.quantity}{" "}
+            {product?.productId?.name ? (
+              <Link
+                onClick={handleViewProduct}
+                to={`/shops/products/${product.productId._id}`}
+              >
+                {product?.productId?.name}
+              </Link>
+            ) : (
+              "Product was deleted by the shop"
+            )}{" "}
+            for ${product.quantity * product.price}
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

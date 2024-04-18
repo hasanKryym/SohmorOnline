@@ -1,4 +1,20 @@
-.shop_container {
+.shop_container .shop_info-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem 4rem 0 4rem;
+  gap: 4rem;
+}
+
+.shop_container .shop_info-container .shop-info {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: bold;
+}
+
+.whatsapp_logo {
+  color: #075e54;
+  font-size: 24px;
 }
 
 .shop_container .title_container {

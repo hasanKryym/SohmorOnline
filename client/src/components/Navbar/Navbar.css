@@ -15,6 +15,7 @@
 
 .Logo {
   width: 120px;
+  cursor: pointer;
 }
 
 .navbar .nav-list {

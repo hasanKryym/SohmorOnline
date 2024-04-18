@@ -2,7 +2,7 @@ import "./Navbar.css";
 import Logo from "../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { pagesLinks } from "./pagesLinksEnum";
 import { useUser } from "../../context/User/UserContext";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { FaBars } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(false);
@@ -67,7 +68,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar">
-        <img className="Logo" src={Logo} alt="" />
+        <img onClick={() => navigate("/")} className="Logo" src={Logo} alt="" />
         {showSidebar ? (
           <FaBarsStaggered
             className="nav_bars"

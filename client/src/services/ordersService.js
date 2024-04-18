@@ -24,9 +24,11 @@ export const addOrder = async (cart) => {
   }
 };
 
-export const getOrders = async () => {
+export const getOrders = async (ordersParams) => {
+  let url = `${baseUrl}/orders`;
+  if (ordersParams.status) url += `?status=${ordersParams.status}`;
   try {
-    const response = await axios.get(`${baseUrl}/orders`, {
+    const response = await axios.get(url, {
       headers: { Authorization: getToken() },
     });
     return response.data;

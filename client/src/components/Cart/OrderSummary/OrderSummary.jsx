@@ -32,7 +32,7 @@ const OrderSummary = ({ onClose }) => {
     const response = await createOrder();
     if (response.success) {
       onClose();
-      // clearCart();
+      clearCart();
     }
   };
 

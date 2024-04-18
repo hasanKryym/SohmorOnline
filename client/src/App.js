@@ -29,6 +29,7 @@ import RouteChangeListener from "./components/RouteChangeListener/RouteChangeLis
 import RegistrationRequests from "./pages/Admins/SiteAdmin/RegistrationRequests/RegistrationRequests";
 import ShopRegistration from "./pages/ShopRegistration/ShopRegistration";
 import Orders from "./pages/Profile/Orders/Orders";
+import ShopOrders from "./pages/Admins/ShopAdmin/ShopOrders/ShopOrders";
 
 function App() {
   return (
@@ -69,6 +70,10 @@ function App() {
                         <Route
                           path="/shops/adminPanel/dashboard"
                           element={<ShopAdminPanel />}
+                        />
+                        <Route
+                          path="/shops/adminPanel/oders"
+                          element={<ShopOrders />}
                         />
                         <Route
                           path="/shops/adminPanel/manage/categories"
