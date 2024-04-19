@@ -5,6 +5,7 @@ import { editUser, editUserFav } from "../../services/userService";
 import { addOrder, getOrders } from "../../services/ordersService";
 import { useNavigate } from "react-router-dom";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
+import { orderStatus } from "../../enum/OrderStatuses/orderstatuses";
 
 const UserContext = createContext();
 
@@ -43,7 +44,9 @@ export const UserProvider = ({ children }) => {
   });
 
   const [orders, setOrders] = useState([]);
-  const [ordersParams, setOrdersParams] = useState({});
+  const [ordersParams, setOrdersParams] = useState({
+    status: orderStatus.PENDING,
+  });
 
   useEffect(() => {
     // Update localStorage whenever user state changes
@@ -51,7 +54,9 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   useEffect(() => {
-    if (isLoggedIn()) getUserOrders();
+    if (isLoggedIn()) {
+      getUserOrders();
+    }
   }, [ordersParams]);
 
   const isLoggedIn = () => {
@@ -189,6 +194,7 @@ export const UserProvider = ({ children }) => {
         favorites,
         orders,
         getUserOrders,
+        ordersParams,
         setOrdersParams,
         logout,
       }}

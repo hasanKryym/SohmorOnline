@@ -14,13 +14,18 @@ const Orders = () => {
   const inUserProfile = location.pathname !== "/shops/adminPanel/oders";
 
   useEffect(() => {
-    if (orders.length === 0) getUserOrders();
+    if (orders.length === 0) {
+      getUserOrders();
+    }
   }, []);
   return (
     <>
-      {inUserProfile && <Navbar />}
+      {inUserProfile && (
+        <>
+          <Navbar /> <Sidebar />
+        </>
+      )}
 
-      <Sidebar />
       <div className="profile_page-container">
         <div style={{ fontSize: "24px", fontWeight: "bold" }}>
           {inUserProfile ? "My Orders:" : "shop Orders: "}

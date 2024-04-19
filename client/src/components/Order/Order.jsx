@@ -9,7 +9,6 @@ const Order = ({ order }) => {
 
   const inShopAdminOrdersPanel =
     location.pathname === "/shops/adminPanel/oders";
-  console.log(order);
   const {
     _id,
     createdAt,

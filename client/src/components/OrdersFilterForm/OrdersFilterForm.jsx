@@ -1,19 +1,25 @@
 import { useContext, useState, useEffect } from "react";
 import "./OrdersFilterForm.css";
 import { useUser } from "../../context/User/UserContext";
-import { ordersStatusArr } from "../../enum/OrderStatuses/orderstatuses";
+import {
+  orderStatus,
+  ordersStatusArr,
+} from "../../enum/OrderStatuses/orderstatuses";
 
 const OrdersFilterForm = () => {
-  const { setOrdersParams } = useUser();
-  const [status, setStatus] = useState("");
+  const { ordersParams, setOrdersParams } = useUser();
+  const [status, setStatus] = useState(orderStatus.PENDING);
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
+    const choosenStatus = e.target.value;
+    setOrdersParams({ status: choosenStatus });
   };
 
   useEffect(() => {
-    setOrdersParams({ status });
-  }, [status]);
+    if (ordersParams.status !== orderStatus.PENDING)
+      setOrdersParams({ status: orderStatus.PENDING });
+  }, []);
 
   return (
     <div className="orders_filter-container">
