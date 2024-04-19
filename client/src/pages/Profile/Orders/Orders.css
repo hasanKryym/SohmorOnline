@@ -10,8 +10,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin: 0 auto;
   align-items: center;
+  padding-bottom: 4rem;
 }
 
 /* .orders_container {
