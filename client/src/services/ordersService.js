@@ -36,6 +36,27 @@ export const getOrders = async (ordersParams) => {
     if (error.response) {
       return error.response.data;
     } else {
+      console.error(`Error while retrieving order: ${error.message}`);
+      throw error;
+    }
+  }
+};
+
+export const updateOrder = async (orderId, updatedOrder) => {
+  if (!orderId || !updatedOrder) return;
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/orders?orderId=${orderId}`,
+      { updatedOrder },
+      {
+        headers: { Authorization: getToken() },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
       console.error(`Error while creating order: ${error.message}`);
       throw error;
     }

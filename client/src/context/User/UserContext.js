@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
 import { editUser, editUserFav } from "../../services/userService";
-import { addOrder, getOrders } from "../../services/ordersService";
+import { addOrder, getOrders, updateOrder } from "../../services/ordersService";
 import { useNavigate } from "react-router-dom";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { orderStatus } from "../../enum/OrderStatuses/orderstatuses";
@@ -150,6 +150,19 @@ export const UserProvider = ({ children }) => {
     } else showNotification(notificationTypes.ERROR, response.message);
   };
 
+  const updateOrderStatus = async (orderId, updatedOrder) => {
+    showNotification(notificationTypes.LOAD, "");
+    const response = await updateOrder(orderId, updatedOrder);
+    if (response.success) {
+      const updatedOrders = orders.filter((order) => {
+        return order._id !== orderId;
+      });
+
+      setOrders(updatedOrders);
+      showNotification(notificationTypes.SUCCESS, response.message);
+    } else showNotification(notificationTypes.ERROR, response.message);
+  };
+
   const logout = () => {
     localStorage.clear();
     setUser({
@@ -196,6 +209,7 @@ export const UserProvider = ({ children }) => {
         getUserOrders,
         ordersParams,
         setOrdersParams,
+        updateOrderStatus,
         logout,
       }}
     >

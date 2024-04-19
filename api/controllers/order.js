@@ -73,4 +73,21 @@ const getOrders = asyncWrapper(async (req, res) => {
     .json(response);
 });
 
-module.exports = { createOrder, getOrders };
+const updateOrder = asyncWrapper(async (req, res) => {
+  const { orderId } = req.query;
+  const { updatedOrder } = req.body;
+  if (!orderId || !updatedOrder)
+    throw new BadRequestError(
+      "please provide the orderId and the updated order"
+    );
+
+  const response = await Order.updateOrder(orderId, updatedOrder);
+
+  return res
+    .status(
+      response.success ? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR
+    )
+    .json(response);
+});
+
+module.exports = { createOrder, getOrders, updateOrder };

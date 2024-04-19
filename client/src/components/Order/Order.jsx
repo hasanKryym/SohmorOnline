@@ -3,12 +3,14 @@ import "./Order.css";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
 import { useState } from "react";
 import { ordersStatusArr } from "../../enum/OrderStatuses/orderstatuses";
+import { useUser } from "../../context/User/UserContext";
 
 const Order = ({ order }) => {
   const location = useLocation();
 
   const inShopAdminOrdersPanel =
     location.pathname === "/shops/adminPanel/oders";
+
   const {
     _id,
     createdAt,
@@ -19,6 +21,8 @@ const Order = ({ order }) => {
   } = order;
 
   const { setQueryParameters } = useProduct();
+  const { updateOrderStatus } = useUser();
+
   const handleViewProduct = () => {
     setQueryParameters({ shopId: shopData._id });
   };
@@ -31,6 +35,7 @@ const Order = ({ order }) => {
   // Handler function to update the selected status
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);
+    updateOrderStatus(_id, { status: e.target.value });
   };
 
   return (
