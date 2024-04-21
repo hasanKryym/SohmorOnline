@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginRegister.css";
 import { useState } from "react";
 import { useUser } from "../../context/User/UserContext";
-import { login } from "../../services/userService";
+import { login, register } from "../../services/userService";
 import { useNotification } from "../../context/Notification/NotificationContext";
 import { notificationTypes } from "../../context/Notification/notificationEnum";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
@@ -102,6 +102,9 @@ const Login = () => {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { user, setUser, updateUserData } = useUser();
+  const { showNotification, hideNotification } = useNotification();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -120,15 +123,41 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (
       !formData.username ||
       !formData.email ||
       !formData.password ||
       !formData.address ||
       !formData.phoneNumber
-    )
+    ) {
+      showNotification(notificationTypes.INFO, "please fill all the fields");
       return;
+    }
+    const userData = {
+      name: formData.username,
+      email: formData.email,
+      password: formData.password,
+      address: formData.address,
+      number: formData.phoneNumber,
+    };
+
+    const response = await register(userData);
+    if (response.success) {
+      localStorage.setItem("token", response.token);
+      setUser((prevUser) => ({
+        ...prevUser,
+        status: {
+          isLoggedIn: true,
+          token: response.token,
+        },
+        data: response.user,
+      }));
+      // showNotification(notificationTypes.SUCCESS, response.message);
+      hideNotification();
+      navigate("/");
+    } else {
+      showNotification(notificationTypes.ERROR, response.message);
+    }
   };
 
   return (

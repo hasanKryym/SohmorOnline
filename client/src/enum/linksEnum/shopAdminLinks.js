@@ -8,7 +8,7 @@ export const navbarLinks = [
       },
 
       { name: "categories", link: "/shops/adminPanel/manage/categories" },
-      { name: "edit Shop", link: "/shops/adminPanel/manage/editShop" },
+      { name: "My Shop", link: "/shops/adminPanel/manage/editShop" },
       { name: "Orders", link: "/shops/adminPanel/oders" },
       { name: "Slider Images", link: "/shops/adminPanel/manage/sliderImages" },
     ],

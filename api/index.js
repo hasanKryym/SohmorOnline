@@ -8,6 +8,7 @@ const connectDB = require("./db/connect");
 
 // middleware
 const authenticate = require("./middleware/authentication");
+const helmet = require("helmet");
 
 // routers
 const authRouter = require("./routes/auth");
@@ -20,6 +21,7 @@ const ordersRouter = require("./routes/order");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
+// CORS
 const cors = require("cors");
 const corsOptions = {
   // origin: 'http://localhost:3000',
@@ -30,14 +32,15 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
+app.use(helmet());
 // extra packages
 
 // routes
-app.use("/auth", authRouter);
-app.use("/shops", shopsRouter);
-app.use("/products", productsRouter);
-app.use("/users", authenticate, usersRouter);
-app.use("/orders", authenticate, ordersRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/shops", shopsRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/users", authenticate, usersRouter);
+app.use("/api/orders", authenticate, ordersRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

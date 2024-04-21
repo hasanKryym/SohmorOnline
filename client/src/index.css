@@ -204,3 +204,31 @@ code {
   height: 2px;
   background: var(--sky-blue);
 }
+
+/* Media query for mobile screens */
+@media screen and (max-width: 767px) {
+  /* Change font size for specific elements */
+  body {
+    font-size: 14px; /* Adjust as needed for smaller screens */
+  }
+
+  /* Example: Change font size for headings */
+  h1 {
+    font-size: 24px; /* Adjust as needed */
+  }
+
+  h2 {
+    font-size: 20px; /* Adjust as needed */
+  }
+
+  h3 {
+    font-size: 18px; /* Adjust as needed */
+  }
+
+  /* Example: Change font size for paragraphs */
+  p {
+    font-size: 14px; /* Adjust as needed */
+  }
+
+  /* Add more styles for other elements as needed */
+}

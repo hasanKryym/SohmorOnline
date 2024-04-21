@@ -13,8 +13,7 @@ const EditShop = () => {
   const { showNotification } = useNotification();
   const { domains, getDomains } = useDomain();
   const { shop, shops, get_shops, editShop } = useShop();
-
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   useEffect(() => {
     if (!shop.name) get_shops(user.data.role.shop);
@@ -94,6 +93,13 @@ const EditShop = () => {
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
+      <div
+        style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}
+      >
+        <button onClick={() => logout()} className="custom-button">
+          Logout
+        </button>
+      </div>
       <div className="shop_form-container">
         <form onSubmit={handleSubmit} className="shop_form">
           <label className="form-label">Name:</label>
@@ -157,12 +163,12 @@ const EditShop = () => {
               type="button"
               onClick={() =>
                 setFormData({
-                  name: shops[0]?.name,
-                  description: shops[0]?.description,
-                  address: shops[0]?.address,
-                  phoneNumber: shops[0]?.phoneNumber,
-                  domain: shops[0]?.domain,
-                  image: shops[0]?.image,
+                  name: shop?.name,
+                  description: shop?.description,
+                  address: shop?.address,
+                  phoneNumber: shop?.phoneNumber,
+                  domain: shop?.domain,
+                  image: shop?.image,
                 })
               }
               className="secondary-button"
