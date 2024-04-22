@@ -193,12 +193,10 @@ const getReview = asyncWrapper(async (req, res) => {
 
 const getProductReviews = asyncWrapper(async (req, res) => {
   const { productId } = req.query;
-  const userId = req.user.userId;
 
-  if (!productId || !userId)
-    throw new BadRequestError("please provide the product Id");
+  if (!productId) throw new BadRequestError("please provide the product Id");
 
-  const response = await ProductReview.getReviews(productId, userId);
+  const response = await ProductReview.getReviews(productId);
 
   return res
     .status(

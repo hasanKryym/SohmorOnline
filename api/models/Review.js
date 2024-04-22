@@ -103,15 +103,12 @@ ProductReviewSchema.statics.getReview = async function (productId, userId) {
 //   }
 // };
 
-ProductReviewSchema.statics.getReviews = async function (
-  productId,
-  excludeUserId
-) {
+ProductReviewSchema.statics.getReviews = async function (productId) {
   try {
     let query = { productId };
-    if (excludeUserId) {
-      query.userId = { $ne: excludeUserId };
-    }
+    // if (excludeUserId) {
+    //   query.userId = { $ne: excludeUserId };
+    // }
     let reviews = await this.find(query);
 
     // Create a new array of plain JavaScript objects with the added username property
