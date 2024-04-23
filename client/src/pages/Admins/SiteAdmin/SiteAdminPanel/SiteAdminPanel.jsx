@@ -17,7 +17,7 @@ const SiteAdminPanel = () => {
   const { shops, get_shops } = useShop();
   const { domains, getDomains } = useDomain();
 
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +32,18 @@ const SiteAdminPanel = () => {
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "1rem",
+        }}
+      >
+        <button onClick={() => logout()} className="secondary-button">
+          logout
+        </button>
+      </div>
+
       <Dashboard headers={headers} data={shops} />
     </>
   );

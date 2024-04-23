@@ -16,7 +16,6 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    console.log(categories);
     if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
 
@@ -36,7 +35,7 @@ const Categories = () => {
             <input
               type="text"
               className="custom-input"
-              style={{ width: "350px", marginRight: "1rem" }}
+              // style={{ width: "350px", marginRight: "1rem" }}
               value={newCategory}
               onChange={handleChange}
               placeholder="Enter new category..."

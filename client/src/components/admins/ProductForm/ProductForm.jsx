@@ -6,6 +6,7 @@ import { useNotification } from "../../../context/Notification/NotificationConte
 import { notificationTypes } from "../../../context/Notification/notificationEnum";
 import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 import { useUser } from "../../../context/User/UserContext";
+import { Link } from "react-router-dom";
 
 const ProductForm = ({ clostProductForm, product }) => {
   const { categories, getCategories } = useCategories();
@@ -172,23 +173,43 @@ const ProductForm = ({ clostProductForm, product }) => {
             </span>
           </label>
 
-          <label className="form-label">Categories:</label>
+          <label className="form-label">
+            Categories:{" "}
+            <Link
+              className="categories_link"
+              to={"/shops/adminPanel/manage/categories"}
+            >
+              Add New Category
+            </Link>
+          </label>
           <ul className="form-categories">
-            {categories.map((category) => (
-              <li key={category._id} className="form-category">
-                <label className="form-checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="categories"
-                    value={category._id}
-                    checked={formData.categories.includes(category._id)}
-                    onChange={handleCategoryChange}
-                    className="form-checkbox"
-                  />
-                  {category.name}
-                </label>
-              </li>
-            ))}
+            {categories.length !== 0 ? (
+              categories.map((category) => (
+                <li key={category._id} className="form-category">
+                  <label className="form-checkbox-label">
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      value={category._id}
+                      checked={formData.categories.includes(category._id)}
+                      onChange={handleCategoryChange}
+                      className="form-checkbox"
+                    />
+                    {category.name}
+                  </label>
+                </li>
+              ))
+            ) : (
+              <>
+                <Link to={"/shops/adminPanel/manage/categories"}>
+                  Add Category
+                </Link>
+                <span>
+                  (NOTE: if you dont have at least 1 category you won't be able
+                  to add a product)
+                </span>
+              </>
+            )}
           </ul>
 
           <label className="form-label">

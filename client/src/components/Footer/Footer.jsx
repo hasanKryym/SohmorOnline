@@ -26,7 +26,7 @@ const Footer = () => {
         {/* Contact Info */}
         <div className="contact_information">
           <img className="Logo" src={Logo} alt="" />
-          <div className="input-container">
+          {/* <div className="input-container">
             <span>
               <FaPhone style={{ color: "#373234" }} />
             </span>
@@ -37,7 +37,7 @@ const Footer = () => {
               type="text"
               value={"+961 81088631"}
             />
-          </div>
+          </div> */}
           <div className="input-container">
             <span>
               <MdOutlineMail style={{ color: "#373234" }} />
@@ -47,7 +47,7 @@ const Footer = () => {
               style={{ width: "fit-content" }}
               className="custom-input"
               type="text"
-              value={"hasan.kryym@gmail.com"}
+              value={"hasan@sohmor.tech"}
             />
           </div>
         </div>

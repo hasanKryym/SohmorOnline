@@ -4,3 +4,16 @@
   gap: 1rem;
   padding: 2rem;
 }
+
+.shop_categories-container form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.shop_categories-container input {
+  max-width: 450px;
+  min-width: 250px;
+}

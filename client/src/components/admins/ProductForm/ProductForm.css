@@ -18,3 +18,19 @@
   align-items: center;
   gap: 1rem;
 }
+
+.categories_link {
+  text-decoration: none;
+  background: var(--dark-charcoal);
+  color: var(--light-beige);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.categories_link:hover {
+  background: var(--light-beige);
+  color: var(--dark-charcoal);
+}

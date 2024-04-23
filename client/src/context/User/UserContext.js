@@ -3,7 +3,7 @@ import { useNotification } from "../Notification/NotificationContext";
 import { notificationTypes } from "../Notification/notificationEnum";
 import { editUser, editUserFav } from "../../services/userService";
 import { addOrder, getOrders, updateOrder } from "../../services/ordersService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { orderStatus } from "../../enum/OrderStatuses/orderstatuses";
 
@@ -11,6 +11,8 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [user, setUser] = useState({
     status: {
       isLoggedIn: localStorage.getItem("token") ? true : false,
@@ -140,6 +142,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const getUserOrders = async () => {
+    if (location.pathname.includes("/siteAdmin/")) return;
     showNotification(notificationTypes.LOAD, "");
     const response = await getOrders(ordersParams);
 
@@ -147,7 +150,9 @@ export const UserProvider = ({ children }) => {
       setOrders(response.orders);
       hideNotification();
       return response;
-    } else showNotification(notificationTypes.ERROR, response.message);
+    } else {
+      showNotification(notificationTypes.ERROR, response.message);
+    }
   };
 
   const updateOrderStatus = async (orderId, updatedOrder) => {

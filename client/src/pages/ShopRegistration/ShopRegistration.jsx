@@ -113,8 +113,9 @@ const ShopRegistration = () => {
   };
   return (
     <>
-      <div className="title_container">Register New Shop:</div>
+      <div className="title_container">Register New Shop</div>
       <div className="shop_form-container">
+        <div className="title_container">Shop Info:</div>
         <form onSubmit={handleSubmit} className="shop_form">
           <label className="form-label">Name:</label>
           <input
