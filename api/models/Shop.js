@@ -111,7 +111,8 @@ ShopSchema.statics.deleteShop = async function (shopId) {
   }
 
   // Delete all products associated with the shop
-  await Product.deleteMany({ _id: { $in: shop.products } });
+  // await Product.deleteMany({ _id: { $in: shop.products } });
+  await Product.deleteMany({ shopId });
 
   // Delete all categories associated with the shop
   await Category.deleteMany({ _id: { $in: shop.categories } });
