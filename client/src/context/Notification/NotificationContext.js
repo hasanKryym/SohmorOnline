@@ -1,42 +1,3 @@
-import { createContext, useContext, useState } from "react";
-import { notificationTypes } from "./notificationEnum";
-
-const NotificationContext = createContext();
-
-export const NotificationProvider = ({ children }) => {
-  const [notification, setNotification] = useState(null);
-
-  const showNotification = (type, message) => {
-    setNotification({ type, message });
-    if (type !== notificationTypes.LOAD) {
-      if (type === notificationTypes.WARNING)
-        setTimeout(() => {
-          hideNotification();
-        }, 10000);
-      else
-        setTimeout(() => {
-          hideNotification();
-        }, 4000);
-    }
-  };
-
-  const hideNotification = () => {
-    setNotification(null);
-  };
-
-  return (
-    <NotificationContext.Provider
-      value={{ notification, showNotification, hideNotification }}
-    >
-      {children}
-    </NotificationContext.Provider>
-  );
-};
-
-export const useNotification = () => {
-  return useContext(NotificationContext);
-};
-
 // import { createContext, useContext, useState } from "react";
 // import { notificationTypes } from "./notificationEnum";
 
@@ -44,33 +5,23 @@ export const useNotification = () => {
 
 // export const NotificationProvider = ({ children }) => {
 //   const [notification, setNotification] = useState(null);
-//   const [timeoutId, setTimeoutId] = useState(null);
 
 //   const showNotification = (type, message) => {
-//     // Clear the previous timeout if exists
-//     if (timeoutId) {
-//       clearTimeout(timeoutId);
-//     }
-
 //     setNotification({ type, message });
-
-//     // Set a new timeout to hide the notification
-//     const newTimeoutId = setTimeout(
-//       () => {
-//         hideNotification();
-//       },
-//       type === notificationTypes.WARNING ? 10000 : 4000
-//     );
-
-//     // Save the timeout ID
-//     setTimeoutId(newTimeoutId);
+//     if (type !== notificationTypes.LOAD) {
+//       if (type === notificationTypes.WARNING)
+//         setTimeout(() => {
+//           hideNotification();
+//         }, 10000);
+//       else
+//         setTimeout(() => {
+//           hideNotification();
+//         }, 4000);
+//     }
 //   };
 
 //   const hideNotification = () => {
 //     setNotification(null);
-//     // Clear the timeout and reset the timeout ID
-//     clearTimeout(timeoutId);
-//     setTimeoutId(null);
 //   };
 
 //   return (
@@ -85,3 +36,63 @@ export const useNotification = () => {
 // export const useNotification = () => {
 //   return useContext(NotificationContext);
 // };
+
+import { createContext, useContext, useEffect, useState } from "react";
+import { notificationTypes } from "./notificationEnum";
+
+const NotificationContext = createContext();
+
+export const NotificationProvider = ({ children }) => {
+  const [notifications, setNotifications] = useState([]);
+  const [showLoader, setShowLoader] = useState(false);
+
+  useEffect(() => {
+    const notificationTimeouts = notifications.map((notification) => {
+      return setTimeout(() => {
+        removeNotification(notification.id);
+      }, 3000);
+    });
+
+    return () => {
+      notificationTimeouts.forEach((timeout) => clearTimeout(timeout));
+    };
+  }, [notifications]);
+
+  const addNotification = (type, message) => {
+    const newNotification = { id: Date.now(), message, type };
+    setNotifications([...notifications, newNotification]);
+    hideLoader();
+  };
+
+  const removeNotification = (id) => {
+    setNotifications(
+      notifications.filter((notification) => notification.id !== id)
+    );
+  };
+
+  const load = () => {
+    setShowLoader(true);
+  };
+  const hideLoader = () => {
+    setShowLoader(false);
+  };
+
+  return (
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        addNotification,
+        removeNotification,
+        showLoader,
+        load,
+        hideLoader,
+      }}
+    >
+      {children}
+    </NotificationContext.Provider>
+  );
+};
+
+export const useNotification = () => {
+  return useContext(NotificationContext);
+};

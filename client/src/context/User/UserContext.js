@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
         },
   });
 
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
 
   const [favorites, setFavorites] = useState({
     shops: [],
@@ -66,7 +66,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const showLoginNotification = () => {
-    showNotification(
+    addNotification(
       notificationTypes.INFO,
       "Please login to access this feature"
     );
@@ -79,7 +79,7 @@ export const UserProvider = ({ children }) => {
       userData.number === user.data.number
     )
       return;
-    showNotification(notificationTypes.LOAD, "");
+    load();
 
     const response = await editUser(userData);
 
@@ -95,8 +95,8 @@ export const UserProvider = ({ children }) => {
           number: newUser.number,
         },
       });
-      showNotification(notificationTypes.SUCCESS, "Data updated successfully");
-    } else showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.SUCCESS, "Data updated successfully");
+    } else addNotification(notificationTypes.ERROR, response.message);
   };
 
   useEffect(() => {
@@ -105,7 +105,7 @@ export const UserProvider = ({ children }) => {
   }, [user.data.fav]);
 
   const editFav = async () => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await editUserFav(user.data.fav);
     if (response.success) {
       const newUser = response?.user;
@@ -118,45 +118,45 @@ export const UserProvider = ({ children }) => {
       // });
       setFavorites(newUser.fav);
       // showNotification(notificationTypes.SUCCESS, response.message);
-      hideNotification();
-    } else showNotification(notificationTypes.ERROR, response.message);
+      hideLoader();
+    } else addNotification(notificationTypes.ERROR, response.message);
   };
 
   const createOrder = async () => {
     if (user.data.cart.length === 0) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "Please insert products to your cart first"
       );
       return;
     }
-    showNotification(notificationTypes.LOAD, "");
+    load();
 
     const response = await addOrder(user.data.cart);
 
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
       getUserOrders();
       return response;
-    } else showNotification(notificationTypes.ERROR, response.message);
+    } else addNotification(notificationTypes.ERROR, response.message);
   };
 
   const getUserOrders = async () => {
     if (location.pathname.includes("/siteAdmin/")) return;
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await getOrders(ordersParams);
 
     if (response.success) {
       setOrders(response.orders);
-      hideNotification();
+      hideLoader();
       return response;
     } else {
-      showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.ERROR, response.message);
     }
   };
 
   const updateOrderStatus = async (orderId, updatedOrder) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await updateOrder(orderId, updatedOrder);
     if (response.success) {
       const updatedOrders = orders.filter((order) => {
@@ -164,8 +164,8 @@ export const UserProvider = ({ children }) => {
       });
 
       setOrders(updatedOrders);
-      showNotification(notificationTypes.SUCCESS, response.message);
-    } else showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
+    } else addNotification(notificationTypes.ERROR, response.message);
   };
 
   const logout = () => {

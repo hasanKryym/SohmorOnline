@@ -19,7 +19,7 @@ const ProductContext = createContext();
 // Create a provider component
 export const ProductProvider = ({ children }) => {
   const { user } = useUser();
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [isFav, setIsFav] = useState(false);
@@ -70,19 +70,19 @@ export const ProductProvider = ({ children }) => {
       setProducts([]);
       return;
     }
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await getProducts(queryParameters);
     if (response.success) {
       if (queryParameters._id) {
         setProduct(response.products[0]);
         if (user.status.isLoggedIn) getUserReview(queryParameters._id);
-        hideNotification();
+        hideLoader();
         return;
       }
       setProducts(response.products);
-      hideNotification();
+      hideLoader();
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while retrieving products"
       );
@@ -90,20 +90,20 @@ export const ProductProvider = ({ children }) => {
 
   const addNewProduct = async (newProduct) => {
     if (!newProduct) {
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         "no new product obj, Please pass the new product"
       );
       return;
     }
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await addProduct(newProduct);
 
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
       updateProducts(response.product);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while adding new product"
       );
@@ -111,17 +111,17 @@ export const ProductProvider = ({ children }) => {
 
   const editProduct = async (productId, updatedFields) => {
     if (!productId || !updatedFields) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "Please provide the productId and the updated fields"
       );
       return;
     }
 
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await edit_product(productId, updatedFields);
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
       // Update the products state only if the response is successful
       setProducts((prevProducts) =>
         prevProducts.map((product) => {
@@ -133,7 +133,7 @@ export const ProductProvider = ({ children }) => {
       );
       return response;
     } else {
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "Error while editing the product"
       );
@@ -142,7 +142,7 @@ export const ProductProvider = ({ children }) => {
 
   const deleteProductsById = async (productsToDelete) => {
     if (productsToDelete.length === 0) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "Please provide the products Id that you want to delete"
       );
@@ -152,7 +152,7 @@ export const ProductProvider = ({ children }) => {
     const response = await deleteProduct(productsToDelete);
 
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
       filterProducts(productsToDelete);
       // Filter out the deleted products from the products state
 
@@ -161,7 +161,7 @@ export const ProductProvider = ({ children }) => {
       // );
       // console.log(filteredProducts);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message
           ? response.message
@@ -176,12 +176,12 @@ export const ProductProvider = ({ children }) => {
   };
 
   const addReview = async (review) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await add_review(review);
     if (response.success)
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
     else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message
           ? response.message
@@ -192,12 +192,12 @@ export const ProductProvider = ({ children }) => {
   };
 
   const getUserReview = async (productId) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await get_review(productId);
     if (response.success) {
       setUserReview(response.review);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message
           ? response.message
@@ -207,13 +207,13 @@ export const ProductProvider = ({ children }) => {
 
   const getProductReviews = async (productId) => {
     if (productReviews.length !== 0) return;
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await getProduct_reviews(productId);
     if (response.success) {
       setProductReviews(response.reviews);
     } else console.log(response.message);
 
-    hideNotification();
+    hideLoader();
     // showNotification(
     //   notificationTypes.ERROR,
     //   response.message
@@ -228,7 +228,7 @@ export const ProductProvider = ({ children }) => {
     if (response.success) {
       // hideNotification();
       return response;
-    } else showNotification(notificationTypes.ERROR, response.message);
+    } else addNotification(notificationTypes.ERROR, response.message);
   };
 
   return (

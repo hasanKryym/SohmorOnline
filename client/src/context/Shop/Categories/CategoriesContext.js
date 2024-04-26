@@ -11,7 +11,7 @@ const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
   const location = useLocation();
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const [categories, setCategories] = useState([]);
 
   const updateCategories = (newCategories) => {
@@ -19,8 +19,7 @@ export const CategoriesProvider = ({ children }) => {
   };
 
   const getCategories = async (shopId) => {
-    // const shopId = "65db576e9b322aadec25830c";
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await getShopCategories(shopId);
 
     if (response.success) {
@@ -29,13 +28,13 @@ export const CategoriesProvider = ({ children }) => {
         response.categories.length === 0 &&
         location.pathname === "/shops/adminPanel/dashboard"
       )
-        showNotification(
+        addNotification(
           notificationTypes.WARNING,
           "please note that you will not be able to insert a product unless you add at least 1 category to the shop"
         );
-      else hideNotification();
+      else hideLoader();
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message
           ? response.message
@@ -47,20 +46,20 @@ export const CategoriesProvider = ({ children }) => {
 
   const addNewCategory = async (name) => {
     if (!name) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please provide a name for the category"
       );
       return;
     }
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await createShopCategory(name);
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
       setCategories((prevCategories) => [...prevCategories, response.category]);
       //    setNewCategory("");
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while adding new category"
       );

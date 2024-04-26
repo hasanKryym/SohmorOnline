@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const ProductForm = ({ clostProductForm, product }) => {
   const { categories, getCategories } = useCategories();
-  const { showNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const { addNewProduct, editProduct } = useProduct();
 
   const { user } = useUser();
@@ -69,7 +69,7 @@ const ProductForm = ({ clostProductForm, product }) => {
       !formData.price ||
       formData.categories.length === 0
     ) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please fill the required fields"
       );
@@ -93,7 +93,7 @@ const ProductForm = ({ clostProductForm, product }) => {
     e.preventDefault();
 
     if (!formData.name || !formData.description || !formData.price) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please fill the required fields"
       );

@@ -7,19 +7,19 @@ const DomainContext = createContext();
 
 export const DomainProvider = ({ children }) => {
   const [domains, setDomains] = useState([]);
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const updateDomain = (newDomain) => {
     setDomains(newDomain);
   };
 
   const getDomains = async () => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await get_Domains();
     if (response.success) {
       setDomains(response.domains);
-      hideNotification();
+      hideLoader();
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ?? "error while fetching domains"
       );
@@ -27,19 +27,19 @@ export const DomainProvider = ({ children }) => {
 
   const addDomain = async (domain) => {
     if (!domain) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please provide a name for the domain"
       );
       return;
     }
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await add_domain(domain);
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
       setDomains((prevDomains) => [...prevDomains, response.newDomain]);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while adding new category"
       );

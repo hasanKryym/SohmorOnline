@@ -20,7 +20,7 @@ import { useNotification } from "../../../../context/Notification/NotificationCo
 
 const ShopAdminPanel = () => {
   const navigate = useNavigate();
-  const { showNotification } = useNotification();
+  const { addNotification } = useNotification();
   const { products, getShopProducts, queryParameters, setQueryParameters } =
     useProduct();
 
@@ -54,7 +54,7 @@ const ShopAdminPanel = () => {
   useEffect(() => {
     if (shop.name) {
       if (!shop.isActive) {
-        showNotification(
+        addNotification(
           notificationTypes.WARNING,
           "Your account is not activated please contact the admin to activate your account"
         );

@@ -20,7 +20,7 @@ const Product = ({ product }) => {
   const { addToCart } = useCart();
   const { shop } = useShop();
   const { isFav, setIsFav } = useProduct();
-  const { showNotification } = useNotification();
+  const { addNotification } = useNotification();
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
@@ -101,7 +101,7 @@ const Product = ({ product }) => {
                   }
                   if (user.data.cart.length !== 0) {
                     if (user.data.cart[0].shop !== shop._id) {
-                      showNotification(
+                      addNotification(
                         notificationTypes.INFO,
                         "Unable to add to cart; When adding to cart please make sure to add products from one shop"
                       );

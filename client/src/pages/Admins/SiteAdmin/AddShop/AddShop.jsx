@@ -11,7 +11,7 @@ import AddImage from "../../../../components/UploadCare/UploadCare";
 import userPositions from "../../../../enum/userEnum/userPositionsEnum";
 
 const AddShop = () => {
-  const { showNotification } = useNotification();
+  const { addNotification } = useNotification();
   const { domains, getDomains } = useDomain();
   const { shops, get_shops, editShop, addShop } = useShop();
 
@@ -82,7 +82,7 @@ const AddShop = () => {
       !userData.address ||
       !userData.number
     ) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please fill the required fields"
       );

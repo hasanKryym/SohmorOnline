@@ -1,15 +1,11 @@
 import ShopProduct from "./ShopProduct/ShopProduct";
 import "./Dashboard.css";
-import { Link, useLocation } from "react-router-dom";
-import { useNotification } from "../../../context/Notification/NotificationContext";
+import { useLocation } from "react-router-dom";
 import ShopRow from "./ShopRow/ShopRow";
-import { useState } from "react";
-import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 import ProductFilterForm from "../../ProductFilterForm/ProductFilterForm";
 import ShopFilterForm from "../../ShopFilterForm/ShopFilterForm";
 
 const Dashboard = ({ headers, data }) => {
-  console.log(data);
   const location = useLocation();
 
   return (

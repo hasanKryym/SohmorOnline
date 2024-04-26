@@ -9,10 +9,10 @@ import { notificationTypes } from "../../../../context/Notification/notification
 
 const ShopRow = ({ data }) => {
   const { deleteShop } = useShop();
-  const { showNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
 
   const handleToggleActive = async (shopId, isActive) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await shopActivation(shopId, isActive);
     if (response.success) {
       data.forEach((shop) => {
@@ -20,8 +20,8 @@ const ShopRow = ({ data }) => {
           shop.isActive = isActive;
         }
       });
-      showNotification(notificationTypes.SUCCESS, response.message);
-    } else showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
+    } else addNotification(notificationTypes.ERROR, response.message);
     // Update the isActive status of the shop
     // You can add your logic to update the status in your context
   };

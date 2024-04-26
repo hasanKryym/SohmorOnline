@@ -10,7 +10,7 @@ import UserPositions from "../../enum/userEnum/userPositionsEnum";
 const Login = () => {
   const navigate = useNavigate();
   const { user, setUser, updateUserData } = useUser();
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -30,13 +30,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please provide the email and the password"
       );
       return;
     }
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await login(formData);
     if (response.success) {
       localStorage.setItem("token", response.token);
@@ -48,15 +48,14 @@ const Login = () => {
         },
         data: response.user,
       }));
-      // showNotification(notificationTypes.SUCCESS, response.message);
-      hideNotification();
+      hideLoader();
       if (response.user.role.position === UserPositions.SHOP_ADMIN) {
         navigate("/shops/adminPanel/dashboard");
       } else if (response.user.role.position === UserPositions.SITE_ADMIN)
         navigate("/siteAdmin/adminPanel/dashboard");
       else navigate("/");
     } else {
-      showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.ERROR, response.message);
     }
   };
 
@@ -104,7 +103,7 @@ const Login = () => {
 const Register = () => {
   const navigate = useNavigate();
   const { user, setUser, updateUserData } = useUser();
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -130,7 +129,7 @@ const Register = () => {
       !formData.address ||
       !formData.phoneNumber
     ) {
-      showNotification(notificationTypes.INFO, "please fill all the fields");
+      addNotification(notificationTypes.INFO, "please fill all the fields");
       return;
     }
     const userData = {
@@ -140,6 +139,8 @@ const Register = () => {
       address: formData.address,
       number: formData.phoneNumber,
     };
+
+    load();
 
     const response = await register(userData);
     if (response.success) {
@@ -152,11 +153,10 @@ const Register = () => {
         },
         data: response.user,
       }));
-      // showNotification(notificationTypes.SUCCESS, response.message);
-      hideNotification();
+      hideLoader();
       navigate("/");
     } else {
-      showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.ERROR, response.message);
     }
   };
 

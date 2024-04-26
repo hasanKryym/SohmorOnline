@@ -10,7 +10,7 @@ import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import AddImage from "../../../../components/UploadCare/UploadCare";
 
 const EditShop = () => {
-  const { showNotification } = useNotification();
+  const { addNotification } = useNotification();
   const { domains, getDomains } = useDomain();
   const { shop, shops, get_shops, editShop } = useShop();
   const { user, logout } = useUser();
@@ -72,7 +72,7 @@ const EditShop = () => {
       !formData.phoneNumber ||
       formData.domain.length === 0
     ) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please fill the required fields"
       );

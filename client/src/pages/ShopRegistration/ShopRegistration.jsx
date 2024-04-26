@@ -7,7 +7,7 @@ import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
 
 const ShopRegistration = () => {
-  const { showNotification } = useNotification();
+  const { addNotification } = useNotification();
   const { domains, getDomains } = useDomain();
   const { addRegistrationRequest } = useShop();
   const [userData, setUserData] = useState({
@@ -75,7 +75,7 @@ const ShopRegistration = () => {
       !userData.address ||
       !userData.number
     ) {
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "please fill the required fields"
       );
@@ -88,7 +88,6 @@ const ShopRegistration = () => {
     };
 
     const response = await addRegistrationRequest(requestData);
-    console.log(response);
     if (response.success) {
       setFormData({
         name: "",

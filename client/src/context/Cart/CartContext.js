@@ -10,7 +10,7 @@ const CartContext = createContext();
 
 // Create a provider component
 export const CartProvider = ({ children }) => {
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const { user, setUser } = useUser();
   const { getProductsById } = useProduct();
 
@@ -73,7 +73,7 @@ export const CartProvider = ({ children }) => {
     });
     if (flag) setCartItems((prevItems) => [...prevItems, item]);
     else
-      showNotification(
+      addNotification(
         notificationTypes.INFO,
         "product is already present in the cart"
       );
@@ -106,7 +106,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateCart = async () => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await updateUserCart(cartItems);
     if (response.success) {
       setUser((prevUser) => ({
@@ -116,9 +116,8 @@ export const CartProvider = ({ children }) => {
           cart: response.updatedCart,
         },
       }));
-      // showNotification(notificationTypes.SUCCESS, response.message);
-      hideNotification();
-    } else showNotification(notificationTypes.ERROR, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
+    } else addNotification(notificationTypes.ERROR, response.message);
   };
 
   return (

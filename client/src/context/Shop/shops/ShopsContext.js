@@ -27,7 +27,7 @@ export const ShopProvider = ({ children }) => {
   const [shopQueryParams, setShopQueryParams] = useState({});
   const [shopsDomains, setShopsDomains] = useState([]);
   const [shopRegistrationRequests, setShopRegistrationRequests] = useState([]);
-  const { showNotification, hideNotification } = useNotification();
+  const { addNotification, load, hideLoader } = useNotification();
   const { user } = useUser();
 
   const updateShops = (newShopData) => {
@@ -70,7 +70,7 @@ export const ShopProvider = ({ children }) => {
 
   const get_shops = async () => {
     let all = false;
-    showNotification(notificationTypes.LOAD, "");
+    load();
     if (
       location.pathname === "/siteAdmin/adminPanel/dashboard" ||
       location.pathname === "/shops/adminPanel/dashboard"
@@ -80,14 +80,14 @@ export const ShopProvider = ({ children }) => {
     if (response.success) {
       if (shopQueryParams.shopId) {
         setShop(response.shops[0]);
-        hideNotification();
+        hideLoader();
         return;
       }
       updateShops(response.shops);
-      hideNotification();
+      hideLoader();
       return response;
     } else {
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while retrieving shops"
       );
@@ -95,23 +95,23 @@ export const ShopProvider = ({ children }) => {
   };
 
   const addShop = async (shopData, adminData) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await add_shop(shopData);
     if (response.success) {
       const shop = response.shop;
       adminData.role.shop = shop._id;
       const res = await register(adminData);
       if (res.success) {
-        showNotification(notificationTypes.SUCCESS, response.message);
+        addNotification(notificationTypes.SUCCESS, response.message);
         return response;
       } else {
-        showNotification(
+        addNotification(
           notificationTypes.ERROR,
           response.message ? response.message : "error while adding admin"
         );
       }
     } else {
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while adding the shop"
       );
@@ -120,40 +120,40 @@ export const ShopProvider = ({ children }) => {
   };
 
   const editShop = async (shopData) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await edit_shop(shopData);
     if (response.success) {
       setShop(response.shop);
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while editing shop"
       );
   };
 
   const deleteShop = async (shopId) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await delete_shop(shopId);
     if (response.success) {
-      showNotification(
+      addNotification(
         notificationTypes.SUCCESS,
         response.message ? response.message : "shop deleted successfully"
       );
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while deleting shop"
       );
   };
 
   const addRegistrationRequest = async (requestData) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await addShopRegistrationRequest(requestData);
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ?? "error while adding registration request"
       );
@@ -161,26 +161,26 @@ export const ShopProvider = ({ children }) => {
   };
 
   const changeShopRegistrationRequestStatus = async (requestId, newStatus) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await changeRequestStatus(requestId, newStatus);
     if (response.success) {
-      showNotification(notificationTypes.SUCCESS, response.message);
+      addNotification(notificationTypes.SUCCESS, response.message);
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ?? "error while changing registration request status"
       );
   };
 
   const getShopRegistrationRequests = async (status) => {
-    showNotification(notificationTypes.LOAD, "");
+    load();
     const response = await getRegistrationRequests(status);
     console.log(response);
     if (response.success) {
       setShopRegistrationRequests(response.requests);
-      hideNotification();
+      hideLoader();
     } else
-      showNotification(
+      addNotification(
         notificationTypes.ERROR,
         response.message ?? "error while changing registration request status"
       );
