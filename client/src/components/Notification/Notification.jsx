@@ -9,6 +9,7 @@ import {
   AiOutlineCloseCircle,
   AiOutlineCheckCircle,
 } from "react-icons/ai";
+import { CiCircleRemove } from "react-icons/ci";
 
 const Notification = () => {
   const { notifications, removeNotification, showLoader } = useNotification();
@@ -16,51 +17,47 @@ const Notification = () => {
   let type = "";
   let icon = null;
 
-  // if (notification) {
-  //   message = notification.message;
-  //   type = notification.type;
-
-  //   // Assign icon based on notification type
-  //   switch (type) {
-  //     case notificationTypes.INFO:
-  //       icon = <AiOutlineInfoCircle />;
-  //       break;
-  //     case notificationTypes.WARNING:
-  //       icon = <AiOutlineWarning />;
-  //       break;
-  //     case notificationTypes.ERROR:
-  //       icon = <AiOutlineCloseCircle />;
-  //       break;
-  //     case notificationTypes.SUCCESS:
-  //       icon = <AiOutlineCheckCircle />;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
   return (
     <>
-      {/* <div className={`notification ${type}`}>
-        <span className="notification-icon">{icon}</span>
-        <span className="notification-message">{message}</span>
-        <button onClick={() => removeNotification(notification.id)}>
-          Dismiss
-        </button>
-      </div> */}
-
       <div className="notification-container">
-        {notifications.map((notification) => (
-          <div
-            key={notification.id}
-            className={`notification ${notification.type}`}
-          >
-            <p>{notification.message}</p>
-            <button onClick={() => removeNotification(notification.id)}>
-              Dismiss
-            </button>
-          </div>
-        ))}
+        {notifications.map((notification) => {
+          if (notification) {
+            message = notification.message;
+            type = notification.type;
+
+            // Assign icon based on notification type
+            switch (type) {
+              case notificationTypes.INFO:
+                icon = <AiOutlineInfoCircle />;
+                break;
+              case notificationTypes.WARNING:
+                icon = <AiOutlineWarning />;
+                break;
+              case notificationTypes.ERROR:
+                icon = <AiOutlineCloseCircle />;
+                break;
+              case notificationTypes.SUCCESS:
+                icon = <AiOutlineCheckCircle />;
+                break;
+              default:
+                break;
+            }
+          }
+
+          return (
+            <div
+              key={notification.id}
+              className={`notification ${notification.type}`}
+            >
+              <span className="notification-icon">{icon}</span>
+              <p>{notification.message}</p>
+              <button onClick={() => removeNotification(notification.id)}>
+                {/* Dismiss */}
+                <CiCircleRemove className="dismiss_notification-button" />
+              </button>
+            </div>
+          );
+        })}
       </div>
 
       {showLoader && <Loader showOverlay={true} />}
