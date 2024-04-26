@@ -236,9 +236,26 @@ const addRegistrationRequest = asyncWrapper(async (req, res) => {
     throw new BadRequestError("Shop name already exists");
   }
 
-  // Check if the admin email already exists in the User schema
-  const existingAdmin = await User.findOne({ email: adminInfo.email });
-  if (existingAdmin) {
+  // Check if the admin email or name already exists in the User schema
+  // const existingAdmin = await User.findOne({
+  //   $or: [{ name: adminInfo.name }, { email: adminInfo.email }],
+  // });
+
+  // if (existingAdmin) {
+  //   throw new BadRequestError("Admin email or name already exists");
+  // }
+
+  // Check if the admin email or name already exists in the User schema
+  const existingAdminName = await User.findOne({
+    name: adminInfo.name,
+  });
+  if (existingAdminName) {
+    throw new BadRequestError("Admin name already exists");
+  }
+  const existingAdminEmail = await User.findOne({
+    email: adminInfo.email,
+  });
+  if (existingAdminEmail) {
     throw new BadRequestError("Admin email already exists");
   }
 

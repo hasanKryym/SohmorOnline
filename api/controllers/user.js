@@ -26,6 +26,14 @@ const editUserData = asyncWrapper(async (req, res) => {
   const userId = req.user.userId;
   const { userData } = req.body;
   if (!userData) throw new BadRequestError("please provide userData");
+
+  const existingUserName = await User.findOne({
+    name: userData.name,
+  });
+  if (existingUserName) {
+    throw new BadRequestError("username already exists");
+  }
+
   const response = await User.editUserData(userId, userData);
   return res.status(StatusCodes.OK).json(response);
 });
