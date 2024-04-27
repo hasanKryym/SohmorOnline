@@ -110,6 +110,14 @@ ShopSchema.statics.deleteShop = async function (shopId) {
     throw new NotFoundError("Shop not found");
   }
 
+  // Delete all shop products reviews
+  // Find all products belonging to the shop
+  const productsToDelete = await Product.find({ shopId: shopId });
+  // Extract the IDs of the products to delete
+  const productIdsToDelete = productsToDelete.map((product) => product._id);
+  // Delete all product reviews associated with the products to delete
+  await ProductReview.deleteMany({ productId: { $in: productIdsToDelete } });
+
   // Delete all products associated with the shop
   // await Product.deleteMany({ _id: { $in: shop.products } });
   await Product.deleteMany({ shopId });
@@ -117,8 +125,7 @@ ShopSchema.statics.deleteShop = async function (shopId) {
   // Delete all categories associated with the shop
   await Category.deleteMany({ _id: { $in: shop.categories } });
 
-  // Delete all shop products reviews
-  await ProductReview.deleteMany({ productId: { $in: shop.products } });
+  // await ProductReview.deleteMany({ productId: { $in: shop.products } });
 
   // Delete all users with role.shop equal to the shop being deleted
   await User.deleteMany({ "role.shop": shopId });
