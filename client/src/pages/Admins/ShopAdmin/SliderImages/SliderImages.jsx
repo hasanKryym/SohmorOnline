@@ -15,12 +15,10 @@ const SliderImages = () => {
   });
 
   useEffect(() => {
-    if (!shop.name) {
-      setShopQueryParams((prevState) => ({
-        ...prevState,
-        shopId: user.data.role.shop,
-      }));
-    }
+    setShopQueryParams((prevState) => ({
+      ...prevState,
+      shopId: user.data.role.shop,
+    }));
   }, []);
 
   useEffect(() => {
