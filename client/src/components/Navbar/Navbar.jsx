@@ -8,6 +8,8 @@ import { useUser } from "../../context/User/UserContext";
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
+import { MdNavigateNext } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -88,6 +90,11 @@ const Navbar = () => {
             showSidebar ? "slide-in-left" : "slide-out-left"
           }`}
         >
+          <div className="close_btn-container">
+            <button onClick={() => setShowSidebar(false)}>
+              <IoMdClose />
+            </button>
+          </div>
           {navbarLinks.map((navLink, i) => {
             return (
               <li className="list-item" key={i}>
@@ -97,7 +104,8 @@ const Navbar = () => {
                   }
                   to={navLink.link}
                 >
-                  {navLink.name}
+                  {navLink.name}{" "}
+                  {showSidebar && <MdNavigateNext className="navigate_icon" />}
                 </Link>
               </li>
             );

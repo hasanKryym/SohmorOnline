@@ -8,15 +8,23 @@ import { notificationTypes } from "../../../../context/Notification/notification
 import { useDomain } from "../../../../context/Shop/Domains/DomainsContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import AddImage from "../../../../components/UploadCare/UploadCare";
+import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
+import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
 
 const EditShop = () => {
   const { addNotification } = useNotification();
   const { domains, getDomains } = useDomain();
-  const { shop, shops, get_shops, editShop } = useShop();
   const { user, logout } = useUser();
+  const { shop, setShopQueryParams, editShop } = useShop();
 
   useEffect(() => {
-    if (!shop.name) get_shops(user.data.role.shop);
+    if (!shop.name) {
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
+    }
+    if (shop.name) if (!shop.isActive) return;
     if (domains.length === 0) getDomains();
   }, []);
 

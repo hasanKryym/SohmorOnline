@@ -8,19 +8,30 @@ import { useUser } from "../../../../context/User/UserContext";
 import Slider from "../../../Home/HomeSlider/Slider";
 
 const SliderImages = () => {
-  const { shop, editShop, get_shops } = useShop();
+  const { shop, editShop, setShopQueryParams } = useShop();
   const { user } = useUser();
   const [formData, setFormData] = useState({
     image: "",
   });
 
   useEffect(() => {
-    if (!shop.name) get_shops(user.data.role.shop);
+    if (!shop.name) {
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
+    }
   }, []);
 
   useEffect(() => {
-    if (!formData.image || !shop) return;
-    editShop({ ...shop, sliderImages: [...shop.sliderImages, formData.image] });
+    (async () => {
+      if (!formData.image || !shop) return;
+      await editShop({
+        ...shop,
+        sliderImages: [...shop.sliderImages, formData.image],
+      });
+      window.location.reload();
+    })();
   }, [formData]);
 
   const deleteImage = (linkToRemove) => {
@@ -32,12 +43,14 @@ const SliderImages = () => {
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
+      <div className="title_container">image slider</div>
       <div style={{ paddingBottom: "4rem" }}>
         <div
           className="middle"
           style={{ display: "flex", gap: "1rem", padding: "2rem " }}
         >
-          Add new Slider Image: <AddImage setFormData={setFormData} />
+          Add new Slider Image (NOTE: these images will appear to users on your
+          shop page): <AddImage setFormData={setFormData} />
         </div>
 
         <div className="images_container">

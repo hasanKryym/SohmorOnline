@@ -19,6 +19,8 @@
 }
 
 .filter_container .shop_categories-list_container {
+  max-height: 400px;
+  overflow: auto;
   list-style: none;
   display: flex;
   flex-wrap: wrap;

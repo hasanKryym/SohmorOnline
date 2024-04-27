@@ -1,9 +1,10 @@
 .account_info-container {
   display: flex;
   justify-content: center;
+  padding: 1rem;
 }
 .account_info-container .info_form {
-  width: 100vw;
+  width: 90vw;
   max-width: 600px;
   min-width: 300px;
   display: flex;

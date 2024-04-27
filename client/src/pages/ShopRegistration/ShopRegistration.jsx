@@ -116,7 +116,7 @@ const ShopRegistration = () => {
       <div className="shop_form-container">
         <div className="title_container">Shop Info:</div>
         <form onSubmit={handleSubmit} className="shop_form">
-          <label className="form-label">Name:</label>
+          <label className="form-label">Shop name:</label>
           <input
             type="text"
             name="name"
@@ -124,14 +124,14 @@ const ShopRegistration = () => {
             onChange={handleChange}
             className="custom-input"
           />
-          <label className="form-label">Description:</label>
+          <label className="form-label">Shop description:</label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             className="custom-input"
           />
-          <label className="form-label">address:</label>
+          <label className="form-label">shop address:</label>
           <input
             type="text"
             name="address"
@@ -139,7 +139,7 @@ const ShopRegistration = () => {
             onChange={handleChange}
             className="custom-input"
           />
-          <label className="form-label">phoneNumber:</label>
+          <label className="form-label">Shop phone number:</label>
           <input
             type="text"
             name="phoneNumber"
@@ -147,10 +147,13 @@ const ShopRegistration = () => {
             onChange={handleChange}
             className="custom-input"
           />
-          <label className="form-label">Image:</label>
+          <label className="form-label">Shop image:</label>
           <AddImage setFormData={setFormData} />
           <br />
-          <label className="form-label">domains:</label>
+          <label className="form-label">
+            {" "}
+            Choose your shop domain: (You may choose up to three domains.)
+          </label>
           <ul className="form-categories">
             {domains.map((domain) => (
               <li key={domain._id} className="form-domains">
@@ -168,7 +171,7 @@ const ShopRegistration = () => {
             ))}
           </ul>
           <div className="title_container">Admin Info:</div>
-          <label className="form-label">name:</label>
+          <label className="form-label">Name:</label>
           <input
             type="text"
             name="name"
@@ -177,7 +180,7 @@ const ShopRegistration = () => {
             className="custom-input"
           />
 
-          <label className="form-label">email:</label>
+          <label className="form-label">Email:</label>
           <input
             type="text"
             name="email"
@@ -186,7 +189,7 @@ const ShopRegistration = () => {
             className="custom-input"
           />
 
-          <label className="form-label">password:</label>
+          <label className="form-label">Password:</label>
           <input
             type="password"
             name="password"
@@ -195,7 +198,7 @@ const ShopRegistration = () => {
             className="custom-input"
           />
 
-          <label className="form-label">address:</label>
+          <label className="form-label">Address:</label>
           <input
             type="address"
             name="address"
@@ -203,7 +206,7 @@ const ShopRegistration = () => {
             onChange={handleUserDataChange}
             className="custom-input"
           />
-          <label className="form-label">number:</label>
+          <label className="form-label">Phone number:</label>
           <input
             type="text"
             name="number"

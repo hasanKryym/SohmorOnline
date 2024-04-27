@@ -49,8 +49,13 @@ const Notification = () => {
               key={notification.id}
               className={`notification ${notification.type}`}
             >
-              <span className="notification-icon">{icon}</span>
-              <p>{notification.message}</p>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+              >
+                <span className="notification-icon">{icon}</span>
+                <p>{notification.message}</p>
+              </div>
+
               <button onClick={() => removeNotification(notification.id)}>
                 {/* Dismiss */}
                 <CiCircleRemove className="dismiss_notification-button" />

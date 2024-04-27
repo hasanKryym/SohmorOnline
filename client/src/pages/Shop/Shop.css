@@ -39,3 +39,10 @@
   background: transparent;
   font-size: 32px;
 }
+
+@media screen and (max-width: 650px) {
+  .shop_container .title_container {
+    font-size: 32px;
+    flex-direction: column;
+  }
+}

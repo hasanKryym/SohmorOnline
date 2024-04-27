@@ -28,7 +28,7 @@ const Categories = () => {
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
-      <div className="title_container">categories</div>
+      <div className="title_container">products categories</div>
       <div className="shop_categories-container">
         <div>
           <form onSubmit={addShopCategory}>

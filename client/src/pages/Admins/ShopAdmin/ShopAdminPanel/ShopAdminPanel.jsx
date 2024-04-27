@@ -54,11 +54,11 @@ const ShopAdminPanel = () => {
   useEffect(() => {
     if (shop.name) {
       if (!shop.isActive) {
+        logout();
         addNotification(
           notificationTypes.WARNING,
           "Your account is not activated please contact the admin to activate your account"
         );
-        logout();
       }
     }
   }, [shop]);
