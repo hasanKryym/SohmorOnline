@@ -112,6 +112,8 @@ const getProducts = asyncWrapper(async (req, res) => {
 
   queryParameters.shopId = shopId;
 
+  if (_id) queryParameters._id = _id;
+
   if (search) {
     queryParameters.$or = [
       { name: { $regex: new RegExp(search, "i") } },
