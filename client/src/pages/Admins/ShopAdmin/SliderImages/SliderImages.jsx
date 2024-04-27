@@ -25,7 +25,7 @@ const SliderImages = () => {
 
   useEffect(() => {
     (async () => {
-      if (!formData.image || !shop) return;
+      if (!formData.image || !shop.name) return;
       await editShop({
         ...shop,
         sliderImages: [...shop.sliderImages, formData.image],

@@ -12,6 +12,7 @@ import {
 } from "../../../services/productService";
 import { notificationTypes } from "../../Notification/notificationEnum";
 import { useUser } from "../../User/UserContext";
+import { useShop } from "../shops/ShopsContext";
 
 // Create the context
 const ProductContext = createContext();
@@ -20,6 +21,8 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const { user } = useUser();
   const { addNotification, load, hideLoader } = useNotification();
+  const { shop, setShop } = useShop();
+
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [isFav, setIsFav] = useState(false);
@@ -100,6 +103,11 @@ export const ProductProvider = ({ children }) => {
     const response = await addProduct(newProduct);
 
     if (response.success) {
+      setShop((prevState) => ({
+        ...prevState,
+        products: [...prevState.products, response.product._id],
+      }));
+
       addNotification(notificationTypes.SUCCESS, response.message);
       updateProducts(response.product);
     } else
@@ -152,6 +160,18 @@ export const ProductProvider = ({ children }) => {
     const response = await deleteProduct(productsToDelete);
 
     if (response.success) {
+      const filteredProducts = shop.products.filter((product) => {
+        // Check if the current product is not in the productsToDelete array
+        return !productsToDelete.some(
+          (productToDelete) => product._id === productToDelete._id
+        );
+      });
+
+      setShop((prevState) => ({
+        ...prevState,
+        products: [filteredProducts],
+      }));
+
       addNotification(notificationTypes.SUCCESS, response.message);
       filterProducts(productsToDelete);
       // Filter out the deleted products from the products state

@@ -175,12 +175,12 @@ const ProductForm = ({ clostProductForm, product }) => {
 
           <label className="form-label">
             Categories:{" "}
-            <Link
+            {/* <Link
               className="categories_link"
               to={"/shops/adminPanel/manage/categories"}
             >
               Add New Category
-            </Link>
+            </Link> */}
           </label>
           <ul className="form-categories">
             {categories.length !== 0 ? (
