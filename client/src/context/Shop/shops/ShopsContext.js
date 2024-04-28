@@ -26,7 +26,9 @@ export const ShopProvider = ({ children }) => {
   const [isFav, setIsFav] = useState(false);
   const [shopQueryParams, setShopQueryParams] = useState({});
   const [shopsDomains, setShopsDomains] = useState([]);
+  const [shopCategories, setShopCategories] = useState([]);
   const [shopRegistrationRequests, setShopRegistrationRequests] = useState([]);
+
   const { addNotification, load, hideLoader } = useNotification();
   const { user } = useUser();
 
@@ -80,6 +82,7 @@ export const ShopProvider = ({ children }) => {
     if (response.success) {
       if (shopQueryParams.shopId) {
         setShop(response.shops[0]);
+        setShopCategories(response.shops[0].categories);
         hideLoader();
         return;
       }

@@ -105,6 +105,26 @@ export const createShopCategory = async (category) => {
   }
 };
 
+export const editShopCategory = async (categoryData) => {
+  if (!categoryData?.name || !categoryData?._id) return;
+
+  const name = categoryData.name;
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/shops/manage/editCategory?_id=${categoryData._id}`,
+      { name },
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const add_domain = async (domain) => {
   try {
     const response = await axios.post(

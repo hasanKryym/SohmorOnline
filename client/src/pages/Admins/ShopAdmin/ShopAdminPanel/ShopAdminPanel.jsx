@@ -12,9 +12,7 @@ import {
   navbarLinks,
   headers,
 } from "../../../../enum/linksEnum/shopAdminLinks";
-import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
-import { Filter } from "../../../../components/Filter/Filter";
 import { notificationTypes } from "../../../../context/Notification/notificationEnum";
 import { useNotification } from "../../../../context/Notification/NotificationContext";
 
@@ -24,10 +22,8 @@ const ShopAdminPanel = () => {
   const { products, getShopProducts, queryParameters, setQueryParameters } =
     useProduct();
 
-  const { categories, getCategories } = useCategories();
   const { user, logout } = useUser();
   const { shop, setShopQueryParams } = useShop();
-
   useEffect(() => {
     if (!shop.name) {
       setShopQueryParams((prevState) => ({
@@ -38,8 +34,6 @@ const ShopAdminPanel = () => {
     if (shop.name) if (!shop.isActive) return;
     if (products.length === 0)
       setQueryParameters({ shopId: user.data.role.shop });
-
-    if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
 
   useEffect(() => {

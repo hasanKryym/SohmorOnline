@@ -5,7 +5,6 @@ import Navbar from "../../Navbar/Navbar";
 import { navbarLinks } from "../../../../enum/linksEnum/shopAdminLinks";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import { useUser } from "../../../../context/User/UserContext";
-import Slider from "../../../Home/HomeSlider/Slider";
 
 const SliderImages = () => {
   const { shop, editShop, setShopQueryParams } = useShop();
@@ -15,10 +14,12 @@ const SliderImages = () => {
   });
 
   useEffect(() => {
-    setShopQueryParams((prevState) => ({
-      ...prevState,
-      shopId: user.data.role.shop,
-    }));
+    if (!shop.name) {
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
+    }
   }, []);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const SliderImages = () => {
         ...shop,
         sliderImages: [...shop.sliderImages, formData.image],
       });
+
       window.location.reload();
     })();
   }, [formData]);

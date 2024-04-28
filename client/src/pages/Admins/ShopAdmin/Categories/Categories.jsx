@@ -5,8 +5,13 @@ import { useCategories } from "../../../../context/Shop/Categories/CategoriesCon
 import { useUser } from "../../../../context/User/UserContext";
 import { navbarLinks } from "../../../../enum/linksEnum/shopAdminLinks";
 
+import { useShop } from "../../../../context/Shop/shops/ShopsContext";
+import EditCategoryForm from "../../../../components/EditCategoryForm/EditCategoryForm";
+import Category from "../../../../components/Category/Category";
+
 const Categories = () => {
   const { categories, getCategories, addNewCategory } = useCategories();
+  const { shop, setShopQueryParams } = useShop();
   const { user } = useUser();
 
   const [newCategory, setNewCategory] = useState("");
@@ -16,7 +21,12 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    if (categories.length === 0) getCategories(user.data.role.shop);
+    if (!shop.name) {
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
+    }
   }, []);
 
   const addShopCategory = async (e) => {
@@ -25,9 +35,11 @@ const Categories = () => {
     const response = await addNewCategory(newCategory);
     if (response.success) setNewCategory("");
   };
+
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
+
       <div className="title_container">products categories</div>
       <div className="shop_categories-container">
         <div>
@@ -46,14 +58,10 @@ const Categories = () => {
           </form>
         </div>
         <div className="">
-          {categories.map((category, i) => {
-            return (
-              <h3 key={i}>
-                <span>{i + 1}_</span>
-                {category.name}{" "}
-              </h3>
-            );
-          })}
+          {shop?.name &&
+            shop?.categories.map((category, i) => {
+              return <Category category={category} i={i} />;
+            })}
         </div>
       </div>
     </>

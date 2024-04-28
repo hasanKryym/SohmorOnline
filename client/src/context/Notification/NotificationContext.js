@@ -60,7 +60,8 @@ export const NotificationProvider = ({ children }) => {
 
   const addNotification = (type, message) => {
     const newNotification = { id: Date.now(), message, type };
-    setNotifications([...notifications, newNotification]);
+    setNotifications((prevState) => [...prevState, newNotification]);
+    // setNotifications([...notifications, newNotification]);
     hideLoader();
   };
 

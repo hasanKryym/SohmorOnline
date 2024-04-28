@@ -205,6 +205,30 @@ const addCategory = asyncWrapper(async (req, res) => {
   });
 });
 
+const editCategory = asyncWrapper(async (req, res) => {
+  const shop = req.user.role.shop;
+  const { _id } = req.query;
+  const { name } = req.body;
+  if (!_id || !name)
+    throw new BadRequestError(
+      "please provide the id and a name for the category"
+    );
+
+  const categoryData = {
+    _id,
+    name,
+    shop,
+  };
+
+  const category = await Category.editCategory(categoryData, shop);
+
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    category,
+    message: "category updated successfully",
+  });
+});
+
 const getCategories = asyncWrapper(async (req, res) => {
   const { shopId } = req.query;
   if (!shopId) throw new BadRequestError("Please provide shopId");
@@ -322,6 +346,7 @@ module.exports = {
   addDomain,
   getDomains,
   addCategory,
+  editCategory,
   getCategories,
   addRegistrationRequest,
   changeRequestStatus,

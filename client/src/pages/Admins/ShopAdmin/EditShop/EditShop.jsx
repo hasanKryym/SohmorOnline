@@ -8,8 +8,6 @@ import { notificationTypes } from "../../../../context/Notification/notification
 import { useDomain } from "../../../../context/Shop/Domains/DomainsContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import AddImage from "../../../../components/UploadCare/UploadCare";
-import { useCategories } from "../../../../context/Shop/Categories/CategoriesContext";
-import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
 
 const EditShop = () => {
   const { addNotification } = useNotification();
@@ -69,7 +67,7 @@ const EditShop = () => {
       });
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     if (
@@ -96,7 +94,11 @@ const EditShop = () => {
       formData.domain === shop.domain
     )
       return;
-    editShop(formData);
+    await editShop(formData);
+    setShopQueryParams((prevState) => ({
+      ...prevState,
+      shopId: user.data.role.shop,
+    }));
   };
   return (
     <>

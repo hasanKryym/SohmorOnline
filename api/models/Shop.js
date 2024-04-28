@@ -229,6 +229,46 @@ CategorySchema.statics.createCategory = async function (categoryData) {
   return newCategory;
 };
 
+CategorySchema.statics.editCategory = async function (categoryData, shop) {
+  const { _id, name } = categoryData;
+
+  // Fetch the category IDs from the shop document
+  const shopCategories = await Shop.findById(shop).select("categories");
+  if (shopCategories) {
+    const categoryIds = shopCategories.categories;
+
+    // Fetch the categories with the IDs
+    const categories = await this.find({ _id: { $in: categoryIds } });
+
+    // Check if the category name already exists for the shop
+    const existingCategory = categories.find(
+      (category) => category.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (existingCategory) {
+      throw new BadRequestError("Category already exists for this shop.");
+    }
+  }
+
+  // Find the category by ID
+  const category = await this.findById(_id);
+  if (!category) {
+    throw new Error("Category not found.");
+  }
+
+  // Check if the new name is already in use
+  // const existingCategory = await this.findOne({ name: newName });
+  // if (existingCategory && existingCategory._id.toString() !== categoryId) {
+  //   throw new BadRequestError("Category name already exists.");
+  // }
+
+  // Update the category name
+  category.name = name;
+  await category.save();
+
+  return category;
+};
+
 const Category = mongoose.model("Category", CategorySchema);
 
 const shopRegistrationSchema = new mongoose.Schema({

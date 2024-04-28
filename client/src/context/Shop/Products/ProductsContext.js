@@ -12,6 +12,7 @@ import {
 } from "../../../services/productService";
 import { notificationTypes } from "../../Notification/notificationEnum";
 import { useUser } from "../../User/UserContext";
+import { useShop } from "../shops/ShopsContext";
 
 // Create the context
 const ProductContext = createContext();
@@ -20,6 +21,7 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const { user } = useUser();
   const { addNotification, load, hideLoader } = useNotification();
+  const { shop, editShop, setShopQueryParams } = useShop();
 
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
@@ -103,6 +105,14 @@ export const ProductProvider = ({ children }) => {
     if (response.success) {
       addNotification(notificationTypes.SUCCESS, response.message);
       updateProducts(response.product);
+      // await editShop({
+      //   ...shop,
+      //   products: [...shop.products, response.product._id],
+      // });
+      // setShopQueryParams((prevState) => ({
+      //   ...prevState,
+      //   shopId: user.data.role.shop,
+      // }));
     } else
       addNotification(
         notificationTypes.ERROR,
@@ -149,10 +159,21 @@ export const ProductProvider = ({ children }) => {
       );
       return;
     }
-
+    load();
     const response = await deleteProduct(productsToDelete);
 
     if (response.success) {
+      // const newProducts = shop.products.filter(
+      //   (_id) => !productsToDelete.includes(_id)
+      // );
+      // await editShop({
+      //   ...shop,
+      //   products: newProducts,
+      // });
+      // setShopQueryParams((prevState) => ({
+      //   ...prevState,
+      //   shopId: user.data.role.shop,
+      // }));
       addNotification(notificationTypes.SUCCESS, response.message);
       filterProducts(productsToDelete);
       // Filter out the deleted products from the products state

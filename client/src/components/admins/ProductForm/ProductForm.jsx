@@ -7,16 +7,18 @@ import { notificationTypes } from "../../../context/Notification/notificationEnu
 import { useProduct } from "../../../context/Shop/Products/ProductsContext";
 import { useUser } from "../../../context/User/UserContext";
 import { Link } from "react-router-dom";
+import { useShop } from "../../../context/Shop/shops/ShopsContext";
 
 const ProductForm = ({ clostProductForm, product }) => {
   const { categories, getCategories } = useCategories();
+  const { shop } = useShop();
   const { addNotification, load, hideLoader } = useNotification();
   const { addNewProduct, editProduct } = useProduct();
 
   const { user } = useUser();
 
   useEffect(() => {
-    if (categories.length === 0) getCategories(user.data.role.shop);
+    // if (categories.length === 0) getCategories(user.data.role.shop);
   }, []);
 
   const [formData, setFormData] = useState({
@@ -183,8 +185,36 @@ const ProductForm = ({ clostProductForm, product }) => {
             </Link> */}
           </label>
           <ul className="form-categories">
-            {categories.length !== 0 ? (
+            {/* {categories.length !== 0 ? (
               categories.map((category) => (
+                <li key={category._id} className="form-category">
+                  <label className="form-checkbox-label">
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      value={category._id}
+                      checked={formData.categories.includes(category._id)}
+                      onChange={handleCategoryChange}
+                      className="form-checkbox"
+                    />
+                    {category.name}
+                  </label>
+                </li>
+              ))
+            ) : (
+              <>
+                <Link to={"/shops/adminPanel/manage/categories"}>
+                  Add Category
+                </Link>
+                <span>
+                  (NOTE: if you dont have at least 1 category you won't be able
+                  to add a product)
+                </span>
+              </>
+            )} */}
+
+            {shop?.categories.length !== 0 ? (
+              shop?.categories.map((category) => (
                 <li key={category._id} className="form-category">
                   <label className="form-checkbox-label">
                     <input

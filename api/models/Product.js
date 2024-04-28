@@ -50,14 +50,14 @@ const ProductSchema = new mongoose.Schema({
 });
 
 ProductSchema.statics.addProduct = async function (productData, shopId) {
-  const Shop = mongoose.model("Shop");
+  // const Shop = mongoose.model("Shop");
   const newProduct = await this.create(productData);
   // Find the shop by its ID and update its products array
-  await Shop.findByIdAndUpdate(
-    shopId,
-    { $push: { products: newProduct._id } },
-    { new: true }
-  );
+  // await Shop.findByIdAndUpdate(
+  // shopId,
+  // { $push: { products: newProduct._id } },
+  // { new: true }
+  // );
 
   return newProduct;
 };
@@ -83,6 +83,7 @@ ProductSchema.statics.deleteProducts = async function (
   shopId
 ) {
   const Shop = mongoose.model("Shop");
+  await ProductReview.deleteMany({ productId: { $in: productsToDelete } });
   const Product = this;
 
   const result = await Product.deleteMany({
@@ -92,14 +93,13 @@ ProductSchema.statics.deleteProducts = async function (
   // Check if any products were deleted
   if (result.deletedCount > 0) {
     // If products were deleted, remove them from the shop's product list
-    await Shop.findByIdAndUpdate(
-      shopId,
-      { $pull: { products: { $in: productsToDelete } } }, // Remove deleted products from the shop's products array
-      { new: true }
-    );
+    // await Shop.findByIdAndUpdate(
+    //   shopId,
+    //   { $pull: { products: { $in: productsToDelete } } }, // Remove deleted products from the shop's products array
+    //   { new: true }
+    // );
 
     // Also, delete the reviews associated with the deleted products
-    await ProductReview.deleteMany({ productId: { $in: productsToDelete } });
 
     return { success: true, message: "Products deleted successfully", result };
   } else {

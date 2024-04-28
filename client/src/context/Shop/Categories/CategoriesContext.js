@@ -3,15 +3,21 @@ import { useNotification } from "../../Notification/NotificationContext";
 import { notificationTypes } from "../../Notification/notificationEnum";
 import {
   createShopCategory,
+  editShopCategory,
   getShopCategories,
 } from "../../../services/shopService";
 import { useLocation } from "react-router-dom";
+import { useShop } from "../shops/ShopsContext";
+import { useUser } from "../../User/UserContext";
 
 const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
   const location = useLocation();
   const { addNotification, load, hideLoader } = useNotification();
+  const { setShopQueryParams } = useShop();
+  const { user } = useUser();
+
   const [categories, setCategories] = useState([]);
 
   const updateCategories = (newCategories) => {
@@ -23,6 +29,7 @@ export const CategoriesProvider = ({ children }) => {
     const response = await getShopCategories(shopId);
 
     if (response.success) {
+      console.log(response);
       setCategories(response.categories);
       if (
         response.categories.length === 0 &&
@@ -55,9 +62,16 @@ export const CategoriesProvider = ({ children }) => {
     load();
     const response = await createShopCategory(name);
     if (response.success) {
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
       addNotification(notificationTypes.SUCCESS, response.message);
-      setCategories((prevCategories) => [...prevCategories, response.category]);
-      //    setNewCategory("");
+      // setCategories((prevCategories) => [...prevCategories, response.category]);
+      // await editShop({
+      //   ...shop,
+      //   categories: [...shop.categories, response.category],
+      // });
     } else
       addNotification(
         notificationTypes.ERROR,
@@ -67,9 +81,40 @@ export const CategoriesProvider = ({ children }) => {
     return response;
   };
 
+  const editCategory = async (categoryData) => {
+    if (!categoryData.name || !categoryData._id) {
+      addNotification(
+        notificationTypes.INFO,
+        "please provide the ID and the new name "
+      );
+      return;
+    }
+
+    load();
+    const response = await editShopCategory(categoryData);
+    console.log(response);
+    if (response.success) {
+      setShopQueryParams((prevState) => ({
+        ...prevState,
+        shopId: user.data.role.shop,
+      }));
+      addNotification(notificationTypes.SUCCESS, response.message);
+    } else
+      addNotification(
+        notificationTypes.ERROR,
+        response.message ? response.message : "error while editing category"
+      );
+  };
+
   return (
     <CategoriesContext.Provider
-      value={{ categories, updateCategories, addNewCategory, getCategories }}
+      value={{
+        categories,
+        updateCategories,
+        addNewCategory,
+        editCategory,
+        getCategories,
+      }}
     >
       {children}
     </CategoriesContext.Provider>
