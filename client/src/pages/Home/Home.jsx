@@ -13,11 +13,12 @@ import HomeSlider from "./HomeSlider/HomeSlider";
 const Home = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  console.log(user);
 
   useEffect(() => {
-    if (user.data.role.position === UserPositions.SHOP_ADMIN)
+    if (user?.data?.role?.position === UserPositions.SHOP_ADMIN)
       navigate("/shops/adminPanel/dashboard");
-    else if (user.data.role.position === UserPositions.SITE_ADMIN)
+    else if (user?.data?.role?.position === UserPositions.SITE_ADMIN)
       navigate("/siteAdmin/adminPanel/dashboard");
   }, []);
   return (

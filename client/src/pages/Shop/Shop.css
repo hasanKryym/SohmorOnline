@@ -12,6 +12,10 @@
   font-weight: bold;
 }
 
+.location-icon {
+  font-size: 24px;
+  color: var(--dark-charcoal);
+}
 .whatsapp_logo {
   color: #075e54;
   font-size: 24px;
@@ -25,11 +29,18 @@
   justify-content: center;
 }
 
+.shop_offers-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .shop_container .title_container .star {
   color: var(--vibrant-yellow);
 }
 
-.shop_container .title_container .flame {
+.flame {
+  font-size: 24px;
   color: #ffa500;
 }
 

@@ -171,7 +171,7 @@ const ShopRegistration = () => {
             ))}
           </ul>
           <div className="title_container">Admin Info:</div>
-          <label className="form-label">Name:</label>
+          <label className="form-label">Full Name:</label>
           <input
             type="text"
             name="name"

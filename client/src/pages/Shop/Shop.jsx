@@ -51,7 +51,8 @@ const Shop = () => {
           </span>
 
           <span className="shop-info">
-            <IoLocationSharp /> <span>{shop.address}</span>
+            <IoLocationSharp className="location-icon" />{" "}
+            <span>{shop.address}</span>
           </span>
         </div>
         <div className="title_container">
@@ -106,15 +107,16 @@ const Shop = () => {
 
         {offers.length !== 0 && (
           <>
-            <div className="title_container">
+            <div className="shop_offers-title">
               <span className="flame">
                 <FaFireFlameCurved />
               </span>
-              OFFERS
+              <div className="title_container">OFFERS</div>
               <span className="flame">
                 <FaFireFlameCurved />
               </span>
             </div>
+
             <ItemsSlider items={offers} />
           </>
         )}

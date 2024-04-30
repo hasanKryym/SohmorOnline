@@ -32,7 +32,7 @@ const Product = () => {
       <Navbar />
       <div>
         <ProductDetails product={product} />
-        <div className="title_container">Similar Products</div>
+        {/* <div className="title_container">Similar Products</div> */}
         {/* <Products items={shopItems} /> */}
         <Footer />
       </div>

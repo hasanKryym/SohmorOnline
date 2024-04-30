@@ -1,8 +1,7 @@
 .swiper_container {
   width: 100vw;
-  max-width: 2000px;
   overflow-x: hidden;
-  max-width: 1500px;
+  max-width: 1600px;
 }
 .swiper_container.homeSwiper {
   background: var(--terracotta-red);
@@ -20,8 +19,8 @@
 
 .swiper img {
   width: inherit;
-  height: 550px;
-  object-fit: cover;
+  height: 600px;
+  object-fit: contain;
 }
 
 .swiper .home_slider-img {
