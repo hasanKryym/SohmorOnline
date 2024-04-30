@@ -107,9 +107,21 @@ ProductSchema.statics.deleteProducts = async function (
   }
 };
 
+// ProductSchema.statics.getProducts = async function (queryParameters) {
+//   const products = await this.find(queryParameters);
+//   return products;
+// };
+
 ProductSchema.statics.getProducts = async function (queryParameters) {
-  const products = await this.find(queryParameters);
-  return products;
+  let query = this.find(queryParameters);
+
+  // Retrieve the products based on the query parameters
+  const products = await query.exec();
+
+  // Randomize the order of the products
+  const shuffledProducts = products.sort(() => Math.random() - 0.5);
+
+  return shuffledProducts;
 };
 
 ProductSchema.statics.getProductsById = async function (productIds) {

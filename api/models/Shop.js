@@ -136,6 +136,18 @@ ShopSchema.statics.deleteShop = async function (shopId) {
   return deletedShop;
 };
 
+// ShopSchema.statics.getShops = async function (queryParameters) {
+//   let query = this.find(queryParameters);
+
+//   if (queryParameters._id) {
+//     // Populate the categories field
+//     query = query.populate("categories");
+//   }
+
+//   const shops = await query.exec();
+//   return shops;
+// };
+
 ShopSchema.statics.getShops = async function (queryParameters) {
   let query = this.find(queryParameters);
 
@@ -144,8 +156,13 @@ ShopSchema.statics.getShops = async function (queryParameters) {
     query = query.populate("categories");
   }
 
+  // Retrieve the shops based on the query parameters
   const shops = await query.exec();
-  return shops;
+
+  // Randomize the order of the shops
+  const shuffledShops = shops.sort(() => Math.random() - 0.5);
+
+  return shuffledShops;
 };
 
 // Define the static method to retrieve shop categories
