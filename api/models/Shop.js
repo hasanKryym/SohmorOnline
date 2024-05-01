@@ -9,6 +9,7 @@ const User = require("./User");
 const Product = require("./Product");
 const registrationRequestStatus = require("../Enums/shopEnums/shopRegistrationStatus");
 const { ProductReview } = require("./Review");
+const sendEmail = require("../mailer");
 
 const ShopSchema = new mongoose.Schema({
   name: {
@@ -375,6 +376,27 @@ shopRegistrationSchema.statics.addRegistrationRequest = async function (
 ) {
   try {
     const newRequest = await this.create(requestData);
+
+    const emailBody = `
+Dear ${newRequest.adminInfo.name},
+
+Thank you for your interest in creating a shop account with Sohmor Online. We have received your request, and our team is currently reviewing it.
+
+Please note that it may take some time to process your request. We will notify you via email once your shop account has been successfully created.
+
+In the meantime, if you have any questions or need further assistance, feel free to contact our support team at leb.sohmor.online@gmail.com.
+
+Best regards,
+Sohmor Online Team
+`;
+
+    if (newRequest)
+      await sendEmail(
+        "",
+        [newRequest.adminInfo.email],
+        "Shop Account Request Confirmation",
+        emailBody
+      );
     return newRequest;
   } catch (error) {
     throw new InternalServerError(

@@ -7,6 +7,7 @@ const {
   NotFoundError,
   InternalServerError,
 } = require("../errors");
+const sendEmail = require("../mailer");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -138,8 +139,30 @@ UserSchema.statics.register = async function (userData) {
   const userWithoutPassword = newUser.toObject();
   delete userWithoutPassword.password;
 
-  if (userData?.role?.position === "shopAdmin")
+  // token null because the site admin registered this user no need for the token
+  if (userData?.role?.position === "shopAdmin") {
+    const emailBody = `
+Dear ${name},
+
+Congratulations! Your shop account with Sohmor Online has been successfully created.
+
+You can now log in to your account using the email and password you provided during the application process.
+
+Thank you for choosing Sohmor Online. If you have any questions or need assistance, please don't hesitate to contact our support team at leb.sohmor.online@gmail.com.
+
+Best regards,
+Sohmor Online Team
+`;
+
+    await sendEmail(
+      "",
+      [email],
+      "Your Shop Account with Sohmor Online",
+      emailBody
+    );
+
     return { user: userWithoutPassword, token: null };
+  }
 
   const token = newUser.createJWT();
 
