@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  padding-right: 3rem;
+  padding-right: 4rem;
   background: var(--light-beige);
   box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
     rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -36,8 +36,8 @@
   background: var(--dark-charcoal);
   border-radius: 0.5rem;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1; /* Ensure dropdown appears above other content */
-  padding: 0.5rem 0;
+  z-index: 950; /* Ensure dropdown appears above other content */
+  /* padding: 0.5rem 0; */
 }
 
 .admin_navbar .links .list {
@@ -45,10 +45,14 @@
 }
 .admin_navbar .links .list .list-item {
   padding: 10px;
+  border-bottom: 1px solid var(--light-beige);
+  /* padding: 0.5rem 0; */
+  padding: 1rem 0.8rem;
 }
 
 .admin_navbar .links a {
   font-size: 14px;
   color: var(--light-beige);
   text-decoration: none;
+  text-transform: capitalize;
 }

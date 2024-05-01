@@ -12,10 +12,12 @@ import HomeSlider from "./HomeSlider/HomeSlider";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, logout } = useUser();
   console.log(user);
 
   useEffect(() => {
+    if (!user?.data?.role?.position) logout();
+
     if (user?.data?.role?.position === UserPositions.SHOP_ADMIN)
       navigate("/shops/adminPanel/dashboard");
     else if (user?.data?.role?.position === UserPositions.SITE_ADMIN)
