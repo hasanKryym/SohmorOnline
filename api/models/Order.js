@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const userPositions = require("../Enums/userEnums/positionsEnums");
+const User = require("./User");
+const sendEmail = require("../mailer");
 
 const OrderSchema = new mongoose.Schema({
   userId: {
@@ -58,6 +60,57 @@ OrderSchema.statics.createOrder = async function (userId, shopId, products) {
       products,
     });
 
+    const customerInfo = await User.findById(userId);
+    const shopAdminInfo = await User.findOne({
+      "role.position": userPositions.SHOP_ADMIN,
+      "role.shop": shopId,
+    });
+
+    const shopAdminEmailBody = `
+Hello,
+
+We're excited to inform you that ${customerInfo.name} has just placed an order (${order._id}) from your shop. Here are the customer details:
+- Phone number: ${customerInfo.number}
+- Email: ${customerInfo.email}
+- Address: ${customerInfo.address}
+
+Please log in to your admin panel to view and process the order accordingly.
+
+Best Regards,
+Sohmor Online Team
+`;
+
+    const customerEmailBody = `
+Dear ${customerInfo.name},
+
+Thank you for your order! We've successfully received it and it's being processed. Here are the details:
+
+Order ID: ${order._id}
+
+For any inquiries or assistance regarding your order, please feel free to contact the shop directly using the following information:
+- Phone number: ${shopAdminInfo.number}
+- Email: ${shopAdminInfo.email}
+- Address: ${shopAdminInfo.address}
+
+We appreciate your business and look forward to serving you again soon.
+
+Best Regards,
+Sohmor Online Team
+`;
+
+    await sendEmail(
+      "",
+      [shopAdminInfo.email],
+      `New Order Received: Order ID - ${order._id}`,
+      shopAdminEmailBody
+    );
+    await sendEmail(
+      "",
+      [customerInfo.email],
+      `Order Confirmation: Order ID - ${order._id}`,
+      customerEmailBody
+    );
+
     return { success: true, order, message: "Order created successfully" };
   } catch (error) {
     return { success: false, message: error.message };
@@ -109,6 +162,35 @@ OrderSchema.statics.updateOrder = async function (orderId, updatedFields) {
     if (!order) {
       return { success: false, message: "Order not found" };
     }
+
+    const customerInfo = await User.findById(order.userId);
+    const shopAdminInfo = await User.findOne({
+      "role.position": userPositions.SHOP_ADMIN,
+      "role.shop": order.shopId,
+    });
+
+    const customerEmailBody = `
+Dear ${customerInfo.name},
+
+Your order (${order._id}) status has been updated to ${order.status}
+
+For any inquiries or assistance regarding your order, please feel free to contact the shop directly using the following information:
+- Phone number: ${shopAdminInfo.number}
+- Email: ${shopAdminInfo.email}
+- Address: ${shopAdminInfo.address}
+
+We appreciate your business and look forward to serving you again soon.
+
+Best Regards,
+Sohmor Online Team
+`;
+
+    await sendEmail(
+      "",
+      [customerInfo.email],
+      `Order status Updated: Order ID - ${order._id}`,
+      customerEmailBody
+    );
 
     return { success: true, order, message: "Order updated successfully" };
   } catch (error) {

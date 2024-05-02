@@ -390,6 +390,14 @@ Best regards,
 Sohmor Online Team
 `;
 
+    const emailBodyForAdmin = `
+Dear Hasan,
+
+${newRequest.adminInfo.name} just requested a shop account for ${newRequest.shopInfo.name} 
+email: ${newRequest.adminInfo.email}
+phoneNb: ${newRequest.adminInfo.number}
+`;
+
     if (newRequest)
       await sendEmail(
         "",
@@ -397,6 +405,13 @@ Sohmor Online Team
         "Shop Account Request Confirmation",
         emailBody
       );
+
+    await sendEmail(
+      "",
+      ["hasan.kryym@gmail.com"],
+      "New shop account request",
+      emailBodyForAdmin
+    );
     return newRequest;
   } catch (error) {
     throw new InternalServerError(
