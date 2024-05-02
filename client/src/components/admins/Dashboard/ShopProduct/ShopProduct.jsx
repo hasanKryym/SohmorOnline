@@ -3,14 +3,22 @@ import { useProduct } from "../../../../context/Shop/Products/ProductsContext";
 import ProductForm from "../../ProductForm/ProductForm";
 import "./ShopProduct.css";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import PopupNotification from "../../../PopupNotification/PopupNotification";
 
 const ShopProduct = ({ data }) => {
   const [showProductForm, setShowProductForm] = useState(false);
   const [clickedProduct, setClickedProduct] = useState({});
+  const [productstoDelete, setProductsToDelete] = useState([]);
   const { deleteProductsById } = useProduct();
 
   const closeProductForm = () => {
     setShowProductForm(false);
+  };
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleCancelDelete = () => {
+    setShowPopup(false);
   };
 
   return (
@@ -42,7 +50,13 @@ const ShopProduct = ({ data }) => {
                 <FaEdit />
               </button>
               <button className="delete-btn">
-                <FaTrashAlt onClick={() => deleteProductsById([product._id])} />
+                {/* <FaTrashAlt onClick={() => deleteProductsById([product._id])} /> */}
+                <FaTrashAlt
+                  onClick={() => {
+                    setProductsToDelete([product._id]);
+                    setShowPopup(true);
+                  }}
+                />
               </button>
             </div>
           </td>
@@ -52,6 +66,17 @@ const ShopProduct = ({ data }) => {
         <ProductForm
           clostProductForm={closeProductForm}
           product={clickedProduct}
+        />
+      )}
+
+      {showPopup && (
+        <PopupNotification
+          message="Are you sure you want to delete this product?"
+          onConfirm={() => {
+            deleteProductsById(productstoDelete);
+            handleCancelDelete();
+          }}
+          onCancel={handleCancelDelete}
         />
       )}
     </>

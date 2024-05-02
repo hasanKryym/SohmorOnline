@@ -13,7 +13,6 @@ import HomeSlider from "./HomeSlider/HomeSlider";
 const Home = () => {
   const navigate = useNavigate();
   const { user, logout } = useUser();
-  console.log(user);
 
   useEffect(() => {
     if (!user?.data?.role?.position) logout();

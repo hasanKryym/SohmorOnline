@@ -6,6 +6,7 @@ import { login, register } from "../../services/userService";
 import { useNotification } from "../../context/Notification/NotificationContext";
 import { notificationTypes } from "../../context/Notification/notificationEnum";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -75,11 +76,8 @@ const Login = () => {
                 onChange={handleChange}
               />
 
-              <input
-                type="password"
-                name="password"
-                className="custom-input"
-                placeholder="Password"
+              <PasswordInput
+                name={"password"}
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -175,18 +173,16 @@ const Register = () => {
               onChange={handleChange}
             />
             <input
-              type="text"
+              type="email"
               name="email"
               className="custom-input"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
             />
-            <input
-              type="password"
-              name="password"
-              className="custom-input"
-              placeholder="Password"
+
+            <PasswordInput
+              name={"password"}
               value={formData.password}
               onChange={handleChange}
             />

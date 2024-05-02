@@ -21,6 +21,7 @@
 
 .cart_container .cart-details {
   margin-top: 20px;
+  overflow-y: auto;
 }
 
 .cart_container .cart-details table {

@@ -5,11 +5,13 @@ import { useDomain } from "../../context/Shop/Domains/DomainsContext";
 import { useNotification } from "../../context/Notification/NotificationContext";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 
 const ShopRegistration = () => {
   const { addNotification } = useNotification();
   const { domains, getDomains } = useDomain();
   const { addRegistrationRequest } = useShop();
+
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -110,6 +112,7 @@ const ShopRegistration = () => {
       });
     }
   };
+
   return (
     <>
       <div className="title_container">Register New Shop</div>
@@ -190,12 +193,10 @@ const ShopRegistration = () => {
           />
 
           <label className="form-label">Password:</label>
-          <input
-            type="password"
-            name="password"
+          <PasswordInput
+            name={"password"}
             value={userData.password}
             onChange={handleUserDataChange}
-            className="custom-input"
           />
 
           <label className="form-label">Address:</label>
