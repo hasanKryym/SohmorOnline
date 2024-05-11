@@ -20,7 +20,7 @@ const ShopItem = ({ item }) => {
     <>
       <div className="shop_item">
         <div className="image_container">
-          <img src={image} alt="" />
+          <img src={image + "-/quality/lightest/-/progressive/yes/"} alt="" />
           {offer > 0 && isAvailable && <div className="offer">{offer}%</div>}
           {!isAvailable && <div className="out_of_stock">out of stock</div>}
         </div>

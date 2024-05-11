@@ -58,7 +58,10 @@ const SliderImages = () => {
             shop?.sliderImages.map((link) => {
               return (
                 <div className="slider_img">
-                  <img src={link} alt="" />
+                  <img
+                    src={link + "-/quality/lightest/-/progressive/yes/"}
+                    alt=""
+                  />
                   <button
                     onClick={() => deleteImage(link)}
                     className="secondary-button"

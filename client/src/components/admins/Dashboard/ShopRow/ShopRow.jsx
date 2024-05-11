@@ -32,7 +32,11 @@ const ShopRow = ({ data }) => {
       {data.map((shop, index) => (
         <tr className="shop_row" key={shop._id}>
           <td>
-            <img className="shop_image" src={shop.image} alt="" />
+            <img
+              className="shop_image"
+              src={shop.image + "-/quality/lightest/-/progressive/yes/"}
+              alt=""
+            />
           </td>
           <td>{shop.name}</td>
           <td>{shop.description}</td>

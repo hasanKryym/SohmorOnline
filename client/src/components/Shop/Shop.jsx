@@ -8,7 +8,7 @@ const Shop = ({ shop }) => {
   return (
     <>
       <div className="shop">
-        <img src={image} alt="" />
+        <img src={image + "-/quality/lightest/-/progressive/yes/"} alt="" />
         <div className="title">
           <h3>{name}</h3>
         </div>

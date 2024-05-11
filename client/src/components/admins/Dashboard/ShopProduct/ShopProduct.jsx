@@ -27,7 +27,11 @@ const ShopProduct = ({ data }) => {
       {data.map((product, index) => (
         <tr className="shop_product" key={product._id}>
           <td>
-            <img className="product_image" src={product.image} alt="" />
+            <img
+              className="product_image"
+              src={product.image + "-/quality/lightest/-/progressive/yes/"}
+              alt=""
+            />
           </td>
           <td>{product.name}</td>
           <td>{product.description}</td>

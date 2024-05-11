@@ -36,7 +36,7 @@ const Product = ({ product }) => {
 
       <div className="product_container">
         <div className="product">
-          <img src={image} alt="" />
+          <img src={image + "-/quality/lightest/-/progressive/yes/"} alt="" />
           <div className="product_info">
             <div className="title">
               {name}

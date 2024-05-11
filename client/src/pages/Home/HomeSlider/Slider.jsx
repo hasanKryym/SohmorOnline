@@ -38,7 +38,10 @@ const Slider = ({ images }) => {
             {images.map((link) => {
               return (
                 <SwiperSlide>
-                  <img src={link} alt="" />
+                  <img
+                    src={link + "-/quality/lightest/-/progressive/yes/"}
+                    alt=""
+                  />
                 </SwiperSlide>
               );
             })}

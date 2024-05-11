@@ -17,7 +17,10 @@ const RegistrationRequest = ({ request }) => {
   return (
     <>
       <article className="shop_registration-request">
-        <img src={shopInfo.image} alt="" />
+        <img
+          src={shopInfo.image + "-/quality/lightest/-/progressive/yes/"}
+          alt=""
+        />
         <h4>Request ID:{_id}</h4>
         <p>
           shop Name: <span>{shopInfo.name}</span>
