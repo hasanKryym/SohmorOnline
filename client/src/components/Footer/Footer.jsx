@@ -47,7 +47,7 @@ const Footer = () => {
               style={{ width: "fit-content" }}
               className="custom-input"
               type="text"
-              value={"hasan@sohmor.tech"}
+              value={"admin@sohmor.tech"}
             />
           </div>
         </div>

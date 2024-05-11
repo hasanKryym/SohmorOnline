@@ -11,6 +11,7 @@ const userPositions = require("../Enums/userEnums/positionsEnums");
 const Domain = require("../models/Domain");
 const User = require("../models/User");
 const registrationRequestStatus = require("../Enums/shopEnums/shopRegistrationStatus");
+const sendEmail = require("../mailer");
 
 const addShop = asyncWrapper(async (req, res) => {
   const {
@@ -109,6 +110,38 @@ const shopActivation = asyncWrapper(async (req, res) => {
   const updatedShop = await Shop.findByIdAndUpdate(shopId, {
     isActive: isActive,
   });
+
+  const shopAdminInfo = await User.findOne({
+    "role.position": userPositions.SHOP_ADMIN,
+    "role.shop": shopId,
+  });
+
+  const emailBody = `
+Dear ${shopAdminInfo.name},
+
+We wanted to inform you that your shop account has been ${
+    isActive ? "activated" : "deactivated"
+  }.
+
+${
+  isActive
+    ? "You can now log in to your account and access all features."
+    : "Unfortunately, your account has been deactivated, and you will not be able to log in. If you have any questions or concerns about this decision, please contact us at leb.sohmor.online@gmail.com."
+}
+
+Thank you for your understanding.
+
+Best regards,
+Sohmor Online Team
+
+`;
+
+  await sendEmail(
+    "",
+    [shopAdminInfo.email],
+    `Important: Your Shop Account Status`,
+    emailBody
+  );
 
   return res.status(StatusCodes.OK).json({
     success: true,
