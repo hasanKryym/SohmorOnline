@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import ContactUs from "../ContactUs/ContactUs";
 import "./Footer.css";
 import { favLinksMap } from "./linksHashmap";
-import Logo from "../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
+// import Logo from "../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
+import Logo from "../../assets/images/sohmorOnlinePhoneAndBagIcon.jpeg";
 import { FaPhone } from "react-icons/fa6";
 import { MdOutlineMail } from "react-icons/md";
+import { useUser } from "../../context/User/UserContext";
 
 const Footer = () => {
+  const { user, isLoggedIn } = useUser();
   return (
     <>
       <div className="footer_container">
@@ -15,6 +18,8 @@ const Footer = () => {
         {/* Links Map */}
         <div className="linksMap_container">
           {favLinksMap.map(({ name, link }, i) => {
+            if ((name === "Cart" || name === "Profile") && !isLoggedIn())
+              return;
             return (
               <Link key={i} style={{ color: "#373234" }} to={link}>
                 {name}
@@ -49,6 +54,23 @@ const Footer = () => {
               type="text"
               value={"admin@sohmor.tech"}
             />
+          </div>
+
+          {/* Additional Footer Content */}
+          <div className="additional_content">
+            <p>&copy; 2024 Sohmor Online. All rights reserved.</p>
+            {/* <ul>
+            <li>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/terms-of-service">Terms of Service</Link>
+            </li>
+          </ul>
+           Add your social media icons/links here 
+          <div className="social_media_icons">
+             Add social media icons and links here 
+          </div> */}
           </div>
         </div>
       </div>

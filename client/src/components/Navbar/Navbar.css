@@ -17,8 +17,15 @@
   display: none;
 }
 
+/* .Logo {
+  width: 120px;
+  cursor: pointer;
+} */
+
 .Logo {
   width: 120px;
+  height: 85px;
+  object-fit: contain;
   cursor: pointer;
 }
 
@@ -71,9 +78,16 @@
     display: initial;
   }
 
-  .Logo {
+  /* .Logo {
     width: 130px;
     object-fit: cover;
+  } */
+
+  .Logo {
+    width: 100px;
+    height: 85px;
+    object-fit: contain;
+    cursor: pointer;
   }
   .navbar .nav-list {
     width: 100vw;

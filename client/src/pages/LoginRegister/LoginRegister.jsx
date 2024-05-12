@@ -7,6 +7,7 @@ import { useNotification } from "../../context/Notification/NotificationContext"
 import { notificationTypes } from "../../context/Notification/notificationEnum";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Login = () => {
   const navigate = useNavigate();

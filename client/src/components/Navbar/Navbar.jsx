@@ -1,5 +1,6 @@
 import "./Navbar.css";
-import Logo from "../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
+// import Logo from "../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
+import Logo from "../../assets/images/sohmorOnlinePhoneAndBagIcon.jpeg";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
