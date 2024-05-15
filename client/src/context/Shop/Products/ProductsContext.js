@@ -21,7 +21,6 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const { user } = useUser();
   const { addNotification, load, hideLoader } = useNotification();
-  const { shop, editShop, setShopQueryParams } = useShop();
 
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
@@ -39,13 +38,13 @@ export const ProductProvider = ({ children }) => {
     setProducts((prevState) => [...prevState, newProduct]);
   };
 
-  const getOffers = (products) => {
-    const offers = products.filter((product) => {
-      return product.offer > 0;
-    });
+  // const getOffers = (products) => {
+  //   const offers = products.filter((product) => {
+  //     return product.offer > 0;
+  //   });
 
-    setOffers(offers);
-  };
+  //   setOffers(offers);
+  // };
 
   useEffect(() => {
     getShopProducts();
@@ -71,6 +70,7 @@ export const ProductProvider = ({ children }) => {
     if (!queryParameters.shopId) {
       // showNotification(notificationTypes.INFO, "Please provide the shopId");
       setProducts([]);
+      setOffers([]);
       return;
     }
     load();
@@ -83,6 +83,7 @@ export const ProductProvider = ({ children }) => {
         return;
       }
       setProducts(response.products);
+      setOffers(response.productsWithOffers);
       hideLoader();
     } else
       addNotification(
@@ -266,7 +267,8 @@ export const ProductProvider = ({ children }) => {
         userReview,
         setUserReview,
         getShopProducts,
-        getOffers,
+        // getOffers,
+        setOffers,
         addNewProduct,
         updateProducts,
         deleteProductsById,

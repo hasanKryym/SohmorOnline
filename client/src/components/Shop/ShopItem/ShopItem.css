@@ -57,15 +57,18 @@
 
 .shop_item .title .price {
   position: absolute;
-  right: 10px;
+  top: 0;
+  right: 5px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--terracotta-red);
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .shop_item .title .price .dashed {
   text-decoration: line-through;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: normal;
 }
 

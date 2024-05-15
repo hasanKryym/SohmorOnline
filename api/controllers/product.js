@@ -87,26 +87,6 @@ const getProducts = asyncWrapper(async (req, res) => {
   } = req.query;
 
   const queryParameters = {};
-  let products = [];
-  // if (shopId) {
-  //   // Fetch products based on shopId
-  //   const shop = await Shop.findById(shopId);
-  //   if (!shop) {
-  //     throw new NotFoundError("Shop not found");
-  //   }
-
-  //   queryParameters._id = { $in: shop.products };
-  //   // If _id is provided, add it to the query parameters
-  //   if (_id) {
-  //     // Check if the specified _id exists in the shop's products array
-  //     if (!shop.products.includes(_id)) {
-  //       throw new NotFoundError("Product not found in this shop");
-  //     }
-  //     queryParameters._id = _id;
-  //   }
-  // } else {
-  //   throw new BadRequestError("please provide the shopId");
-  // }
 
   if (!shopId) throw new BadRequestError("please provide the shopId");
 
@@ -136,7 +116,9 @@ const getProducts = asyncWrapper(async (req, res) => {
   if (categories) {
     queryParameters.categories = { $in: categories };
   }
-  products = await Product.getProducts(queryParameters);
+  let { products, productsWithOffers } = await Product.getProducts(
+    queryParameters
+  );
 
   // Handle case where no products are found
   if (!products || products.length === 0) {
@@ -146,6 +128,7 @@ const getProducts = asyncWrapper(async (req, res) => {
   return res.status(StatusCodes.OK).json({
     success: true,
     products,
+    productsWithOffers,
     message: "Products retrieved successfully",
   });
 });

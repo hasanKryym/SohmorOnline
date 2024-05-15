@@ -29,6 +29,10 @@ const SiteAdminPanel = () => {
     }
     if (domains.length === 0) getDomains();
   }, []);
+
+  useEffect(() => {
+    if (shops.length === 0) get_shops();
+  }, []);
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />

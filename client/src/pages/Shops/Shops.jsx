@@ -4,9 +4,18 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
 import ShopFilterForm from "../../components/ShopFilterForm/ShopFilterForm";
+import { useEffect } from "react";
+import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Shops = () => {
-  const { shops } = useShop();
+  const { shops, get_shops } = useShop();
+  const { setOffers } = useProduct();
+
+  useEffect(() => {
+    if (shops.length === 0) get_shops();
+
+    setOffers([]);
+  }, []);
 
   return (
     <>

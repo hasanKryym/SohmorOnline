@@ -42,6 +42,8 @@ export const ShopProvider = ({ children }) => {
       !shopQueryParams.shopId
     )
       return;
+
+    if (location.pathname === "/") return;
     get_shops();
   }, [shopQueryParams]);
 

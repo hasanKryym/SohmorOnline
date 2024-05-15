@@ -25,13 +25,13 @@ const Shop = () => {
     offers,
     queryParameters,
     setQueryParameters,
-    getOffers,
+    // getOffers,
     getShopProducts,
   } = useProduct();
 
-  useEffect(() => {
-    getOffers(products);
-  }, [products]);
+  // useEffect(() => {
+  //   getOffers(products);
+  // }, [products]);
 
   useEffect(() => {
     if (!shop.name) {

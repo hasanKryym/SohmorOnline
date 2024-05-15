@@ -108,20 +108,45 @@ ProductSchema.statics.deleteProducts = async function (
 };
 
 // ProductSchema.statics.getProducts = async function (queryParameters) {
-//   const products = await this.find(queryParameters);
-//   return products;
+//   let query = this.find(queryParameters);
+
+//   // Retrieve the products based on the query parameters
+//   const products = await query.exec();
+
+//   // Randomize the order of the products
+//   const shuffledProducts = products.sort(() => Math.random() - 0.5);
+
+//   // Separate the products with offers
+//   const productsWithOffers = shuffledProducts.filter(
+//     (product) => product.offer > 0
+//   );
+
+//   return {
+//     products: shuffledProducts,
+//     productsWithOffers: productsWithOffers,
+//   };
 // };
 
 ProductSchema.statics.getProducts = async function (queryParameters) {
-  let query = this.find(queryParameters);
+  // Retrieve all products first
+  const allProducts = await this.find({ shopId: queryParameters.shopId });
 
-  // Retrieve the products based on the query parameters
-  const products = await query.exec();
+  // Separate the products with offers
+  const productsWithOffers = allProducts.filter((product) => product.offer > 0);
 
-  // Randomize the order of the products
-  const shuffledProducts = products.sort(() => Math.random() - 0.5);
+  // Apply the query parameters to the remaining products
+  const query = this.find(queryParameters);
+  const filteredProducts = await query.exec();
 
-  return shuffledProducts;
+  // Randomize the order of the filtered products
+  const shuffledFilteredProducts = filteredProducts.sort(
+    () => Math.random() - 0.5
+  );
+
+  return {
+    products: shuffledFilteredProducts,
+    productsWithOffers: productsWithOffers,
+  };
 };
 
 ProductSchema.statics.getProductsById = async function (productIds) {
