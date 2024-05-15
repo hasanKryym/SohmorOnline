@@ -6,6 +6,7 @@ import { Filter } from "../Filter/Filter";
 import { CiSearch } from "react-icons/ci";
 import { MdRefresh } from "react-icons/md";
 import ProductFilterForm from "../ProductFilterForm/ProductFilterForm";
+import ProductsSortByFilter from "../ProductsSortByFilter/ProductsSortByFilter";
 
 const Products = ({ items }) => {
   const {
@@ -28,12 +29,18 @@ const Products = ({ items }) => {
   };
   return (
     <>
-      {showFilterContainer && (
+      {/* {showFilterContainer && (
         <Filter
           closeFilterPage={closeFilterPage}
           clearSearchInput={clearSearchInput}
         />
-      )}
+      )} */}
+
+      {/* <Filter
+        closeFilterPage={closeFilterPage}
+        clearSearchInput={clearSearchInput}
+      /> */}
+
       <div className="products_container">
         <div className="title_container">Products</div>
         <ProductFilterForm />

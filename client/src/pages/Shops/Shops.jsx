@@ -8,12 +8,10 @@ import { useEffect } from "react";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
 
 const Shops = () => {
-  const { shops, get_shops } = useShop();
+  const { shops, get_shops, setShopQueryParams } = useShop();
   const { setOffers } = useProduct();
 
   useEffect(() => {
-    if (shops.length === 0) get_shops();
-
     setOffers([]);
   }, []);
 

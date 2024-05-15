@@ -9,6 +9,10 @@ export const getProducts = async (queryParameter) => {
   if (queryParameter.search) url += `&search=${queryParameter.search}`;
   if (queryParameter.categories)
     url += `&categories=${queryParameter.categories}`;
+  if (queryParameter.minPrice) url += `&minPrice=${queryParameter.minPrice}`;
+  if (queryParameter.maxPrice) url += `&maxPrice=${queryParameter.maxPrice}`;
+  if (queryParameter.price === "asc" || queryParameter.price === "desc")
+    url += `&price=${queryParameter.price}`;
   try {
     const response = await axios.get(url, queryParameter, {
       headers: {

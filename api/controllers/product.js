@@ -84,6 +84,7 @@ const getProducts = asyncWrapper(async (req, res) => {
     maxRating,
     categories,
     shopId,
+    price, // this will be used to know how to sort the products it will have to values ('asc', 'desc')
   } = req.query;
 
   const queryParameters = {};
@@ -116,9 +117,24 @@ const getProducts = asyncWrapper(async (req, res) => {
   if (categories) {
     queryParameters.categories = { $in: categories };
   }
+
   let { products, productsWithOffers } = await Product.getProducts(
     queryParameters
   );
+
+  let sortedProducts = [...products];
+  if (price === "asc" || price === "desc") {
+    // sort products
+    sortedProducts.sort((a, b) => {
+      if (price === "asc") {
+        return a.price - b.price;
+      } else if (price === "desc") {
+        return b.price - a.price;
+      }
+    });
+  }
+
+  products = sortedProducts;
 
   // Handle case where no products are found
   if (!products || products.length === 0) {

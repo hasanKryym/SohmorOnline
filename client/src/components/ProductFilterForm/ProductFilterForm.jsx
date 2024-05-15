@@ -52,6 +52,11 @@ const ProductFilterForm = () => {
                     categories: "",
                     _id: "",
                     search: "",
+                    price: "",
+                    minPrice: "",
+                    maxPrice: "",
+                    minRating: "",
+                    maxRating: "",
                   }));
                   closeFilterPage();
                 }}
@@ -76,7 +81,9 @@ const ProductFilterForm = () => {
           </div>
           <div className="filter_btn-container">
             <button
-              onClick={() => setShowFilterContainer(true)}
+              onClick={() => {
+                setShowFilterContainer(true);
+              }}
               className="custom-button"
             >
               filter

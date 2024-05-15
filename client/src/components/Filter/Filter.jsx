@@ -3,13 +3,31 @@ import { useShop } from "../../context/Shop/shops/ShopsContext";
 import "./Filter.css";
 import { MdRefresh } from "react-icons/md";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
+import ProductsSortByFilter from "../ProductsSortByFilter/ProductsSortByFilter";
 
 const Filter = ({ closeFilterPage, clearSearchInput }) => {
   const { shop } = useShop();
+  const { products, setProducts } = useProduct();
   const { queryParameters, setQueryParameters } = useProduct();
   const [productFilters, setProductFilters] = useState({
     categories: queryParameters?.categories ?? "",
   });
+
+  const [sortByFilters, setSortByFilters] = useState({
+    price: queryParameters.price ?? "",
+    rating: "",
+    minPrice: queryParameters?.minPrice ?? "",
+    maxPrice: queryParameters?.maxPrice ?? "",
+    minRating: queryParameters?.minRating ?? "",
+    maxRating: queryParameters?.maxRating ?? "",
+  });
+
+  const handleSortByInputChange = (e) => {
+    let { name, value } = e.target;
+    console.log(name, value);
+    if (name === "minPrice" && value < 0) value = 0;
+    setSortByFilters({ ...sortByFilters, [name]: value });
+  };
 
   return (
     <>
@@ -25,6 +43,11 @@ const Filter = ({ closeFilterPage, clearSearchInput }) => {
                   categories: "",
                   _id: "",
                   search: "",
+                  price: "",
+                  minPrice: "",
+                  maxPrice: "",
+                  minRating: "",
+                  maxRating: "",
                 }));
                 closeFilterPage();
               }}
@@ -38,27 +61,33 @@ const Filter = ({ closeFilterPage, clearSearchInput }) => {
             <h3>Categories:</h3>
             <br />
             <ul className="shop_categories-list_container">
-              {shop?.categories.map((category) => {
-                return (
-                  <li
-                    onClick={() =>
-                      setProductFilters((prevState) => ({
-                        ...prevState,
-                        categories: category._id,
-                      }))
-                    }
-                    key={category._id}
-                    id={category._id}
-                    className={`shop_categories-list ${
-                      productFilters.categories === category._id && "isSelected"
-                    }`}
-                  >
-                    {category.name}
-                  </li>
-                );
-              })}
+              {shop.name &&
+                shop?.categories.map((category) => {
+                  return (
+                    <li
+                      onClick={() =>
+                        setProductFilters((prevState) => ({
+                          ...prevState,
+                          categories: category._id,
+                        }))
+                      }
+                      key={category._id}
+                      id={category._id}
+                      className={`shop_categories-list ${
+                        productFilters.categories === category._id &&
+                        "isSelected"
+                      }`}
+                    >
+                      {category.name}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
+          <ProductsSortByFilter
+            sortByFilters={sortByFilters}
+            handleSortByInputChange={handleSortByInputChange}
+          />
           <div className="btns_container">
             <button
               onClick={() => {
@@ -68,6 +97,11 @@ const Filter = ({ closeFilterPage, clearSearchInput }) => {
                   categories: productFilters.categories,
                   _id: "",
                   search: "",
+                  price: sortByFilters.price,
+                  minPrice: sortByFilters.minPrice,
+                  maxPrice: sortByFilters.maxPrice,
+                  minRating: sortByFilters.minRating,
+                  maxRating: sortByFilters.maxRating,
                 }));
                 closeFilterPage();
               }}

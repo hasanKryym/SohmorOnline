@@ -43,7 +43,7 @@ export const ShopProvider = ({ children }) => {
     )
       return;
 
-    if (location.pathname === "/") return;
+    // if (location.pathname === "/") return;
     get_shops();
   }, [shopQueryParams]);
 
