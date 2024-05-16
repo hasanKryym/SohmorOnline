@@ -37,7 +37,10 @@ const CartProducts = ({ product }) => {
     <tr className="cart_product">
       <td className="product-data">
         <div className="product-details">
-          <img src={product.image} alt="" />
+          <img
+            src={product.image + "-/quality/lightest/-/progressive/yes/"}
+            alt=""
+          />
           <div className="info">
             <h4>{product.name}</h4>
             <Link
