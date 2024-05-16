@@ -84,7 +84,7 @@ const Order = ({ order }) => {
           .toFixed(2)}
       </p>
       {/* Display dropdown for selecting status */}
-      {inShopAdminOrdersPanel ? (
+      {inShopAdminOrdersPanel && (
         <div className="status_dropdown">
           status:{" "}
           <select value={selectedStatus} onChange={handleStatusChange}>
@@ -95,8 +95,6 @@ const Order = ({ order }) => {
             ))}
           </select>
         </div>
-      ) : (
-        <p>status: {status}</p>
       )}
 
       {/* Display products */}
@@ -109,10 +107,10 @@ const Order = ({ order }) => {
                 onClick={handleViewProduct}
                 to={`/shops/products/${product.productId._id}`}
               >
-                {product?.productId?.name}
+                {product.name}
               </Link>
             ) : (
-              "Product was deleted by the shop"
+              <span>{product.name}</span>
             )}{" "}
             for ${product.quantity * product.price}
           </div>
