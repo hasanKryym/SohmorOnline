@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import Logo from "../../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
+import Logo from "../../../assets/images/sohmorOnlineLogo.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 const Navbar = ({ navbarLinks }) => {

@@ -3,7 +3,7 @@ import ContactUs from "../ContactUs/ContactUs";
 import "./Footer.css";
 import { favLinksMap } from "./linksHashmap";
 // import Logo from "../../assets/images/sohmor-online-high-resolution-logo-transparent.png";
-import Logo from "../../assets/images/sohmorOnlinePhoneAndBagIcon.jpeg";
+import Logo from "../../assets/images/sohmorOnlineLogo.png";
 import { FaPhone } from "react-icons/fa6";
 import { MdOutlineMail } from "react-icons/md";
 import { useUser } from "../../context/User/UserContext";
