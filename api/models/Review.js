@@ -39,7 +39,7 @@ ProductReviewSchema.statics.addReview = async function (review) {
     if (existingReview) {
       // Update the existing review
       if (rating) existingReview.rating = rating;
-      if (comment) existingReview.comment = comment;
+      if (comment || comment === "") existingReview.comment = comment;
       await existingReview.save();
     } else {
       // Create a new review
@@ -170,7 +170,7 @@ ShopReviewSchema.statics.addReviewAndUpdateRating = async function (review) {
     if (existingReview) {
       // Update the existing review
       if (rating) existingReview.rating = review.rating;
-      if (comment) existingReview.comment = review.comment;
+      if (comment || comment === "") existingReview.comment = review.comment;
       await existingReview.save();
       return existingReview;
     } else {

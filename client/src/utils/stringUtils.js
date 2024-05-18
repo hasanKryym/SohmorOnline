@@ -1,5 +1,5 @@
 // stringUtils.js
-export function validateStringValue(str) {
+export function normalizeString(str) {
   if (typeof str !== "string") {
     throw new TypeError("Input must be a string");
   }

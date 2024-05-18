@@ -8,6 +8,7 @@ import { notificationTypes } from "../../context/Notification/notificationEnum";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import Navbar from "../../components/Navbar/Navbar";
+import { normalizeString } from "../../utils/stringUtils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,8 +32,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    email = email.trim();
-    password = password.trim();
+    email = normalizeString(email);
+    password = normalizeString(password);
 
     if (!email || !password) {
       addNotification(
@@ -126,11 +127,11 @@ const Register = () => {
     e.preventDefault();
 
     const userData = {
-      name: formData.username.trim(),
-      email: formData.email.trim(),
-      password: formData.password.trim(),
-      address: formData.address.trim(),
-      number: formData.phoneNumber.trim(),
+      name: normalizeString(formData.username),
+      email: normalizeString(formData.email),
+      password: normalizeString(formData.password),
+      address: normalizeString(formData.address),
+      number: normalizeString(formData.phoneNumber),
     };
 
     if (

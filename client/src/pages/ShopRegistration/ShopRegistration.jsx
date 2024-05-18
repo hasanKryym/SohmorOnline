@@ -6,6 +6,7 @@ import { useNotification } from "../../context/Notification/NotificationContext"
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { useShop } from "../../context/Shop/shops/ShopsContext";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import { normalizeString } from "../../utils/stringUtils";
 
 const ShopRegistration = () => {
   const { addNotification } = useNotification();
@@ -64,6 +65,20 @@ const ShopRegistration = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Assuming formData and userData are already defined
+    formData.name = normalizeString(formData.name);
+    formData.description = normalizeString(formData.description);
+    formData.image = normalizeString(formData.image);
+    formData.address = normalizeString(formData.address);
+    formData.phoneNumber = normalizeString(formData.phoneNumber);
+
+    userData.name = normalizeString(userData.name);
+    userData.email = normalizeString(userData.email);
+    userData.password = normalizeString(userData.password);
+    userData.address = normalizeString(userData.address);
+    userData.number = normalizeString(userData.number);
+
     if (
       !formData.name ||
       !formData.description ||

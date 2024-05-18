@@ -6,6 +6,7 @@ import { addOrder, getOrders, updateOrder } from "../../services/ordersService";
 import { useLocation, useNavigate } from "react-router-dom";
 import UserPositions from "../../enum/userEnum/userPositionsEnum";
 import { orderStatus } from "../../enum/OrderStatuses/orderstatuses";
+import { normalizeString } from "../../utils/stringUtils";
 
 const UserContext = createContext();
 
@@ -73,9 +74,9 @@ export const UserProvider = ({ children }) => {
   };
 
   const editUserData = async (userData) => {
-    userData.name = userData.name.trim();
-    userData.address = userData.address.trim();
-    userData.number = userData.number.trim();
+    userData.name = normalizeString(userData.name);
+    userData.address = normalizeString(userData.address);
+    userData.number = normalizeString(userData.number);
     if (
       userData.name === user.data.name &&
       userData.address === user.data.address &&

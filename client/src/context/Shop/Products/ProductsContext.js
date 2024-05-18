@@ -13,6 +13,7 @@ import {
 import { notificationTypes } from "../../Notification/notificationEnum";
 import { useUser } from "../../User/UserContext";
 import { useShop } from "../shops/ShopsContext";
+import { normalizeString } from "../../../utils/stringUtils";
 
 // Create the context
 const ProductContext = createContext();
@@ -101,6 +102,10 @@ export const ProductProvider = ({ children }) => {
       return;
     }
     load();
+    newProduct.name = normalizeString(newProduct.name);
+    newProduct.description = normalizeString(newProduct.description);
+    newProduct.image = normalizeString(newProduct.image);
+
     const response = await addProduct(newProduct);
 
     if (response.success) {
@@ -131,6 +136,11 @@ export const ProductProvider = ({ children }) => {
     }
 
     load();
+
+    updatedFields.name = normalizeString(updatedFields.name);
+    updatedFields.description = normalizeString(updatedFields.description);
+    updatedFields.image = normalizeString(updatedFields.image);
+
     const response = await edit_product(productId, updatedFields);
     if (response.success) {
       addNotification(notificationTypes.SUCCESS, response.message);

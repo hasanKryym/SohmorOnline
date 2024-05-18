@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./RatingForm.css";
 import { useProduct } from "../../context/Shop/Products/ProductsContext";
+import { normalizeString } from "../../utils/stringUtils";
 
 const RatingForm = ({ closeRatingForm, productId }) => {
   const { userReview, setUserReview } = useProduct();
@@ -20,12 +21,21 @@ const RatingForm = ({ closeRatingForm, productId }) => {
     event.preventDefault();
 
     if (!rating && !comment) return;
-    if (userReview.rating === rating && userReview.comment === comment) return;
+    if (
+      userReview.rating === rating &&
+      normalizeString(userReview.comment) === normalizeString(comment)
+    )
+      return;
 
     if (productId) {
-      const response = await addReview({ productId, rating, comment });
+      const commentToSave = normalizeString(comment);
+      const response = await addReview({
+        productId,
+        rating,
+        comment: commentToSave,
+      });
       if (response.success) {
-        setUserReview({ rating, comment });
+        setUserReview({ rating, commentToSave });
         closeRatingForm();
       }
     }

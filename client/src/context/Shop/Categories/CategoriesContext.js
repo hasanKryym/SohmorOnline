@@ -9,6 +9,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useShop } from "../shops/ShopsContext";
 import { useUser } from "../../User/UserContext";
+import { normalizeString } from "../../../utils/stringUtils";
 
 const CategoriesContext = createContext();
 
@@ -60,6 +61,7 @@ export const CategoriesProvider = ({ children }) => {
       return;
     }
     load();
+    name = normalizeString(name);
     const response = await createShopCategory(name);
     if (response.success) {
       setShopQueryParams((prevState) => ({
@@ -91,6 +93,7 @@ export const CategoriesProvider = ({ children }) => {
     }
 
     load();
+    categoryData.name = normalizeString(categoryData.name);
     const response = await editShopCategory(categoryData);
     console.log(response);
     if (response.success) {

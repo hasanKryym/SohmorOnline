@@ -69,7 +69,6 @@ const EditShop = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (
       !formData.name ||
       !formData.description ||

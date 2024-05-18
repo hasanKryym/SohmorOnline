@@ -15,6 +15,7 @@ import { register } from "../../../services/userService";
 import { useUser } from "../../User/UserContext";
 import { useLocation } from "react-router-dom";
 import UserPositions from "../../../enum/userEnum/userPositionsEnum";
+import { normalizeString } from "../../../utils/stringUtils";
 
 const ShopContext = createContext();
 
@@ -142,6 +143,13 @@ export const ShopProvider = ({ children }) => {
 
   const editShop = async (shopData) => {
     load();
+
+    shopData.name = normalizeString(shopData.name);
+    shopData.description = normalizeString(shopData.description);
+    shopData.image = normalizeString(shopData.image);
+    shopData.address = normalizeString(shopData.address);
+    shopData.phoneNumber = normalizeString(shopData.phoneNumber);
+
     const response = await edit_shop(shopData);
     if (response.success) {
       setShop(response.shop);
