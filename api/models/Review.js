@@ -105,6 +105,7 @@ ProductReviewSchema.statics.getReview = async function (productId, userId) {
 
 ProductReviewSchema.statics.getReviews = async function (productId) {
   try {
+    const User = require("./User");
     let query = { productId };
     // if (excludeUserId) {
     //   query.userId = { $ne: excludeUserId };

@@ -27,10 +27,13 @@ const Login = () => {
     });
   };
 
-  const { email, password } = formData;
+  let { email, password } = formData;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    email = email.trim();
+    password = password.trim();
+
     if (!email || !password) {
       addNotification(
         notificationTypes.INFO,
@@ -39,7 +42,7 @@ const Login = () => {
       return;
     }
     load();
-    const response = await login(formData);
+    const response = await login({ email, password });
     if (response.success) {
       localStorage.setItem("token", response.token);
       setUser((prevUser) => ({
@@ -121,23 +124,25 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const userData = {
+      name: formData.username.trim(),
+      email: formData.email.trim(),
+      password: formData.password.trim(),
+      address: formData.address.trim(),
+      number: formData.phoneNumber.trim(),
+    };
+
     if (
-      !formData.username ||
-      !formData.email ||
-      !formData.password ||
-      !formData.address ||
-      !formData.phoneNumber
+      !userData.name ||
+      !userData.email ||
+      !userData.password ||
+      !userData.address ||
+      !userData.number
     ) {
       addNotification(notificationTypes.INFO, "please fill all the fields");
       return;
     }
-    const userData = {
-      name: formData.username,
-      email: formData.email,
-      password: formData.password,
-      address: formData.address,
-      number: formData.phoneNumber,
-    };
 
     load();
 

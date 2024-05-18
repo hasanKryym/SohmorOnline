@@ -9,7 +9,7 @@ const register = asyncWrapper(async (req, res) => {
     throw new BadRequestError("Please provide name, email, and password");
 
   const userData = { name, email, password, address, number, role };
-  const { user, token } = await User.register(userData);
+  const { user, token } = await User.register(userData, false);
 
   return res.status(StatusCodes.CREATED).json({
     token,

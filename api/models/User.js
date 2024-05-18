@@ -8,6 +8,7 @@ const {
   InternalServerError,
 } = require("../errors");
 const sendEmail = require("../mailer");
+const { ShopRegistration } = require("./Shop");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -103,6 +104,9 @@ UserSchema.methods.hashPassword = async function (password) {
 };
 
 UserSchema.statics.login = async function (email, password) {
+  email = email.trim();
+  password = password.trim();
+
   const user = await this.findOne({ email });
 
   if (!user) {
@@ -124,16 +128,69 @@ UserSchema.statics.login = async function (email, password) {
   return { user: userWithoutPassword, token };
 };
 
-UserSchema.statics.register = async function (userData) {
-  const { name, email } = userData;
-  const userEmail = await this.findOne({ email });
+UserSchema.statics.validateUserBeforeRegister = async function (
+  name,
+  email,
+  fromShopRegistrationRequest
+) {
+  name = name.trim();
+  email = email.trim();
   const username = await this.findOne({ name });
-
-  if (userEmail) throw new BadRequestError("email already exists");
   if (username) throw new BadRequestError("username already exists");
 
-  const newUser = new this(userData);
-  newUser.password = await newUser.hashPassword(userData.password); // Assign hashed password
+  const userEmail = await this.findOne({ email });
+  if (userEmail) throw new BadRequestError("email already exists");
+
+  // Check if the email already exists in the ShopRegistration schema
+
+  if (!fromShopRegistrationRequest) {
+    const existingRequestAdminName = await ShopRegistration.findOne({
+      "adminInfo.name": name,
+    });
+    if (existingRequestAdminName) {
+      throw new BadRequestError("username already exists");
+    }
+
+    const existingRequestAdmin = await ShopRegistration.findOne({
+      "adminInfo.email": email,
+    });
+    if (existingRequestAdmin) {
+      throw new BadRequestError("email already exists");
+    }
+  }
+};
+
+UserSchema.statics.register = async function (
+  userData,
+  fromShopRegistrationRequest
+) {
+  // fromShopRegistrationRequest is a boolean value that allow the system to know if he need to check the user name and email in the shopRegistration schema before registering a user
+  console.log(fromShopRegistrationRequest);
+  let { name, email, password, address, number, role } = userData;
+
+  name = name.trim();
+  email = email.trim();
+  password = password.trim();
+  address = address.trim();
+  number = number.trim();
+
+  const trimmedData = {
+    name,
+    email,
+    password,
+    address,
+    number,
+    role,
+  };
+
+  await this.validateUserBeforeRegister(
+    name,
+    email,
+    fromShopRegistrationRequest
+  );
+
+  const newUser = new this(trimmedData);
+  newUser.password = await newUser.hashPassword(trimmedData.password); // Assign hashed password
   await newUser.save();
   // Exclude password from user object
   const userWithoutPassword = newUser.toObject();
@@ -231,6 +288,15 @@ UserSchema.statics.replaceCart = async function (userId, newCartItems) {
 
 UserSchema.statics.editUserData = async function (userId, userData) {
   try {
+    const existingUserName = await User.findOne({
+      name: userData.name,
+      _id: { $ne: userId },
+    });
+
+    if (existingUserName) {
+      throw new BadRequestError("username already exists");
+    }
+
     const newUserData = await this.findByIdAndUpdate(userId, userData, {
       new: true,
     });

@@ -6,7 +6,7 @@ const RegistrationRequest = ({ request }) => {
   const { _id, shopInfo, adminInfo } = request;
   const { addShop, changeShopRegistrationRequestStatus } = useShop();
   const handleAcceptRequest = async () => {
-    const response = await addShop(shopInfo, adminInfo);
+    const response = await addShop(shopInfo, adminInfo, true);
     if (response?.success) {
       await changeShopRegistrationRequestStatus(
         _id,

@@ -33,13 +33,21 @@ export const getShops = async (queryParameter, all) => {
   }
 };
 
-export const add_shop = async (shopData) => {
+export const add_shop = async (
+  shopData,
+  adminData,
+  fromShopRegistrationRequest
+) => {
   try {
-    const response = await axios.post(`${baseUrl}/shops/manage/add`, shopData, {
-      headers: {
-        Authorization: getToken(),
-      },
-    });
+    const response = await axios.post(
+      `${baseUrl}/shops/manage/add?fromShopRegistrationRequest=${fromShopRegistrationRequest}`,
+      { shopData, adminData },
+      {
+        headers: {
+          Authorization: getToken(),
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return error.response.data;

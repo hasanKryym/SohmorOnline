@@ -29,6 +29,7 @@ const editUserData = asyncWrapper(async (req, res) => {
 
   const existingUserName = await User.findOne({
     name: userData.name,
+    _id: { $ne: userId }, // Exclude the current user
   });
   if (existingUserName) {
     throw new BadRequestError("username already exists");

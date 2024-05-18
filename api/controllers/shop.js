@@ -13,7 +13,44 @@ const User = require("../models/User");
 const registrationRequestStatus = require("../Enums/shopEnums/shopRegistrationStatus");
 const sendEmail = require("../mailer");
 
+// const addShop = asyncWrapper(async (req, res) => {
+//   const {
+//     name,
+//     description,
+//     image,
+//     products,
+//     sliderImages,
+//     address,
+//     phoneNumber,
+//     domain,
+//   } = req.body;
+
+//   if (!name || !description || !address || !phoneNumber || !domain) {
+//     throw new BadRequestError("Required fields are missing.");
+//   }
+
+//   const shopData = {
+//     name: name.trim(),
+//     description: description.trim(),
+//     image: image && image.trim(),
+//     products,
+//     sliderImages,
+//     address: address.trim(),
+//     phoneNumber: phoneNumber.trim(),
+//     domain,
+//   };
+
+//   const newShop = await Shop.createShop(shopData);
+
+//   res
+//     .status(StatusCodes.CREATED)
+//     .json({ shop: newShop, success: true, message: "shop added successfully" });
+// });
+
 const addShop = asyncWrapper(async (req, res) => {
+  const { shopData, adminData } = req.body;
+  const { fromShopRegistrationRequest } = req.query; // this is a boolean value that will let us know if this function was called because of accepting a shop request, so if its true so no need to check if the email and name already present in the shopRegistration schema
+
   const {
     name,
     description,
@@ -23,29 +60,110 @@ const addShop = asyncWrapper(async (req, res) => {
     address,
     phoneNumber,
     domain,
-  } = req.body;
+  } = shopData;
 
   if (!name || !description || !address || !phoneNumber || !domain) {
-    throw new BadRequestError("Required fields are missing.");
+    throw new BadRequestError("Required shop fields are missing.");
   }
 
-  const shopData = {
-    name,
-    description,
-    image,
+  const trimmedShopData = {
+    name: name.trim(),
+    description: description.trim(),
+    image: image && image.trim(),
     products,
     sliderImages,
-    address,
-    phoneNumber,
+    address: address.trim(),
+    phoneNumber: phoneNumber.trim(),
     domain,
   };
 
-  const newShop = await Shop.createShop(shopData);
+  const shopName = trimmedShopData.name;
 
-  res
-    .status(StatusCodes.CREATED)
-    .json({ shop: newShop, success: true, message: "shop added successfully" });
+  // Check if the shop name is already taken
+  const isShopUnavailable = await Shop.findOne({ name: shopName });
+  // Check if the admin name or email is already taken
+  const userName = adminData.name;
+  const userEmail = adminData.email; // Changed "Email" to "email" for consistency
+
+  const isUserNameUnavailable =
+    (await User.findOne({ name: userName })) ||
+    (!fromShopRegistrationRequest &&
+      (await ShopRegistration.findOne({
+        "adminInfo.name": userName,
+      })));
+
+  const isUserEmailUnavailable =
+    (await User.findOne({ email: userEmail })) ||
+    (!fromShopRegistrationRequest &&
+      (await ShopRegistration.findOne({
+        "adminInfo.email": userEmail,
+      })));
+
+  // If no conflicts, create the shop and register the admin user
+  if (!isShopUnavailable && !isUserNameUnavailable && !isUserEmailUnavailable) {
+    const newShop = await Shop.createShop(trimmedShopData);
+    adminData.role.shop = newShop._id;
+
+    await User.register(adminData, true);
+
+    return res.status(StatusCodes.CREATED).json({
+      shop: newShop,
+      success: true,
+      message: "Shop added successfully",
+    });
+  } else {
+    // Handle existing shop name, admin name, or email
+    if (isShopUnavailable) {
+      throw new BadRequestError("Shop name already exists");
+    }
+    if (isUserNameUnavailable) {
+      throw new BadRequestError("Admin name already exists");
+    }
+    if (isUserEmailUnavailable) {
+      throw new BadRequestError("Admin email already exists");
+    }
+
+    throw new BadRequestError("Shop name, admin name, or email already exists");
+  }
 });
+
+// const editShop = asyncWrapper(async (req, res) => {
+//   const shopId = req.user.role.shop;
+
+//   const {
+//     name,
+//     description,
+//     image,
+//     products,
+//     sliderImages,
+//     address,
+//     phoneNumber,
+//     domain,
+//   } = req.body;
+
+//   if (!name || !description || !address || !phoneNumber || !domain) {
+//     throw new BadRequestError("Required fields are missing.");
+//   }
+
+//   const shopData = {
+//     name,
+//     description,
+//     image,
+//     products,
+//     sliderImages,
+//     address,
+//     phoneNumber,
+//     domain,
+//   };
+
+//   const updatedShop = await Shop.editShop(shopId, shopData);
+
+//   res.status(StatusCodes.OK).json({
+//     shop: updatedShop,
+//     success: true,
+//     message: "shop updated successfully",
+//   });
+// });
 
 const editShop = asyncWrapper(async (req, res) => {
   const shopId = req.user.role.shop;

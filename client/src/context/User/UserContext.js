@@ -73,6 +73,9 @@ export const UserProvider = ({ children }) => {
   };
 
   const editUserData = async (userData) => {
+    userData.name = userData.name.trim();
+    userData.address = userData.address.trim();
+    userData.number = userData.number.trim();
     if (
       userData.name === user.data.name &&
       userData.address === user.data.address &&

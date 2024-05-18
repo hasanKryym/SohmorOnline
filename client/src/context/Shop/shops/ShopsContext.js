@@ -99,29 +99,45 @@ export const ShopProvider = ({ children }) => {
     }
   };
 
-  const addShop = async (shopData, adminData) => {
+  // const addShop = async (shopData, adminData) => {
+  //   load();
+  //   const response = await add_shop(shopData);
+  //   if (response.success) {
+  //     const shop = response.shop;
+  //     adminData.role.shop = shop._id;
+  //     const res = await register(adminData);
+  //     if (res.success) {
+  //       addNotification(notificationTypes.SUCCESS, response.message);
+  //       return response;
+  //     } else {
+  //       addNotification(
+  //         notificationTypes.ERROR,
+  //         res.message ? res.message : "error while adding admin"
+  //       );
+  //       await deleteShop(shop._id);
+  //       return res;
+  //     }
+  //   } else {
+  //     addNotification(
+  //       notificationTypes.ERROR,
+  //       response.message ? response.message : "error while adding the shop"
+  //     );
+  //     return response;
+  //   }
+  // };
+
+  const addShop = async (shopData, adminData, fromShopRegistrationRequest) => {
     load();
-    const response = await add_shop(shopData);
+    const response = await add_shop(shopData, adminData);
     if (response.success) {
-      const shop = response.shop;
-      adminData.role.shop = shop._id;
-      const res = await register(adminData);
-      if (res.success) {
-        addNotification(notificationTypes.SUCCESS, response.message);
-        return response;
-      } else {
-        addNotification(
-          notificationTypes.ERROR,
-          response.message ? response.message : "error while adding admin"
-        );
-      }
+      addNotification(notificationTypes.SUCCESS, response.message);
     } else {
       addNotification(
         notificationTypes.ERROR,
         response.message ? response.message : "error while adding the shop"
       );
-      return response;
     }
+    return response;
   };
 
   const editShop = async (shopData) => {
@@ -180,7 +196,6 @@ export const ShopProvider = ({ children }) => {
   const getShopRegistrationRequests = async (status) => {
     load();
     const response = await getRegistrationRequests(status);
-    console.log(response);
     if (response.success) {
       setShopRegistrationRequests(response.requests);
       hideLoader();

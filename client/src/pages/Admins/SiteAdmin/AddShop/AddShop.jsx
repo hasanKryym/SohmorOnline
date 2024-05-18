@@ -89,7 +89,7 @@ const AddShop = () => {
       return;
     }
 
-    const response = await addShop(formData, userData);
+    const response = await addShop(formData, userData, false);
     if (response.success) {
       setFormData({
         name: "",

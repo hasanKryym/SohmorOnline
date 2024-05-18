@@ -111,6 +111,11 @@ ShopSchema.statics.deleteShop = async function (shopId) {
     throw new NotFoundError("Shop not found");
   }
 
+  const Product = mongoose.model("Product");
+  const ProductReview = mongoose.model("ProductReview");
+  const Category = mongoose.model("Category");
+  const User = mongoose.model("User");
+
   // Delete all shop products reviews
   // Find all products belonging to the shop
   const productsToDelete = await Product.find({ shopId: shopId });
