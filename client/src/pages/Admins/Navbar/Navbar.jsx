@@ -3,6 +3,7 @@ import "./Navbar.css";
 import Logo from "../../../assets/images/sohmorOnlineLogo.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
+
 const Navbar = ({ navbarLinks }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -14,32 +15,34 @@ const Navbar = ({ navbarLinks }) => {
     <>
       <nav className="admin_navbar">
         <img className="Logo" src={Logo} alt="" />
-        <ul className="list">
-          {navbarLinks.map((item, i) => {
-            return (
-              <div className="list_container" key={i}>
-                <li onClick={() => toggleDropdown(i)} className="list-item">
-                  {item.title}{" "}
-                  <span>
-                    <IoIosArrowDown />
-                  </span>
-                </li>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <ul className="list">
+            {navbarLinks.map((item, i) => {
+              return (
+                <div className="list_container" key={i}>
+                  <li onClick={() => toggleDropdown(i)} className="list-item">
+                    {item.title}{" "}
+                    <span>
+                      <IoIosArrowDown />
+                    </span>
+                  </li>
 
-                {openIndex === i && (
-                  <div className="links">
-                    <ul className="list">
-                      {item.lists.map(({ name, link }, j) => (
-                        <Link to={link} key={j}>
-                          <li className="list-item">{name}</li>
-                        </Link>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </ul>
+                  {openIndex === i && (
+                    <div className="links">
+                      <ul className="list">
+                        {item.lists.map(({ name, link }, j) => (
+                          <Link to={link} key={j}>
+                            <li className="list-item">{name}</li>
+                          </Link>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </ul>
+        </div>
       </nav>
     </>
   );

@@ -219,6 +219,11 @@ const Register = () => {
           <Link style={{ color: "var(--primaryColor)" }} to="/login">
             Login
           </Link>
+          <br />
+          Want to register your shop?{" "}
+          <Link style={{ color: "var(--primaryColor)" }} to="/shops/register">
+            Register
+          </Link>
         </p>
       </div>
     </div>

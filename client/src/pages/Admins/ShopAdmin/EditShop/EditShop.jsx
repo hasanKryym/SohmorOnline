@@ -8,6 +8,7 @@ import { notificationTypes } from "../../../../context/Notification/notification
 import { useDomain } from "../../../../context/Shop/Domains/DomainsContext";
 import { useShop } from "../../../../context/Shop/shops/ShopsContext";
 import AddImage from "../../../../components/UploadCare/UploadCare";
+import { CiLogout } from "react-icons/ci";
 
 const EditShop = () => {
   const { addNotification } = useNotification();
@@ -99,15 +100,50 @@ const EditShop = () => {
       shopId: user.data.role.shop,
     }));
   };
+
+  const copyShopURL = () => {
+    navigator.clipboard
+      .writeText(`https://sohmor.tech/shops/${user.data.role.shop}`)
+      .then(() => {
+        addNotification(
+          notificationTypes.SUCCESS,
+          "Shop URL copied to clipboard!"
+        );
+      })
+      .catch((err) => {
+        console.error("Failed to copy the URL: ", err);
+      });
+  };
   return (
     <>
       <Navbar navbarLinks={navbarLinks} />
       <div
         style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}
       >
-        <button onClick={() => logout()} className="custom-button">
-          Logout
+        <button
+          title="logout"
+          onClick={() => logout()}
+          className="secondary-button"
+        >
+          <CiLogout />
         </button>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "start",
+          padding: "0 2rem",
+          gap: "1rem",
+        }}
+      >
+        <button className="custom-button" onClick={() => copyShopURL()}>
+          Copy my shop URL
+        </button>
+        <span>
+          (You can use this URL to share your shop on social media platforms
+          like Instagram, Facebook, TikTok, and more.)
+        </span>
       </div>
       <div className="shop_form-container">
         <form onSubmit={handleSubmit} className="shop_form">
