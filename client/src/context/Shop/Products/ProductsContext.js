@@ -68,6 +68,21 @@ export const ProductProvider = ({ children }) => {
   }, [product]);
 
   const getShopProducts = async () => {
+    // if the request contains an id for a specific product
+    if (queryParameters._id) {
+      load();
+      const response = await getProducts(queryParameters);
+      if (response.success) {
+        setProduct(response.products[0]);
+        if (user.status.isLoggedIn) getUserReview(queryParameters._id);
+        hideLoader();
+      } else
+        addNotification(
+          notificationTypes.ERROR,
+          response.message ? response.message : "error while retrieving product"
+        );
+      return;
+    }
     if (!queryParameters.shopId) {
       // showNotification(notificationTypes.INFO, "Please provide the shopId");
       setProducts([]);
@@ -77,12 +92,12 @@ export const ProductProvider = ({ children }) => {
     load();
     const response = await getProducts(queryParameters);
     if (response.success) {
-      if (queryParameters._id) {
-        setProduct(response.products[0]);
-        if (user.status.isLoggedIn) getUserReview(queryParameters._id);
-        hideLoader();
-        return;
-      }
+      // if (queryParameters._id) {
+      //   setProduct(response.products[0]);
+      //   if (user.status.isLoggedIn) getUserReview(queryParameters._id);
+      //   hideLoader();
+      //   return;
+      // }
       setProducts(response.products);
       setOffers(response.productsWithOffers);
       hideLoader();

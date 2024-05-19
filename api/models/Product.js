@@ -128,6 +128,15 @@ ProductSchema.statics.deleteProducts = async function (
 // };
 
 ProductSchema.statics.getProducts = async function (queryParameters) {
+  if (queryParameters._id) {
+    const product = await this.find({ _id: queryParameters._id });
+    const productsWithOffers = [];
+
+    return {
+      products: product,
+      productsWithOffers: productsWithOffers,
+    };
+  }
   // Retrieve all products first
   const allProducts = await this.find({ shopId: queryParameters.shopId });
 

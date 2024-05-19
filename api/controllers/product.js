@@ -89,11 +89,27 @@ const getProducts = asyncWrapper(async (req, res) => {
 
   const queryParameters = {};
 
+  // If the user request contains a specific product id then no need to continue filling the queryParams
+  if (_id) {
+    queryParameters._id = _id;
+    let { products, productsWithOffers } = await Product.getProducts(
+      queryParameters
+    );
+
+    if (products.length === 0)
+      throw new NotFoundError("No product found with this specific id");
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      products,
+      productsWithOffers,
+      message: "Products retrieved successfully",
+    });
+  }
+
   if (!shopId) throw new BadRequestError("please provide the shopId");
 
   queryParameters.shopId = shopId;
-
-  if (_id) queryParameters._id = _id;
 
   if (search) {
     queryParameters.$or = [
