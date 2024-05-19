@@ -43,9 +43,9 @@ const Order = ({ order }) => {
       <h4>Order ID: {_id}</h4>
       {!inShopAdminOrdersPanel && (
         <>
-          <h3>Shop: {shopData.name}</h3>
-          <p>Shop number: {shopData.phoneNumber}</p>
-          <p>Shop address: {shopData.address}</p>
+          <h3>Shop: {shopData?.name}</h3>
+          <p>Shop number: {shopData?.phoneNumber}</p>
+          <p>Shop address: {shopData?.address}</p>
           <p>Status: {status}</p>
         </>
       )}
