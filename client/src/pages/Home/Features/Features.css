@@ -1,3 +1,7 @@
+.features_section-title {
+  font-size: 32px;
+}
+
 .features_container {
   display: flex;
   align-items: center;

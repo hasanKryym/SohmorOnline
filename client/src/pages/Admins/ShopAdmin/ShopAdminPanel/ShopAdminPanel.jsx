@@ -49,8 +49,12 @@ const ShopAdminPanel = () => {
     if (shop.name) {
       if (!shop.isActive) {
         logout();
-        addNotification(
-          notificationTypes.WARNING,
+        // addNotification(
+        //   notificationTypes.WARNING,
+        //   "Your account is not activated please contact the admin to activate your account"
+        // );
+
+        alert(
           "Your account is not activated please contact the admin to activate your account"
         );
       }

@@ -45,7 +45,7 @@ const Shop = () => {
             <FaWhatsappSquare className="whatsapp_logo" /> {shop.phoneNumber}
           </span>
 
-          <span className="shop-info">
+          <span className="shop-info shop-location">
             <IoLocationSharp className="location-icon" />{" "}
             <span>{shop.address}</span>
           </span>

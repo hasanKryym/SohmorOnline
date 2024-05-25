@@ -53,7 +53,18 @@
 
 @media screen and (max-width: 650px) {
   .shop_container .title_container {
-    font-size: 32px;
+    font-size: 24px;
+    font-weight: bold;
+    flex-direction: column;
+  }
+
+  .shop_container .shop_info-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .shop_container .shop_info-container .shop-info.shop-location {
     flex-direction: column;
   }
 }

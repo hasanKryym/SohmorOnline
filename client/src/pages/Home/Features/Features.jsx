@@ -6,7 +6,7 @@ const Features = () => {
   return (
     <>
       <div className="title_container">
-        <h2>Features</h2>
+        <h2 className="features_section-title">Features</h2>
       </div>
       <div className="features_container">
         {featuresData.map(({ title, description }, i) => {
